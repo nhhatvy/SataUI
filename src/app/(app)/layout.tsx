@@ -7,6 +7,7 @@ import { Sidebar } from '@/shared/layouts/sidebar'
 import { Header } from '@/shared/layouts/header'
 import { BottomNav } from '@/shared/layouts/bottom-nav'
 import { DevStateSwitcher } from '@/shared/components/dev-state-switcher'
+import { AppearanceController } from '@/shared/components/appearance-controller'
 import { Loader2 } from 'lucide-react'
 
 // Shared App Shell cho cả Mode Phụ huynh (/parent/*) và Mode Học sinh (/student/*).
@@ -46,11 +47,13 @@ export default function AppShellLayout({ children }: { children: React.ReactNode
 
       <div className="flex min-w-0 flex-1 flex-col">
         <Header />
-        <div className="flex-1 bg-slate-50/50">{children}</div>
+        {/* min-w-0 + overflow-x-clip: chặn mọi tràn ngang do trang con gây ra (tránh mobile bị zoom-out để lộ khoảng trắng phải) */}
+        <div className="flex-1 min-w-0 overflow-x-clip bg-muted/50">{children}</div>
       </div>
 
       <BottomNav />
       <DevStateSwitcher />
+      <AppearanceController />
     </div>
   )
 }

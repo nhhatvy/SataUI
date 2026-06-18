@@ -54,8 +54,8 @@ export function ParentGallery() {
           <Card className="border-border/60 rounded-2xl shadow-none p-10 text-center">
             <CardContent className="flex flex-col items-center gap-3 p-0">
               <Camera className="size-10 text-slate-300" />
-              <p className="text-sm font-bold text-slate-600">Chưa có ảnh nào</p>
-              <p className="text-sm text-slate-400 max-w-xs">Ảnh lớp sẽ được chia theo từng buổi học khi giáo viên đăng tải.</p>
+              <p className="text-sm font-bold text-muted-foreground">Chưa có ảnh nào</p>
+              <p className="text-sm text-muted-foreground max-w-xs">Ảnh lớp sẽ được chia theo từng buổi học khi giáo viên đăng tải.</p>
             </CardContent>
           </Card>
         ) : (
@@ -66,14 +66,14 @@ export function ParentGallery() {
                 <section key={lesson.index}>
                   {/* Session header */}
                   <div className="flex items-center gap-2.5 mb-3">
-                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-white text-sm font-black shrink-0">
+                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-black shrink-0">
                       {lesson.index}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-slate-900 leading-tight truncate">
+                      <p className="text-sm font-bold text-foreground leading-tight truncate">
                         Buổi {lesson.index}: {lesson.title}
                       </p>
-                      <p className="text-xs text-slate-400 font-medium">
+                      <p className="text-xs text-muted-foreground font-medium">
                         Ngày chụp: {lesson.date} · {photos.length} ảnh
                       </p>
                     </div>
@@ -107,7 +107,7 @@ export function ParentGallery() {
                             )}
                           </div>
                           <div className="p-3 bg-card border-t border-border/40">
-                            <h4 className="text-sm font-bold text-slate-900 truncate">{photo.caption}</h4>
+                            <h4 className="text-sm font-bold text-foreground truncate">{photo.caption}</h4>
                           </div>
                         </CardContent>
                       </Card>
@@ -154,7 +154,7 @@ export function ParentGallery() {
               </div>
 
               <div className="p-6 bg-card border-t border-border/60">
-                <DialogTitle className="text-base font-bold text-slate-900">
+                <DialogTitle className="text-base font-bold text-foreground">
                   {child.imageConsent ? selected.photo.caption : 'Hình ảnh riêng tư'}
                 </DialogTitle>
                 <p className="text-sm text-muted-foreground font-semibold mt-1">
@@ -168,7 +168,7 @@ export function ParentGallery() {
                         alert('Đang tải ảnh chất lượng cao...')
                         setSelected(null)
                       }}
-                      className="flex items-center justify-center gap-2 rounded-xl bg-primary text-white text-sm font-bold px-4 py-2.5 hover:opacity-90 transition-all cursor-pointer shadow-sm shadow-primary/20 border-none"
+                      className="flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground text-sm font-bold px-4 py-2.5 hover:opacity-90 transition-all cursor-pointer shadow-sm shadow-primary/20 border-none"
                     >
                       <Download className="size-4" /> Tải ảnh
                     </button>

@@ -26,7 +26,7 @@ export function DevStateSwitcher() {
         <div className="rounded-2xl border border-border bg-card p-2 shadow-lg space-y-1 w-44">
           <div className="flex items-center justify-between px-2 py-1">
             <span className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">Dev · Trạng thái</span>
-            <button onClick={() => setOpen(false)} className="text-slate-400 hover:text-slate-700 cursor-pointer">
+            <button onClick={() => setOpen(false)} className="text-muted-foreground hover:text-foreground cursor-pointer">
               <X className="size-3.5" />
             </button>
           </div>
@@ -36,7 +36,7 @@ export function DevStateSwitcher() {
               onClick={() => setLayoutState(s.key)}
               className={cn(
                 'flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-sm font-bold cursor-pointer transition-colors',
-                layoutState === s.key ? 'bg-primary text-white' : 'text-slate-600 hover:bg-slate-50'
+                layoutState === s.key ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:bg-muted'
               )}
             >
               {s.label}

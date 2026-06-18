@@ -8,13 +8,13 @@ import {
   getCourseSyllabus,
   getSessionReviews,
   SKILL_RATING_LABEL,
+  TODAY,
   type SkillRating,
 } from '@/shared/mock-data/student-data'
 import { cn } from '@/shared/utils/utils'
 import { PageHeader } from '@/shared/components/page-header'
 import { Search, Check, MessageSquareText, ChevronLeft, Calendar, User } from 'lucide-react'
 
-const TODAY = new Date(2026, 5, 15)
 function daysAgo(d: string): number {
   const [dd, mm, yyyy] = d.split('/').map(Number)
   return Math.floor((TODAY.getTime() - new Date(yyyy, mm - 1, dd).getTime()) / 86400000)
@@ -88,12 +88,12 @@ export function ParentComments() {
       {/* Filter bar */}
       <div className="mb-4 flex flex-col sm:flex-row gap-2.5">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Tìm tên bài học / nội dung nhận xét..."
-            className="w-full h-10 pl-9 pr-3 rounded-xl border border-border bg-white text-sm font-medium text-slate-800 outline-none focus:border-primary"
+            className="w-full h-10 pl-9 pr-3 rounded-xl border border-border bg-card text-sm font-medium text-foreground outline-none focus:border-primary"
           />
         </div>
         <div className="grid grid-cols-3 sm:flex gap-2.5">
@@ -112,9 +112,9 @@ export function ParentComments() {
             <Card className="border-border/60 rounded-2xl shadow-none overflow-hidden lg:sticky lg:top-20">
               <CardContent className="p-0">
                 {filtered.length === 0 ? (
-                  <p className="p-6 text-center text-sm text-slate-400 font-semibold">Không có nhận xét phù hợp bộ lọc.</p>
+                  <p className="p-6 text-center text-sm text-muted-foreground font-semibold">Không có nhận xét phù hợp bộ lọc.</p>
                 ) : (
-                  <div className="divide-y divide-slate-100 max-h-[70vh] overflow-y-auto scrollbar-thin">
+                  <div className="divide-y divide-border max-h-[70vh] overflow-y-auto scrollbar-thin">
                     {filtered.map((i) => {
                       const selected = i.index === activeIndex
                       const unviewed = !viewedSet.has(i.index)
@@ -122,15 +122,15 @@ export function ParentComments() {
                         <button
                           key={i.index}
                           onClick={() => selectRow(i.index)}
-                          className={cn('w-full text-left p-3.5 flex items-start gap-3 transition-colors relative', selected ? 'bg-primary/5' : 'hover:bg-slate-50')}
+                          className={cn('w-full text-left p-3.5 flex items-start gap-3 transition-colors relative', selected ? 'bg-primary/5' : 'hover:bg-muted')}
                         >
                           {selected && <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />}
-                          <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-black shrink-0', selected ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500')}>
+                          <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-black shrink-0', selected ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}>
                             {i.index}
                           </span>
                           <div className="min-w-0 flex-1">
-                            <p className={cn('text-sm leading-snug truncate', selected ? 'font-bold text-slate-900' : 'font-semibold text-slate-700')}>{i.title}</p>
-                            <p className="text-xs text-slate-400 font-medium mt-0.5 truncate">{i.date} · {i.review.teacher}</p>
+                            <p className={cn('text-sm leading-snug truncate', selected ? 'font-bold text-foreground' : 'font-semibold text-foreground')}>{i.title}</p>
+                            <p className="text-xs text-muted-foreground font-medium mt-0.5 truncate">{i.date} · {i.review.teacher}</p>
                           </div>
                           {unviewed && <span className="mt-1 size-2 rounded-full bg-primary shrink-0" title="Chưa xem" />}
                         </button>
@@ -158,12 +158,12 @@ function Detail({ item, onBack }: { item: any; onBack: () => void }) {
     <Card className="border-border/60 rounded-2xl shadow-none overflow-hidden animate-in fade-in duration-200">
       <CardContent className="p-0">
         {/* Header */}
-        <div className="p-5 border-b border-border/50 bg-slate-50/60">
-          <button onClick={onBack} className="lg:hidden mb-2 inline-flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-slate-900 cursor-pointer">
+        <div className="p-5 border-b border-border/50 bg-muted/60">
+          <button onClick={onBack} className="lg:hidden mb-2 inline-flex items-center gap-1 text-sm font-bold text-muted-foreground hover:text-foreground cursor-pointer">
             <ChevronLeft className="size-4" /> Danh sách
           </button>
-          <p className="text-base font-bold text-slate-900 leading-snug">Buổi {item.index} · {item.title}</p>
-          <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-slate-500 font-medium mt-1.5">
+          <p className="text-base font-bold text-foreground leading-snug">Buổi {item.index} · {item.title}</p>
+          <div className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-muted-foreground font-medium mt-1.5">
             <span className="inline-flex items-center gap-1"><Calendar className="size-3.5" /> {item.date}</span>
             <span className="inline-flex items-center gap-1"><User className="size-3.5" /> {r.teacher}</span>
             <span>Lớp: {item.className}</span>
@@ -173,10 +173,10 @@ function Detail({ item, onBack }: { item: any; onBack: () => void }) {
         <div className="p-5 space-y-5">
           {/* Mục tiêu */}
           <section>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">Mục tiêu buổi học</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Mục tiêu buổi học</h3>
             <ul className="space-y-1.5">
               {r.objectives.map((o: string, i: number) => (
-                <li key={i} className="flex items-start gap-2 text-sm text-slate-700 font-medium">
+                <li key={i} className="flex items-start gap-2 text-sm text-foreground font-medium">
                   <span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" /> {o}
                 </li>
               ))}
@@ -185,14 +185,14 @@ function Detail({ item, onBack }: { item: any; onBack: () => void }) {
 
           {/* Kỹ năng */}
           <section>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2.5">Đánh giá kỹ năng</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2.5">Đánh giá kỹ năng</h3>
             <div className="space-y-2.5">
               {r.skills.map((s: any) => {
                 const rb = ratingBar[s.rating as SkillRating]
                 return (
                   <div key={s.name} className="grid grid-cols-[5.5rem_1fr_auto] sm:grid-cols-[7rem_1fr_5.5rem] items-center gap-2 sm:gap-3">
-                    <span className="text-sm font-semibold text-slate-700 truncate">{s.name}</span>
-                    <div className="h-2.5 rounded-full bg-slate-100 overflow-hidden">
+                    <span className="text-sm font-semibold text-foreground truncate">{s.name}</span>
+                    <div className="h-2.5 rounded-full bg-muted overflow-hidden">
                       <div className={cn('h-full rounded-full', rb.bar)} style={{ width: `${rb.pct}%` }} />
                     </div>
                     <span className={cn('text-xs sm:text-sm font-bold text-right whitespace-nowrap', rb.text)}>{SKILL_RATING_LABEL[s.rating as SkillRating]}</span>
@@ -204,7 +204,7 @@ function Detail({ item, onBack }: { item: any; onBack: () => void }) {
 
           {/* Chi tiết */}
           <section className="space-y-3">
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Nhận xét chi tiết</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Nhận xét chi tiết</h3>
             <DetailBlock label="Điểm nổi bật" tone="success" text={r.highlights} />
             <DetailBlock label="Tiến bộ" tone="blue" text={r.progress} />
             <DetailBlock label="Cần cải thiện" tone="amber" text={r.improvements} />
@@ -212,12 +212,12 @@ function Detail({ item, onBack }: { item: any; onBack: () => void }) {
 
           {/* Đề xuất */}
           <section>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2">Đề xuất cho phụ huynh</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2">Đề xuất cho phụ huynh</h3>
             <ul className="space-y-2">
               {r.suggestions.slice(0, 3).map((s: string, i: number) => (
-                <li key={i} className="flex items-start gap-2.5 text-sm text-slate-700 font-medium">
-                  <span className="mt-0.5 grid size-5 place-items-center rounded-md border border-slate-300 bg-white shrink-0">
-                    <Check className="size-3.5 text-slate-400" />
+                <li key={i} className="flex items-start gap-2.5 text-sm text-foreground font-medium">
+                  <span className="mt-0.5 grid size-5 place-items-center rounded-md border border-border bg-card shrink-0">
+                    <Check className="size-3.5 text-muted-foreground" />
                   </span>
                   {s}
                 </li>
@@ -235,7 +235,7 @@ function Select({ value, onChange, options }: { value: string; onChange: (v: str
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="h-10 rounded-xl border border-border bg-white px-2.5 text-sm font-bold text-slate-700 outline-none focus:border-primary cursor-pointer min-w-0"
+      className="h-10 rounded-xl border border-border bg-card px-2.5 text-sm font-bold text-foreground outline-none focus:border-primary cursor-pointer min-w-0"
     >
       {options.map(([v, l]) => (
         <option key={v} value={v}>{l}</option>
@@ -250,7 +250,7 @@ function DetailBlock({ label, tone, text }: { label: string; tone: 'success' | '
   return (
     <div className={cn('rounded-xl border p-3.5', cls)}>
       <p className={cn('text-sm font-bold mb-1', labelCls)}>{label}</p>
-      <p className="text-sm text-slate-700 font-medium leading-relaxed">{text}</p>
+      <p className="text-sm text-foreground font-medium leading-relaxed">{text}</p>
     </div>
   )
 }
@@ -260,8 +260,8 @@ function EmptyCard({ title, desc }: { title: string; desc: string }) {
     <Card className="border-border/60 rounded-2xl shadow-none p-10 text-center">
       <CardContent className="flex flex-col items-center gap-3 p-0">
         <MessageSquareText className="size-10 text-slate-300" />
-        <p className="text-sm font-bold text-slate-600">{title}</p>
-        <p className="text-sm text-slate-400 max-w-xs">{desc}</p>
+        <p className="text-sm font-bold text-muted-foreground">{title}</p>
+        <p className="text-sm text-muted-foreground max-w-xs">{desc}</p>
       </CardContent>
     </Card>
   )

@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type NotiCategory = 'study' | 'finance' | 'makeup' | 'survey' | 'report' | 'schedule'
+export type NotiCategory = 'study' | 'comment' | 'finance' | 'makeup' | 'survey' | 'report' | 'schedule'
 
 export interface NotificationItem {
   id: string
@@ -34,7 +34,7 @@ const initialNotifications: NotificationItem[] = [
     title: 'Nhận xét mới từ Thầy Hoàng Minh',
     description: 'Bảo Minh hoàn thành xuất sắc mô hình robot tránh vật cản.',
     time: '3 giờ trước',
-    type: 'study',
+    type: 'comment',
     unread: true,
     childName: 'Bảo Minh'
   },

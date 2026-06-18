@@ -54,7 +54,7 @@ function ProgressIndicator({
 function ProgressLabel({ className, ...props }: ProgressPrimitive.Label.Props) {
   return (
     <ProgressPrimitive.Label
-      className={cn("text-sm font-normal text-slate-600 leading-relaxed", className)}
+      className={cn("text-sm font-normal text-muted-foreground leading-relaxed", className)}
       data-slot="progress-label"
       {...props}
     />

@@ -75,12 +75,22 @@ export function ParentDashboard() {
 
   if (pageLoading) {
     return (
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 space-y-6">
+      <main className="mx-auto w-full max-w-screen-2xl flex-1 px-4 sm:px-6 lg:px-8 xl:px-10 2xl:px-12 pb-24 pt-6 space-y-6">
         <Skeleton className="h-16 w-2/3 rounded-2xl" />
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} className="h-20 rounded-2xl" />)}
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div
+  className="
+    grid
+    grid-cols-1
+    md:grid-cols-2
+    xl:grid-cols-3
+    2xl:grid-cols-4
+    gap-4
+    lg:gap-5
+  "
+>
           <Skeleton className="h-44 rounded-2xl" />
           <Skeleton className="h-44 rounded-2xl" />
         </div>
@@ -89,20 +99,47 @@ export function ParentDashboard() {
   }
 
   return (
-    <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300 space-y-6 sm:space-y-7">
+    <main
+  className="
+    mx-auto
+    w-full
+    max-w-screen-2xl
+    flex-1
+    px-4
+    sm:px-6
+    lg:px-8
+    xl:px-10
+    2xl:px-12
+    pt-6
+    pb-24
+    animate-in
+    fade-in
+    duration-300
+    space-y-6
+    lg:space-y-8
+  "
+>
       {/* Greeting */}
       <header>
         <p className="text-sm font-bold text-parent uppercase tracking-wider">Cổng phụ huynh</p>
-        <h1 className="text-[clamp(1.5rem,5vw,1.875rem)] font-bold tracking-tight text-slate-900 mt-1 break-words">
+        <h1 className="mt-1 break-words text-[clamp(1.75rem,3vw,2.5rem)] font-bold tracking-tight text-foreground">
           Chào {user?.name || 'Phụ huynh'} 👋
         </h1>
-        <p className="text-sm text-slate-500 mt-1 leading-relaxed">
+        <p className="text-sm text-muted-foreground mt-1 leading-relaxed">
           Bạn đang đồng hành cùng {summary.kids} con tại SataRobo. Chọn một con để xem chi tiết.
         </p>
       </header>
 
       {/* Family stats — 2 cột mobile, 4 cột desktop, value xuống dòng riêng nên không bị cắt */}
-      <section className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      <section
+  className="
+    grid
+    grid-cols-2
+    md:grid-cols-4
+    gap-3
+    lg:gap-4
+  "
+>
         <StatTile icon={Users} accent="parent" label="Số con đang học" value={`${summary.kids}`} />
         <StatTile icon={CalendarDays} accent="indigo" label="Buổi học tuần này" value={`${summary.sessionsThisWeek}`} />
         <StatTile icon={Pencil} accent="primary" label="Bài tập chờ làm" value={`${summary.totalHw}`} />
@@ -111,11 +148,29 @@ export function ParentDashboard() {
 
       {/* Child cards */}
       <section>
-        <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-3">Các con của bạn</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <h2 className="text-sm font-bold text-foreground uppercase tracking-wider mb-3">Các con của bạn</h2>
+        <div
+  className="
+    grid
+    grid-cols-1
+    md:grid-cols-2
+    xl:grid-cols-3
+    2xl:grid-cols-4
+    gap-4
+    lg:gap-5
+  "
+>
           {perChild.map((p) => (
-            <Card key={p.child.id} className="border-border/60 rounded-2xl shadow-none">
-              <CardContent className="p-4 sm:p-5 space-y-4">
+            <Card
+  key={p.child.id}
+  className="
+    h-full
+    rounded-2xl
+    border-border/60
+    shadow-none
+  "
+>
+              <CardContent className="flex h-full flex-col p-4 sm:p-5 space-y-4">
                 <div className="flex items-center gap-3 min-w-0">
                   <span
                     className="grid size-11 sm:size-12 shrink-0 place-items-center rounded-xl text-base font-black text-white"
@@ -124,17 +179,17 @@ export function ParentDashboard() {
                     {p.child.initials}
                   </span>
                   <div className="min-w-0">
-                    <h3 className="text-base font-bold text-slate-900 truncate">{p.child.name}</h3>
-                    <p className="text-sm text-slate-500 font-medium truncate">{p.courseName} · {p.child.className}</p>
+                    <h3 className="text-base font-bold text-foreground truncate">{p.child.name}</h3>
+                    <p className="text-sm text-muted-foreground font-medium truncate">{p.courseName} · {p.child.className}</p>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between gap-2 text-sm font-semibold">
-                    <span className="text-slate-500 min-w-0 truncate">Tiến độ ({p.done}/{p.total} buổi)</span>
+                    <span className="text-muted-foreground min-w-0 truncate">Tiến độ ({p.done}/{p.total} buổi)</span>
                     <span className="text-primary shrink-0 tabular-nums">{p.progress}%</span>
                   </div>
-                  <Progress value={p.progress} className="h-2 bg-slate-100" />
+                  <Progress value={p.progress} className="h-2 bg-muted" />
                 </div>
 
                 <div className="flex items-center gap-2 flex-wrap">
@@ -148,16 +203,16 @@ export function ParentDashboard() {
                   )}
                 </div>
 
-                <div className="flex items-center gap-2 pt-1">
+                <div className="mt-auto flex items-center gap-2 pt-4">
                   <Link
                     href={`/parent/children/${p.child.slug}`}
-                    className="flex-1 min-w-0 text-center py-2.5 rounded-xl border border-border bg-white hover:bg-slate-50 text-sm font-bold text-slate-700 transition-colors truncate"
+                    className="flex-1 min-w-0 text-center py-2.5 rounded-xl border border-border bg-card hover:bg-muted text-sm font-bold text-foreground transition-colors truncate"
                   >
                     Hồ sơ
                   </Link>
                   <button
                     onClick={() => openChild(p.child.id)}
-                    className="flex-1 min-w-0 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-primary text-white text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
+                    className="flex-1 min-w-0 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
                   >
                     <span className="truncate">Cổng học sinh</span>
                     <ArrowRight className="size-4 shrink-0" />
@@ -170,21 +225,21 @@ export function ParentDashboard() {
       </section>
 
       {/* Schedule + notifications */}
-      <section className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <section className="grid grid-cols-1 xl:grid-cols-12 gap-6">
         {/* Merged schedule */}
-        <div className="lg:col-span-2 space-y-3 min-w-0">
+        <div className="xl:col-span-8 space-y-3 min-w-0">
           <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider min-w-0 truncate">Lịch học sắp tới</h2>
+            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider min-w-0 truncate">Lịch học sắp tới</h2>
             <Link href="/parent/schedule" className="text-sm font-bold text-primary hover:underline inline-flex items-center gap-0.5 shrink-0 whitespace-nowrap">
               Chi tiết <ArrowRight className="size-3.5" />
             </Link>
           </div>
-          <Card className="border-border/60 rounded-2xl shadow-none">
+          <Card className="h-full border-border/60 rounded-2xl shadow-none">
             <CardContent className="p-2 sm:p-4">
               {mergedSchedule.length === 0 ? (
-                <p className="py-6 text-center text-sm text-slate-400">Không có lịch học nào.</p>
+                <p className="py-6 text-center text-sm text-muted-foreground">Không có lịch học nào.</p>
               ) : (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-border">
                   {mergedSchedule.map((s, idx) => (
                     <div key={idx} className="flex items-center gap-3 p-2 sm:py-3 sm:px-1 first:pt-1 last:pb-1">
                       <span
@@ -195,12 +250,14 @@ export function ParentDashboard() {
                         {s.childInitials}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="text-sm font-semibold text-slate-900 truncate">{s.subject}</p>
-                        <p className="text-sm text-slate-500 font-medium truncate">{s.childName} · {s.day} · {s.room}</p>
+                        <div className="flex items-center gap-2 min-w-0">
+                          <p className="text-sm font-semibold text-foreground truncate flex-1 min-w-0">{s.subject}</p>
+                          <Badge className="bg-muted text-muted-foreground border border-border/60 text-xs font-bold px-2 py-0.5 rounded-md shrink-0 whitespace-nowrap tabular-nums">
+                            {s.time}
+                          </Badge>
+                        </div>
+                        <p className="text-sm text-muted-foreground font-medium truncate mt-0.5">{s.childName} · {s.day} · {s.room}</p>
                       </div>
-                      <Badge className="bg-slate-50 text-slate-600 border border-slate-200/60 text-xs font-bold px-2 py-1 rounded-md shrink-0 whitespace-nowrap">
-                        {s.time}
-                      </Badge>
                     </div>
                   ))}
                 </div>
@@ -210,30 +267,48 @@ export function ParentDashboard() {
         </div>
 
         {/* Recent notifications */}
-        <div className="space-y-3 min-w-0">
-          <div className="flex items-center justify-between gap-2">
-            <h2 className="text-sm font-bold text-slate-900 uppercase tracking-wider min-w-0 truncate">Thông báo</h2>
+        <div className="xl:col-span-4 space-y-3 min-w-0">
+          <div className="flex items-center justify-between gap-2 mt-6">
+            <h2 className="text-sm font-bold text-foreground uppercase tracking-wider min-w-0 truncate">Thông báo</h2>
             <Link href="/parent/notifications" className="text-sm font-bold text-primary hover:underline inline-flex items-center gap-0.5 shrink-0 whitespace-nowrap">
               Tất cả <ArrowRight className="size-3.5" />
             </Link>
           </div>
-          <Card className="border-border/60 rounded-2xl shadow-none">
+          <Card className="h-full border-border/60 rounded-2xl shadow-none">
             <CardContent className="p-2">
               {recentNotis.length === 0 ? (
-                <p className="py-6 text-center text-sm text-slate-400">Không có thông báo.</p>
+                <p className="py-6 text-center text-sm text-muted-foreground">Không có thông báo.</p>
               ) : (
-                <div className="divide-y divide-slate-100">
+                <div className="divide-y divide-border">
                   {recentNotis.map((n) => (
-                    <Link key={n.id} href="/parent/notifications" className="flex items-start gap-3 p-3 hover:bg-slate-50 rounded-xl transition-colors">
-                      <span className={cn('mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl', n.unread ? 'bg-primary/10 text-primary' : 'bg-slate-100 text-slate-400')}>
+                    <Link
+                      key={n.id}
+                      href="/parent/notifications"
+                      className="flex items-start gap-3 rounded-xl p-3 transition-colors hover:bg-muted"
+                    >
+                      <span
+                        className={cn(
+                          'mt-0.5 grid size-9 shrink-0 place-items-center rounded-xl',
+                          n.unread ? 'bg-primary/10 text-primary' : 'bg-muted text-muted-foreground'
+                        )}
+                      >
                         <Bell className="size-4" />
                       </span>
-                      <div className="min-w-0 flex-1">
-                        <p className={cn('text-sm text-slate-900 truncate', n.unread ? 'font-bold' : 'font-semibold')}>{n.title}</p>
-                        <p className="text-sm text-slate-500 font-medium truncate">{n.description}</p>
-                        <p className="text-xs text-slate-400 font-semibold mt-0.5 truncate">{n.childName} · {n.time}</p>
+
+                      <div className="min-w-0 flex-1 space-y-0.5">
+                        <p className={cn('text-sm text-foreground line-clamp-2', n.unread ? 'font-bold' : 'font-semibold')}>
+                          {n.title}
+                        </p>
+                        <p className="text-sm font-medium text-muted-foreground line-clamp-2">
+                          {n.description}
+                        </p>
+                        <p className="text-xs font-medium text-muted-foreground pt-0.5">
+                          {n.childName} · {n.time}
+                        </p>
                       </div>
-                      <ChevronRight className="size-4 text-slate-300 self-center shrink-0" />
+
+                      {n.unread && <span className="mt-1.5 size-2 shrink-0 rounded-full bg-primary" />}
+                      <ChevronRight className="mt-0.5 size-4 shrink-0 text-muted-foreground/40" />
                     </Link>
                   ))}
                 </div>
@@ -258,20 +333,35 @@ function StatTile({
   accent: 'parent' | 'indigo' | 'primary' | 'amber'
 }) {
   const accentCls =
-    accent === 'parent' ? 'bg-parent/10 text-parent'
-      : accent === 'indigo' ? 'bg-indigo-500/10 text-indigo-500'
-        : accent === 'primary' ? 'bg-primary/10 text-primary'
+    accent === 'parent'
+      ? 'bg-parent/10 text-parent'
+      : accent === 'indigo'
+        ? 'bg-indigo-500/10 text-indigo-500'
+        : accent === 'primary'
+          ? 'bg-primary/10 text-primary'
           : 'bg-amber-500/10 text-amber-600'
+
   return (
-    <Card className="border-border/60 rounded-2xl shadow-none">
-      <CardContent className="p-3.5 sm:p-4">
-        <div className="flex items-start justify-between gap-2">
-          <p className="text-xs sm:text-sm text-slate-500 font-medium leading-tight min-w-0">{label}</p>
-          <span className={cn('grid size-7 sm:size-8 shrink-0 place-items-center rounded-lg', accentCls)}>
-            <Icon className="size-4" />
+    <Card className="h-full border-border/60 rounded-2xl shadow-none">
+      <CardContent className="p-4 lg:p-5 min-h-[110px]">
+        <div className="flex items-start justify-between gap-3">
+          <p className="min-w-0 text-xs sm:text-sm font-medium leading-tight text-muted-foreground">
+            {label}
+          </p>
+
+          <span
+            className={cn(
+              'grid size-8 lg:size-10 shrink-0 place-items-center rounded-xl',
+              accentCls
+            )}
+          >
+            <Icon className="size-4 lg:size-5" />
           </span>
         </div>
-        <p className="text-lg sm:text-xl font-bold text-slate-900 leading-tight mt-1.5 tabular-nums break-words">{value}</p>
+
+        <p className="mt-3 text-xl lg:text-2xl font-bold leading-tight tabular-nums break-words text-foreground">
+          {value}
+        </p>
       </CardContent>
     </Card>
   )

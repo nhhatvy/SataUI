@@ -63,10 +63,10 @@ export function StateMockWrapper({
   if (layoutState === 'empty') {
     return (
       <div className="flex flex-col items-center justify-center py-20 px-4 text-center animate-in fade-in zoom-in-95 duration-300">
-        <div className="grid size-16 place-items-center rounded-2xl bg-slate-50 border border-border/60 text-muted-foreground mb-4">
+        <div className="grid size-16 place-items-center rounded-2xl bg-muted border border-border/60 text-muted-foreground mb-4">
           <FolderOpen className="size-8" />
         </div>
-        <h3 className="text-base font-bold text-slate-900 text-foreground">{emptyTitle}</h3>
+        <h3 className="text-base font-bold text-foreground text-foreground">{emptyTitle}</h3>
         <p className="text-sm text-muted-foreground mt-2 max-w-sm leading-relaxed">
           {emptyDescription}
         </p>
@@ -82,7 +82,7 @@ export function StateMockWrapper({
             <span className="grid size-12 place-items-center bg-destructive/15 text-destructive rounded-full">
               <AlertTriangle className="size-6" />
             </span>
-            <h3 className="text-base font-bold text-slate-900 mt-1">Lỗi kết nối máy chủ</h3>
+            <h3 className="text-base font-bold text-foreground mt-1">Lỗi kết nối máy chủ</h3>
             <p className="text-sm text-muted-foreground leading-relaxed">
               Đã xảy ra lỗi khi tải dữ liệu học vụ từ máy chủ SataRobo. Vui lòng làm mới lại hoặc thử lại sau.
             </p>

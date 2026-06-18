@@ -239,6 +239,15 @@ export function getStudentData(childId: string) {
 export type LessonProgress = 'done' | 'current' | 'upcoming'
 export type HomeworkState = 'submitted' | 'pending' | 'overdue'
 
+// Điểm danh cho buổi ĐÃ diễn ra (progress = done). Nguồn sự thật duy nhất cho
+// chuyên cần & học bù — mọi số liệu tổng hợp đều suy ra từ đây.
+export type AttendanceMark =
+  | 'present'  // có mặt đúng giờ
+  | 'late'     // đi muộn
+  | 'excused'  // vắng có phép (cần học bù)
+  | 'absent'   // vắng không phép (cần học bù)
+  | 'makeup'   // từng vắng nhưng ĐÃ học bù
+
 export type SyllabusHomework = {
   quizId: string // map tới QUIZ_DATABASE trong student-assignments
   title: string
@@ -251,8 +260,14 @@ export type SyllabusLesson = {
   title: string
   date: string
   progress: LessonProgress // done/current = đã/đang học (xanh), upcoming = chưa học (xám)
+  attendance?: AttendanceMark // chỉ buổi đã diễn ra (progress='done')
   homework?: SyllabusHomework
 }
+
+// Mốc "hôm nay" cố định cho dữ liệu demo: 26/05/2026 — khóa học đang ở buổi 7/14 (~50%).
+// Toàn bộ trạng thái buổi/lịch/điểm danh được biên soạn nhất quán quanh mốc này
+// (không dùng đồng hồ thật để dữ liệu không bị "thối" theo thời gian).
+export const TODAY = new Date(2026, 4, 26) // tháng 0-index: 4 = tháng 5
 
 export type TeacherTest = {
   id: string // map tới QUIZ_DATABASE
@@ -277,12 +292,12 @@ export const courseSyllabusMap: Record<string, CourseSyllabus> = {
     teacher: 'Thầy Hoàng Minh',
     totalSessions: 14,
     lessons: [
-      { index: 1, title: 'Làm quen bộ kit & an toàn lab', date: '05/05/2026', progress: 'done' },
-      { index: 2, title: 'Cảm biến siêu âm & đo khoảng cách', date: '08/05/2026', progress: 'done', homework: { quizId: 'a1', title: 'BT: Cảm biến siêu âm', due: '10/05/2026', state: 'submitted' } },
-      { index: 3, title: 'Động cơ DC & điều khiển bánh xe', date: '12/05/2026', progress: 'done' },
-      { index: 4, title: 'Dò đường bằng cảm biến hồng ngoại', date: '15/05/2026', progress: 'done', homework: { quizId: 'a3', title: 'BT: Xe dò đường', due: '17/05/2026', state: 'submitted' } },
-      { index: 5, title: 'Vòng lặp & rẽ nhánh trong điều khiển', date: '19/05/2026', progress: 'done', homework: { quizId: 'a1', title: 'BT: Vòng lặp điều khiển', due: '21/05/2026', state: 'overdue' } },
-      { index: 6, title: 'Robot tránh vật cản tự động', date: '22/05/2026', progress: 'done', homework: { quizId: 'a3', title: 'BT: Robot tránh vật cản', due: '24/05/2026', state: 'submitted' } },
+      { index: 1, title: 'Làm quen bộ kit & an toàn lab', date: '05/05/2026', progress: 'done', attendance: 'present' },
+      { index: 2, title: 'Cảm biến siêu âm & đo khoảng cách', date: '08/05/2026', progress: 'done', attendance: 'present', homework: { quizId: 'a1', title: 'BT: Cảm biến siêu âm', due: '10/05/2026', state: 'submitted' } },
+      { index: 3, title: 'Động cơ DC & điều khiển bánh xe', date: '12/05/2026', progress: 'done', attendance: 'makeup' },
+      { index: 4, title: 'Dò đường bằng cảm biến hồng ngoại', date: '15/05/2026', progress: 'done', attendance: 'present', homework: { quizId: 'a3', title: 'BT: Xe dò đường', due: '17/05/2026', state: 'submitted' } },
+      { index: 5, title: 'Vòng lặp & rẽ nhánh trong điều khiển', date: '19/05/2026', progress: 'done', attendance: 'excused', homework: { quizId: 'a1', title: 'BT: Vòng lặp điều khiển', due: '21/05/2026', state: 'overdue' } },
+      { index: 6, title: 'Robot tránh vật cản tự động', date: '22/05/2026', progress: 'done', attendance: 'present', homework: { quizId: 'a3', title: 'BT: Robot tránh vật cản', due: '24/05/2026', state: 'submitted' } },
       { index: 7, title: 'Lắp ráp khung gầm nâng cao', date: '26/05/2026', progress: 'current', homework: { quizId: 'a1', title: 'BT: Khung gầm & động lực', due: '16/06/2026', state: 'pending' } },
       { index: 8, title: 'Cánh tay robot & servo', date: '29/05/2026', progress: 'upcoming' },
       { index: 9, title: 'Lập trình theo kịch bản', date: '02/06/2026', progress: 'upcoming' },
@@ -302,13 +317,13 @@ export const courseSyllabusMap: Record<string, CourseSyllabus> = {
     teacher: 'Cô Lan Anh',
     totalSessions: 14,
     lessons: [
-      { index: 1, title: 'Làm quen giao diện Scratch', date: '04/05/2026', progress: 'done' },
-      { index: 2, title: 'Khối lệnh chuyển động & sự kiện', date: '07/05/2026', progress: 'done', homework: { quizId: 'a4', title: 'BT: Chuyển động nhân vật', due: '09/05/2026', state: 'submitted' } },
-      { index: 3, title: 'Vẽ hình bằng vòng lặp', date: '11/05/2026', progress: 'done', homework: { quizId: 'a5', title: 'BT: Vẽ ngôi sao 5 cánh', due: '13/05/2026', state: 'submitted' } },
-      { index: 4, title: 'Biến số & điểm số trò chơi', date: '14/05/2026', progress: 'done', homework: { quizId: 'a4', title: 'BT: Biến đếm điểm', due: '16/05/2026', state: 'overdue' } },
-      { index: 5, title: 'Thiết kế nhân vật & phông nền', date: '18/05/2026', progress: 'done' },
-      { index: 6, title: 'Game hứng quả phần 1', date: '21/05/2026', progress: 'current', homework: { quizId: 'a5', title: 'BT: Game hứng quả', due: '16/06/2026', state: 'pending' } },
-      { index: 7, title: 'Game hứng quả phần 2', date: '25/05/2026', progress: 'upcoming' },
+      { index: 1, title: 'Làm quen giao diện Scratch', date: '04/05/2026', progress: 'done', attendance: 'present' },
+      { index: 2, title: 'Khối lệnh chuyển động & sự kiện', date: '07/05/2026', progress: 'done', attendance: 'makeup', homework: { quizId: 'a4', title: 'BT: Chuyển động nhân vật', due: '09/05/2026', state: 'submitted' } },
+      { index: 3, title: 'Vẽ hình bằng vòng lặp', date: '11/05/2026', progress: 'done', attendance: 'present', homework: { quizId: 'a5', title: 'BT: Vẽ ngôi sao 5 cánh', due: '13/05/2026', state: 'submitted' } },
+      { index: 4, title: 'Biến số & điểm số trò chơi', date: '14/05/2026', progress: 'done', attendance: 'excused', homework: { quizId: 'a4', title: 'BT: Biến đếm điểm', due: '16/05/2026', state: 'overdue' } },
+      { index: 5, title: 'Thiết kế nhân vật & phông nền', date: '18/05/2026', progress: 'done', attendance: 'present' },
+      { index: 6, title: 'Game hứng quả phần 1', date: '21/05/2026', progress: 'done', attendance: 'present' },
+      { index: 7, title: 'Game hứng quả phần 2', date: '26/05/2026', progress: 'current', homework: { quizId: 'a5', title: 'BT: Game hứng quả', due: '16/06/2026', state: 'pending' } },
       { index: 8, title: 'Âm thanh & hiệu ứng', date: '28/05/2026', progress: 'upcoming' },
       { index: 9, title: 'Hoạt hình kể chuyện', date: '01/06/2026', progress: 'upcoming' },
       { index: 10, title: 'Điều khiển bằng bàn phím', date: '04/06/2026', progress: 'upcoming' },
@@ -325,6 +340,61 @@ export const courseSyllabusMap: Record<string, CourseSyllabus> = {
 
 export function getCourseSyllabus(childId: string): CourseSyllabus {
   return courseSyllabusMap[childId] || courseSyllabusMap.minh
+}
+
+// ----- SELECTOR DUY NHẤT: thống kê chuyên cần & tiến độ suy ra từ syllabus -----
+// Mọi trang (dashboard, học bạ, lịch học, điểm danh, các con…) phải dùng hàm này
+// để số liệu luôn nhất quán (tránh tình trạng 14/20/16 buổi mỗi nơi một khác).
+export type AttendanceStats = {
+  total: number       // tổng số buổi của khóa (canonical)
+  done: number        // số buổi đã diễn ra (progress='done')
+  current: number     // buổi đang học hôm nay (progress='current')
+  completed: number   // đã + đang diễn ra = done + current
+  remaining: number   // còn lại chưa học
+  present: number
+  late: number
+  excused: number
+  unexcused: number   // = absent
+  makeup: number      // số buổi đã học bù
+  attended: number    // có mặt thực tế (present + late + makeup)
+  absent: number      // tổng buổi từng vắng (excused + unexcused + makeup)
+  needMakeup: number  // buổi vắng CHƯA bù (excused + unexcused)
+  doneMakeup: number  // buổi đã học bù (= makeup)
+  rate: number        // % chuyên cần = attended / done
+  progressPct: number // % tiến độ khóa = completed / total
+}
+
+export function getAttendanceStats(childId: string): AttendanceStats {
+  const syl = getCourseSyllabus(childId)
+  const lessons = syl.lessons
+  const total = syl.totalSessions
+  let done = 0, current = 0
+  let present = 0, late = 0, excused = 0, unexcused = 0, makeup = 0
+  for (const l of lessons) {
+    if (l.progress === 'current') { current++; continue }
+    if (l.progress !== 'done') continue
+    done++
+    switch (l.attendance) {
+      case 'present': present++; break
+      case 'late': late++; break
+      case 'excused': excused++; break
+      case 'absent': unexcused++; break
+      case 'makeup': makeup++; break
+      default: present++; break // mặc định coi như có mặt
+    }
+  }
+  const attended = present + late + makeup
+  const needMakeup = excused + unexcused
+  const completed = done + current
+  return {
+    total, done, current, completed,
+    remaining: Math.max(total - completed, 0),
+    present, late, excused, unexcused, makeup, attended,
+    absent: excused + unexcused + makeup,
+    needMakeup, doneMakeup: makeup,
+    rate: done > 0 ? Math.round((attended / done) * 100) : 0,
+    progressPct: total > 0 ? Math.round((completed / total) * 100) : 0,
+  }
 }
 
 // ----- Nhận xét & hình ảnh THEO TỪNG BUỔI HỌC -----
@@ -667,39 +737,56 @@ export type MakeupData = {
   history: MakeupHistory[]
 }
 
-export const makeupDataMap: Record<string, MakeupData> = {
+// Chỉ giữ thông tin TĨNH: cơ sở nhà + danh sách lớp học bù gợi ý.
+// `missed` (buổi cần bù) và `history` (đã bù) được SUY RA từ điểm danh trong syllabus.
+type MakeupMeta = { homeCampus: string; suggestions: MakeupSuggestion[] }
+
+export const makeupMetaMap: Record<string, MakeupMeta> = {
   minh: {
     homeCampus: 'Cơ sở 1 - Nguyễn Trãi',
-    missed: [
-      { id: 'ms1', lessonIndex: 5, lessonTitle: 'Vòng lặp & rẽ nhánh trong điều khiển', missedDate: '19/05/2026', reason: 'Nghỉ ốm có phép' },
-    ],
     suggestions: [
       { id: 'sg1', className: 'Robotics 4C', lessonTitle: 'Vòng lặp & rẽ nhánh', date: '18/06/2026', time: '14:00 - 15:30', teacher: 'Cô Trần Lan', campus: 'same', campusName: 'Cơ sở 1 - Nguyễn Trãi', seatsLeft: 3 },
       { id: 'sg2', className: 'Robotics 4D', lessonTitle: 'Vòng lặp & rẽ nhánh', date: '20/06/2026', time: '16:00 - 17:30', teacher: 'Thầy Lê Bình', campus: 'same', campusName: 'Cơ sở 1 - Nguyễn Trãi', seatsLeft: 1 },
       { id: 'sg3', className: 'Robotics 4B', lessonTitle: 'Vòng lặp & rẽ nhánh', date: '21/06/2026', time: '08:00 - 09:30', teacher: 'Cô Phạm Mai', campus: 'other', campusName: 'Cơ sở 2 - Cầu Giấy', seatsLeft: 5 },
     ],
-    history: [
-      { id: 'h1', lessonTitle: 'Cảm biến siêu âm & đo khoảng cách', targetClass: 'Robotics 4C', campusName: 'Cơ sở 1 - Nguyễn Trãi', date: '08/05/2026', status: 'done' },
-      { id: 'h2', lessonTitle: 'Động cơ DC & điều khiển bánh xe', targetClass: 'Robotics 4D', campusName: 'Cơ sở 1 - Nguyễn Trãi', date: '14/05/2026', status: 'approved' },
-    ],
   },
   an: {
     homeCampus: 'Cơ sở 2 - Cầu Giấy',
-    missed: [
-      { id: 'ms2', lessonIndex: 4, lessonTitle: 'Biến số & điểm số trò chơi', missedDate: '14/05/2026', reason: 'Bận việc gia đình' },
-    ],
     suggestions: [
       { id: 'sg4', className: 'Scratch 2B', lessonTitle: 'Biến số & điểm số', date: '19/06/2026', time: '10:00 - 11:30', teacher: 'Cô Lan Anh', campus: 'same', campusName: 'Cơ sở 2 - Cầu Giấy', seatsLeft: 4 },
       { id: 'sg5', className: 'Scratch 2A', lessonTitle: 'Biến số & điểm số', date: '22/06/2026', time: '14:00 - 15:30', teacher: 'Thầy Hồ Nam', campus: 'other', campusName: 'Cơ sở 1 - Nguyễn Trãi', seatsLeft: 2 },
     ],
-    history: [
-      { id: 'h3', lessonTitle: 'Khối lệnh chuyển động & sự kiện', targetClass: 'Scratch 2B', campusName: 'Cơ sở 2 - Cầu Giấy', date: '10/05/2026', status: 'done' },
-    ],
   },
 }
 
+const MISSED_REASON: Partial<Record<AttendanceMark, string>> = {
+  excused: 'Nghỉ có phép',
+  absent: 'Vắng không phép',
+}
+
 export function getMakeupData(childId: string): MakeupData {
-  return makeupDataMap[childId] || makeupDataMap.minh
+  const meta = makeupMetaMap[childId] || makeupMetaMap.minh
+  const lessons = getCourseSyllabus(childId).lessons
+  const missed: MissedSession[] = lessons
+    .filter((l) => l.attendance === 'excused' || l.attendance === 'absent')
+    .map((l) => ({
+      id: `ms-${childId}-${l.index}`,
+      lessonIndex: l.index,
+      lessonTitle: l.title,
+      missedDate: l.date,
+      reason: MISSED_REASON[l.attendance!] ?? 'Vắng mặt',
+    }))
+  const history: MakeupHistory[] = lessons
+    .filter((l) => l.attendance === 'makeup')
+    .map((l) => ({
+      id: `h-${childId}-${l.index}`,
+      lessonTitle: l.title,
+      targetClass: meta.suggestions[0]?.className ?? '—',
+      campusName: meta.homeCampus,
+      date: l.date,
+      status: 'done' as const,
+    }))
+  return { homeCampus: meta.homeCampus, suggestions: meta.suggestions, missed, history }
 }
 
 // ----- Danh sách học bạ (cho giao diện Phụ huynh) -----

@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { getChildData } from '@/shared/mock-data/parent-data'
-import { getCourseSyllabus } from '@/shared/mock-data/student-data'
+import { getCourseSyllabus, getAttendanceStats, TODAY } from '@/shared/mock-data/student-data'
 import { cn } from '@/shared/utils/utils'
 import { PageHeader } from '@/shared/components/page-header'
 import { Clock, MapPin, CalendarDays, CheckCircle2 } from 'lucide-react'
@@ -23,22 +23,26 @@ export function ParentSchedule() {
   const data = getChildData(child.id)
   const syllabus = getCourseSyllabus(child.id)
 
-  const att = data?.attendanceSummary ?? { completed: 0, total: 0, rate: 0 }
+  const att = useMemo(() => getAttendanceStats(child.id), [child.id])
   const weekSchedule = data?.weekSchedule ?? []
   const calendarEvents = data?.calendarMonthEvents ?? {}
 
-  // Lưới tháng 06/2026
+  // Lưới tháng theo mốc demo TODAY (tháng 05/2026)
+  const year = TODAY.getFullYear()
+  const month = TODAY.getMonth() + 1
+  const todayDate = TODAY.getDate()
+  const monthLabel = `${String(month).padStart(2, '0')}/${year}`
   const monthGrid = useMemo(() => {
-    const year = 2026, month = 6
     const firstWeekday = (new Date(year, month - 1, 1).getDay() + 6) % 7 // Mon-first
+    const daysInMonth = new Date(year, month, 0).getDate()
     const cells: ({ day: number; key: string; event: any } | null)[] = []
     for (let i = 0; i < firstWeekday; i++) cells.push(null)
-    for (let d = 1; d <= 30; d++) {
+    for (let d = 1; d <= daysInMonth; d++) {
       const key = `${year}-${String(month).padStart(2, '0')}-${String(d).padStart(2, '0')}`
       cells.push({ day: d, key, event: calendarEvents[key] || null })
     }
     return cells
-  }, [calendarEvents])
+  }, [calendarEvents, year, month])
 
   const upcoming = syllabus.lessons.filter((l) => l.progress !== 'done').slice(0, 6)
 
@@ -62,30 +66,30 @@ export function ParentSchedule() {
         <div className="lg:col-span-2 space-y-6">
           {/* Tuần này */}
           <section className="space-y-3">
-            <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">Lịch học tuần này</h2>
+            <h2 className="text-base font-bold text-foreground uppercase tracking-wider">Lịch học tuần này</h2>
             <Card className="border-border/60 rounded-2xl shadow-none">
-              <CardContent className="p-0 divide-y divide-slate-100">
+              <CardContent className="p-0 divide-y divide-border">
                 {weekSchedule.length === 0 ? (
-                  <p className="p-6 text-center text-sm text-slate-400 font-semibold">Không có lịch học tuần này.</p>
+                  <p className="p-6 text-center text-sm text-muted-foreground font-semibold">Không có lịch học tuần này.</p>
                 ) : (
                   weekSchedule.map((day: any) => (
                     <div key={day.date} className={cn('p-4 flex gap-4', day.isToday && 'bg-primary/[0.03]')}>
                       <div className="w-16 shrink-0 text-center">
-                        <p className={cn('text-sm font-bold', day.isToday ? 'text-primary' : 'text-slate-900')}>{day.day}</p>
-                        <p className="text-xs text-slate-400 font-medium">{day.date}</p>
-                        {day.isToday && <Badge className="bg-primary text-white border-none text-[10px] font-bold px-1.5 py-0 rounded mt-1">Hôm nay</Badge>}
+                        <p className={cn('text-sm font-bold', day.isToday ? 'text-primary' : 'text-foreground')}>{day.day}</p>
+                        <p className="text-xs text-muted-foreground font-medium">{day.date}</p>
+                        {day.isToday && <Badge className="bg-primary text-primary-foreground border-none text-[10px] font-bold px-1.5 py-0 rounded mt-1">Hôm nay</Badge>}
                       </div>
                       <div className="flex-1 min-w-0 space-y-2">
                         {(day.items || []).map((it: any) => (
-                          <div key={it.id} className="rounded-xl border border-border/50 bg-slate-50/50 p-3">
+                          <div key={it.id} className="rounded-xl border border-border/50 bg-muted/50 p-3">
                             <div className="flex items-center justify-between gap-2">
-                              <p className="text-sm font-bold text-slate-900 truncate">{it.subject}</p>
+                              <p className="text-sm font-bold text-foreground truncate">{it.subject}</p>
                               <Badge className={cn('border-none text-xs font-bold px-2 py-0.5 rounded-md shrink-0',
-                                it.status === 'done' ? 'bg-success/15 text-success' : it.status === 'today' ? 'bg-primary/15 text-primary' : 'bg-slate-100 text-slate-500')}>
+                                it.status === 'done' ? 'bg-success/15 text-success' : it.status === 'today' ? 'bg-primary/15 text-primary' : 'bg-muted text-muted-foreground')}>
                                 {it.status === 'done' ? 'Đã học' : it.status === 'today' ? 'Hôm nay' : 'Sắp tới'}
                               </Badge>
                             </div>
-                            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-slate-500 font-medium mt-1">
+                            <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-muted-foreground font-medium mt-1">
                               <span className="inline-flex items-center gap-1"><Clock className="size-3.5" /> {it.time}</span>
                               <span className="inline-flex items-center gap-1"><MapPin className="size-3.5" /> {it.room}</span>
                               <span>GV {it.teacher}</span>
@@ -102,18 +106,18 @@ export function ParentSchedule() {
 
           {/* Toàn bộ buổi học */}
           <section className="space-y-3">
-            <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">Các buổi học sắp tới</h2>
+            <h2 className="text-base font-bold text-foreground uppercase tracking-wider">Các buổi học sắp tới</h2>
             <Card className="border-border/60 rounded-2xl shadow-none">
-              <CardContent className="p-0 divide-y divide-slate-100">
+              <CardContent className="p-0 divide-y divide-border">
                 {upcoming.map((l) => (
                   <div key={l.index} className="p-4 flex items-center gap-3">
                     <span className={cn('grid size-9 place-items-center rounded-xl text-sm font-black shrink-0',
-                      l.progress === 'current' ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500')}>
+                      l.progress === 'current' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}>
                       {l.index}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm font-bold text-slate-900 truncate">Buổi {l.index}: {l.title}</p>
-                      <p className="text-sm text-slate-400 font-medium mt-0.5">Dự kiến: {l.date}</p>
+                      <p className="text-sm font-bold text-foreground truncate">Buổi {l.index}: {l.title}</p>
+                      <p className="text-sm text-muted-foreground font-medium mt-0.5">Dự kiến: {l.date}</p>
                     </div>
                     {l.progress === 'current' && <Badge className="bg-primary/15 text-primary border-none text-xs font-bold px-2 py-0.5 rounded-md">Đang học</Badge>}
                   </div>
@@ -125,14 +129,14 @@ export function ParentSchedule() {
 
         {/* Right: lịch tháng */}
         <aside className="lg:sticky lg:top-20 space-y-3">
-          <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-            <CalendarDays className="size-4 text-slate-400" /> Lịch tháng 06/2026
+          <h2 className="text-base font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
+            <CalendarDays className="size-4 text-muted-foreground" /> Lịch tháng {monthLabel}
           </h2>
           <Card className="border-border/60 rounded-2xl shadow-none">
             <CardContent className="p-4">
               <div className="grid grid-cols-7 gap-1 mb-1">
                 {WEEKDAYS.map((d) => (
-                  <div key={d} className="text-center text-xs font-bold text-slate-400 py-1">{d}</div>
+                  <div key={d} className="text-center text-xs font-bold text-muted-foreground py-1">{d}</div>
                 ))}
               </div>
               <div className="grid grid-cols-7 gap-1">
@@ -145,7 +149,7 @@ export function ParentSchedule() {
                       title={cell.event ? `${EVENT_STYLE[cell.event.type]?.label}: ${cell.event.label}` : undefined}
                       className={cn(
                         'aspect-square rounded-lg flex flex-col items-center justify-center text-sm font-semibold relative',
-                        cell.event ? 'bg-slate-50 text-slate-900' : 'text-slate-500'
+                        cell.day === todayDate ? 'bg-primary text-primary-foreground' : cell.event ? 'bg-muted text-foreground' : 'text-muted-foreground'
                       )}
                     >
                       {cell.day}
@@ -157,7 +161,7 @@ export function ParentSchedule() {
               {/* Legend */}
               <div className="flex flex-wrap gap-x-3 gap-y-1 mt-3 pt-3 border-t border-border/50">
                 {Object.entries(EVENT_STYLE).map(([k, v]) => (
-                  <span key={k} className="inline-flex items-center gap-1 text-xs font-medium text-slate-500">
+                  <span key={k} className="inline-flex items-center gap-1 text-xs font-medium text-muted-foreground">
                     <span className={cn('size-2 rounded-full', v.dot)} /> {v.label}
                   </span>
                 ))}
@@ -178,12 +182,12 @@ export function ParentSchedule() {
 }
 
 function Stat({ label, value, tone }: { label: string; value: string; tone: 'success' | 'primary' | 'default' }) {
-  const cls = tone === 'success' ? 'text-success' : tone === 'primary' ? 'text-primary' : 'text-slate-900'
+  const cls = tone === 'success' ? 'text-success' : tone === 'primary' ? 'text-primary' : 'text-foreground'
   return (
     <Card className="border-border/60 rounded-2xl shadow-none">
       <CardContent className="p-4 text-center">
         <p className={cn('text-2xl font-bold', cls)}>{value}</p>
-        <p className="text-sm text-slate-500 font-medium mt-0.5 leading-tight">{label}</p>
+        <p className="text-sm text-muted-foreground font-medium mt-0.5 leading-tight">{label}</p>
       </CardContent>
     </Card>
   )

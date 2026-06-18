@@ -14,7 +14,6 @@ import {
   Star,
   CalendarDays,
   MessageSquareText,
-  Trophy,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -45,7 +44,6 @@ export const studentNav: NavItem[] = [
   { label: 'Lịch học', href: '/student/schedule', icon: Calendar },
   { label: 'Bài tập', href: '/student/homework', icon: Pencil },
   { label: 'Buổi học', href: '/student/sessions', icon: List },
-  { label: 'Bảng xếp hạng', href: '/student/leaderboard', icon: Trophy },
   { label: 'Đánh giá giáo viên', href: '/student/evaluate-teacher', icon: Star },
   { label: 'Thông báo', href: '/student/notifications', icon: Bell },
 ]

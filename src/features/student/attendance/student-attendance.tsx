@@ -5,8 +5,7 @@ import Link from 'next/link'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
-import { getChildData } from '@/shared/mock-data/parent-data'
-import { getCourseSyllabus, getSessionReviews, getMakeupData } from '@/shared/mock-data/student-data'
+import { getCourseSyllabus, getSessionReviews, getAttendanceStats, type SyllabusLesson } from '@/shared/mock-data/student-data'
 import { PageHeader } from '@/shared/components/page-header'
 import { cn } from '@/shared/utils/utils'
 import { List, Calendar, Target, ClipboardCheck, BookOpen, ChevronLeft } from 'lucide-react'
@@ -19,22 +18,19 @@ const ATT_META: Record<AttStatus, { label: string; cls: string }> = {
   late: { label: 'Đi muộn', cls: 'bg-orange-500/15 text-orange-600 border-orange-500/30' },
   makeup: { label: 'Học bù', cls: 'bg-blue-500/15 text-blue-600 border-blue-500/30' },
   today: { label: 'Hôm nay', cls: 'bg-primary/15 text-primary border-primary/30' },
-  upcoming: { label: 'Chưa diễn ra', cls: 'bg-slate-100 text-slate-500 border-slate-200' },
+  upcoming: { label: 'Chưa diễn ra', cls: 'bg-muted text-muted-foreground border-border' },
 }
 
 export function StudentAttendance() {
   const { child } = useActiveChildStore()
-  const data = getChildData(child.id)
   const syllabus = useMemo(() => getCourseSyllabus(child.id), [child.id])
   const reviews = useMemo(() => getSessionReviews(child.id), [child.id])
-  const missedIdx = useMemo(() => new Set(getMakeupData(child.id).missed.map((m) => m.lessonIndex)), [child.id])
-  const summary = data?.attendanceSummary ?? { present: 0, absent: 0, makeup: 0, rate: 0, completed: 0, total: 0 }
+  const summary = useMemo(() => getAttendanceStats(child.id), [child.id])
 
-  const attOf = (index: number, progress: string): AttStatus => {
-    if (progress === 'upcoming') return 'upcoming'
-    if (progress === 'current') return 'today'
-    if (missedIdx.has(index)) return 'excused'
-    return 'present'
+  const attOf = (lesson: SyllabusLesson): AttStatus => {
+    if (lesson.progress === 'upcoming') return 'upcoming'
+    if (lesson.progress === 'current') return 'today'
+    return (lesson.attendance as AttStatus) ?? 'present'
   }
 
   const currentIdx = syllabus.lessons.find((l) => l.progress === 'current')?.index ?? syllabus.lessons[0]?.index ?? null
@@ -64,24 +60,24 @@ export function StudentAttendance() {
         <div className={cn('lg:block', mobileDetail && 'hidden')}>
           <Card className="border-border/60 rounded-2xl shadow-none overflow-hidden lg:sticky lg:top-20">
             <CardContent className="p-0">
-              <div className="divide-y divide-slate-100 max-h-[70vh] overflow-y-auto scrollbar-thin">
+              <div className="divide-y divide-border max-h-[70vh] overflow-y-auto scrollbar-thin">
                 {syllabus.lessons.map((l) => {
-                  const att = attOf(l.index, l.progress)
+                  const att = attOf(l)
                   const selected = l.index === active?.index
                   return (
                     <button
                       key={l.index}
                       onClick={() => selectRow(l.index)}
-                      className={cn('w-full text-left p-3.5 flex items-center gap-3 transition-colors relative', selected ? 'bg-primary/5' : 'hover:bg-slate-50')}
+                      className={cn('w-full text-left p-3.5 flex items-center gap-3 transition-colors relative', selected ? 'bg-primary/5' : 'hover:bg-muted')}
                     >
                       {selected && <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />}
                       <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-black shrink-0',
-                        l.progress === 'done' ? 'bg-success text-white' : l.progress === 'current' ? 'bg-primary text-white' : 'bg-slate-100 text-slate-500')}>
+                        l.progress === 'done' ? 'bg-success text-primary-foreground' : l.progress === 'current' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}>
                         {l.progress === 'done' ? '✓' : l.index}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className={cn('text-sm leading-snug truncate', selected ? 'font-bold text-slate-900' : 'font-semibold text-slate-700')}>Buổi {l.index}: {l.title}</p>
-                        <p className="text-xs text-slate-400 font-medium mt-0.5">{l.date}</p>
+                        <p className={cn('text-sm leading-snug truncate', selected ? 'font-bold text-foreground' : 'font-semibold text-foreground')}>Buổi {l.index}: {l.title}</p>
+                        <p className="text-xs text-muted-foreground font-medium mt-0.5">{l.date}</p>
                       </div>
                       <Badge className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded-md border shadow-none shrink-0', ATT_META[att].cls)}>{ATT_META[att].label}</Badge>
                     </button>
@@ -94,7 +90,7 @@ export function StudentAttendance() {
 
         {/* DETAIL */}
         <div className={cn('lg:block', !mobileDetail && 'hidden')}>
-          {active && <Detail lesson={active} att={attOf(active.index, active.progress)} objectives={reviews[active.index]?.objectives} onBack={() => setMobileDetail(false)} />}
+          {active && <Detail lesson={active} att={attOf(active)} objectives={reviews[active.index]?.objectives} onBack={() => setMobileDetail(false)} />}
         </div>
       </div>
     </main>
@@ -106,14 +102,14 @@ function Detail({ lesson, att, objectives, onBack }: { lesson: any; att: AttStat
   return (
     <Card className="border-border/60 rounded-2xl shadow-none overflow-hidden animate-in fade-in duration-200">
       <CardContent className="p-0">
-        <div className="p-5 border-b border-border/50 bg-slate-50/60">
-          <button onClick={onBack} className="lg:hidden mb-2 inline-flex items-center gap-1 text-sm font-bold text-slate-500 hover:text-slate-900 cursor-pointer">
+        <div className="p-5 border-b border-border/50 bg-muted/60">
+          <button onClick={onBack} className="lg:hidden mb-2 inline-flex items-center gap-1 text-sm font-bold text-muted-foreground hover:text-foreground cursor-pointer">
             <ChevronLeft className="size-4" /> Danh sách
           </button>
           <div className="flex items-start justify-between gap-3">
             <div className="min-w-0">
-              <p className="text-base font-bold text-slate-900 leading-snug">Buổi {lesson.index} · {lesson.title}</p>
-              <p className="text-sm text-slate-500 font-medium mt-1 inline-flex items-center gap-1"><Calendar className="size-3.5" /> {lesson.date}</p>
+              <p className="text-base font-bold text-foreground leading-snug">Buổi {lesson.index} · {lesson.title}</p>
+              <p className="text-sm text-muted-foreground font-medium mt-1 inline-flex items-center gap-1"><Calendar className="size-3.5" /> {lesson.date}</p>
             </div>
             <Badge className={cn('text-sm font-bold px-2.5 py-1 rounded-md border shadow-none shrink-0', ATT_META[att].cls)}>{ATT_META[att].label}</Badge>
           </div>
@@ -122,44 +118,44 @@ function Detail({ lesson, att, objectives, onBack }: { lesson: any; att: AttStat
         <div className="p-5 space-y-5">
           {/* Mục tiêu */}
           <section>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-1.5"><Target className="size-4 text-slate-400" /> Mục tiêu buổi học</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><Target className="size-4 text-muted-foreground" /> Mục tiêu buổi học</h3>
             {objectives && objectives.length > 0 ? (
               <ul className="space-y-1.5">
                 {objectives.map((o, i) => (
-                  <li key={i} className="flex items-start gap-2 text-sm text-slate-700 font-medium"><span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" /> {o}</li>
+                  <li key={i} className="flex items-start gap-2 text-sm text-foreground font-medium"><span className="mt-1.5 size-1.5 rounded-full bg-primary shrink-0" /> {o}</li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-slate-400 font-medium">{lesson.progress === 'upcoming' ? 'Buổi học chưa diễn ra.' : 'Đang cập nhật.'}</p>
+              <p className="text-sm text-muted-foreground font-medium">{lesson.progress === 'upcoming' ? 'Buổi học chưa diễn ra.' : 'Đang cập nhật.'}</p>
             )}
           </section>
 
           {/* Bài tập */}
           <section>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-1.5"><BookOpen className="size-4 text-slate-400" /> Bài tập của buổi</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><BookOpen className="size-4 text-muted-foreground" /> Bài tập của buổi</h3>
             {hw ? (
-              <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border/60 bg-slate-50/60 p-3.5">
+              <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-border/60 bg-muted/60 p-3.5">
                 <div className="min-w-0">
-                  <p className="text-sm font-bold text-slate-900 truncate">{hw.title}</p>
-                  <p className="text-xs text-slate-400 font-medium">Hạn: {hw.due}</p>
+                  <p className="text-sm font-bold text-foreground truncate">{hw.title}</p>
+                  <p className="text-xs text-muted-foreground font-medium">Hạn: {hw.due}</p>
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   <Badge className={cn('text-xs font-bold px-2 py-0.5 rounded-md border-none', hw.state === 'submitted' ? 'bg-success/15 text-success' : hw.state === 'overdue' ? 'bg-destructive/15 text-destructive' : 'bg-amber-500/15 text-amber-600')}>
                     {hw.state === 'submitted' ? 'Đã làm' : hw.state === 'overdue' ? 'Quá hạn' : 'Chưa làm'}
                   </Badge>
-                  <Link href={`/student/homework/${hw.quizId}`} className="h-9 px-3.5 grid place-items-center rounded-lg bg-primary text-white text-sm font-black hover:opacity-90">
+                  <Link href={`/student/homework/${hw.quizId}`} className="h-9 px-3.5 grid place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-black hover:opacity-90">
                     {hw.state === 'submitted' ? 'Làm lại' : 'Làm bài'}
                   </Link>
                 </div>
               </div>
             ) : (
-              <p className="text-sm text-slate-400 font-medium">Buổi này không có bài tập.</p>
+              <p className="text-sm text-muted-foreground font-medium">Buổi này không có bài tập.</p>
             )}
           </section>
 
           {/* Điểm danh */}
           <section>
-            <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider mb-2 flex items-center gap-1.5"><ClipboardCheck className="size-4 text-slate-400" /> Điểm danh</h3>
+            <h3 className="text-sm font-bold text-foreground uppercase tracking-wider mb-2 flex items-center gap-1.5"><ClipboardCheck className="size-4 text-muted-foreground" /> Điểm danh</h3>
             <Badge className={cn('text-sm font-bold px-2.5 py-1 rounded-md border shadow-none', ATT_META[att].cls)}>{ATT_META[att].label}</Badge>
           </section>
         </div>
@@ -174,7 +170,7 @@ function Stat({ label, value, tone }: { label: string; value: string; tone: 'pri
     <Card className="border-border/60 rounded-2xl shadow-none">
       <CardContent className="p-3.5 text-center">
         <p className={cn('text-xl font-bold', cls)}>{value}</p>
-        <p className="text-sm text-slate-500 font-medium mt-0.5 leading-tight">{label}</p>
+        <p className="text-sm text-muted-foreground font-medium mt-0.5 leading-tight">{label}</p>
       </CardContent>
     </Card>
   )

@@ -31,10 +31,13 @@ import {
   ChevronDown,
   BookOpen,
   ClipboardList,
+  MessageSquareText,
+  Palette,
 } from 'lucide-react'
 
 const notiIcon = {
   study: BookOpen,
+  comment: MessageSquareText,
   finance: CreditCard,
   makeup: ChevronDown,
   survey: ClipboardList,
@@ -43,6 +46,7 @@ const notiIcon = {
 }
 const notiColor = {
   study: 'text-primary bg-primary/10',
+  comment: 'text-blue-500 bg-blue-500/10',
   finance: 'text-amber-500 bg-amber-500/10',
   makeup: 'text-indigo-500 bg-indigo-500/10',
   survey: 'text-success bg-success/10',
@@ -96,6 +100,11 @@ export function Header() {
       router.push('/parent/report-card')
       return
     }
+    if (n.type === 'comment') {
+      // Nhận xét giáo viên chỉ ở cổng phụ huynh
+      router.push('/parent/comments')
+      return
+    }
     // Student-scoped: chuyển sang profile con tương ứng trước
     const target = allChildren.find((c) => c.name === n.childName || c.shortName === n.childName)
     if (target) setActiveChildId(target.id)
@@ -131,7 +140,7 @@ export function Header() {
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-[calc(100vw-1.5rem)] max-w-[26rem] p-0 rounded-2xl border-border/60 shadow-lg">
             <div className="flex items-center justify-between px-4 py-3">
-              <p className="text-sm font-bold text-slate-900 uppercase tracking-wider">Thông báo mới</p>
+              <p className="text-sm font-bold text-foreground uppercase tracking-wider">Thông báo mới</p>
               <button
                 onClick={(e) => {
                   e.stopPropagation()
@@ -145,7 +154,7 @@ export function Header() {
             <Separator />
             <div className="max-h-80 overflow-y-auto py-1 scrollbar-thin divide-y divide-border/40">
               {filteredNotifications.length === 0 ? (
-                <div className="p-6 text-center text-sm font-semibold text-slate-400">
+                <div className="p-6 text-center text-sm font-semibold text-muted-foreground">
                   Không có thông báo mới
                 </div>
               ) : (
@@ -159,7 +168,7 @@ export function Header() {
                         handleNotiClick(n)
                       }}
                       className={cn(
-                        'flex w-full items-start gap-3.5 px-4 py-3 text-left transition-colors hover:bg-slate-50 border-none bg-transparent cursor-pointer',
+                        'flex w-full items-start gap-3.5 px-4 py-3 text-left transition-colors hover:bg-muted border-none bg-transparent cursor-pointer',
                         n.unread && 'bg-primary/5'
                       )}
                     >
@@ -168,12 +177,12 @@ export function Header() {
                       </span>
                       <span className="min-w-0 flex-1 space-y-1">
                         <div className="flex items-center justify-between gap-1">
-                          <span className="block text-sm font-semibold text-slate-900 truncate">{n.title}</span>
+                          <span className="block text-sm font-semibold text-foreground truncate">{n.title}</span>
                           <Badge variant="outline" className="text-sm font-medium shrink-0 text-primary border-primary/20 bg-primary/5 py-0 px-2">
                             {n.childName}
                           </Badge>
                         </div>
-                        <span className="block text-sm leading-relaxed text-slate-500 font-normal">{n.description}</span>
+                        <span className="block text-sm leading-relaxed text-muted-foreground font-normal">{n.description}</span>
                       </span>
                     </button>
                   )
@@ -185,23 +194,26 @@ export function Header() {
 
         {/* Account menu */}
         <DropdownMenu>
-          <DropdownMenuTrigger className="flex items-center gap-2 py-1 pl-1 pr-2 transition-colors hover:bg-slate-50 cursor-pointer focus:outline-none select-none rounded-xl">
-            <span className="grid size-9 place-items-center rounded-lg bg-slate-900 text-sm font-bold text-white uppercase">
+          <DropdownMenuTrigger className="flex items-center gap-2 py-1 pl-1 pr-2 transition-colors hover:bg-muted cursor-pointer focus:outline-none select-none rounded-xl">
+            <span className="grid size-9 place-items-center rounded-lg bg-foreground text-sm font-bold text-background uppercase">
               {initials}
             </span>
             <span className="hidden text-left md:block">
-              <span className="block text-sm font-semibold leading-tight text-slate-900">{user?.name || 'Tài khoản'}</span>
-              <span className="block text-sm text-slate-400 font-medium tracking-wider mt-0.5">Phụ huynh</span>
+              <span className="block text-sm font-semibold leading-tight text-foreground">{user?.name || 'Tài khoản'}</span>
+              <span className="block text-sm text-muted-foreground font-medium tracking-wider mt-0.5">Phụ huynh</span>
             </span>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-60 rounded-2xl border-border/60 shadow-md">
             <DropdownMenuLabel className="flex flex-col">
-              <span className="text-sm font-bold text-slate-900">{user?.name}</span>
-              <span className="text-sm text-slate-400 font-normal mt-0.5">{user?.email}</span>
+              <span className="text-sm font-bold text-foreground">{user?.name}</span>
+              <span className="text-sm text-muted-foreground font-normal mt-0.5">{user?.email}</span>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => router.push('/parent/profile')} className="gap-2.5 py-2 cursor-pointer text-sm font-semibold">
               <Settings className="size-4 text-muted-foreground" /> Hồ sơ liên lạc
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => router.push('/settings/appearance')} className="gap-2.5 py-2 cursor-pointer text-sm font-semibold">
+              <Palette className="size-4 text-muted-foreground" /> Giao diện
             </DropdownMenuItem>
             <DropdownMenuItem className="gap-2.5 py-2 cursor-pointer text-sm font-semibold">
               <KeyRound className="size-4 text-muted-foreground" /> Đổi mật khẩu

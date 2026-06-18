@@ -63,6 +63,35 @@
   --radius-xl: calc(var(--radius) * 1.2);   /* ~12px */
   --radius-2xl: calc(var(--radius) * 1.5);  /* ~16px */
   --radius-3xl: calc(var(--radius) * 2.0);  /* ~20px */
+
+  /* Elevation / Shadow scale — trung tính, nhuốm slate (xem docs/ui-design-system.md §6).
+     Chủ ý ghi đè thang shadow mặc định để mọi shadow-* toàn app hội tụ về một bộ. */
+  --shadow-xs: 0 1px 2px 0 rgba(15, 23, 42, 0.04);
+  --shadow-sm: 0 1px 3px 0 rgba(15, 23, 42, 0.05), 0 1px 2px -1px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px -2px rgba(15, 23, 42, 0.06), 0 2px 6px -2px rgba(15, 23, 42, 0.05);
+  --shadow-lg: 0 12px 28px -6px rgba(15, 23, 42, 0.1), 0 6px 12px -6px rgba(15, 23, 42, 0.06);
+  --shadow-xl: 0 24px 48px -12px rgba(15, 23, 42, 0.16);
+
+  /* Typography scale (semantic) — KHÔNG ghi đè text-sm/base/xs mặc định.
+     Sinh utility: text-display / text-h1 / text-h2 / text-h3 / text-caption. */
+  --text-display: 2.25rem;
+  --text-display--line-height: 1.1;
+  --text-display--font-weight: 700;
+  --text-display--letter-spacing: -0.02em;
+  --text-h1: 1.875rem;
+  --text-h1--line-height: 1.15;
+  --text-h1--font-weight: 700;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: 1.25rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--font-weight: 700;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: 1rem;
+  --text-h3--line-height: 1.4;
+  --text-h3--font-weight: 600;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.4;
+  --text-caption--font-weight: 400;
 }
 
 :root {
@@ -124,7 +153,20 @@
   --chart-5: #E0524B;
   
   /* Base Radius chuẩn cho Dashboard quản lý */
-  --radius: 0.65rem; 
+  --radius: 0.65rem;
+
+  /* Spacing scale (4px base) — đồng bộ thang Tailwind; dùng cho token tham chiếu/JS.
+     Trong markup vẫn ưu tiên utility Tailwind (p-4, gap-6) vốn map sẵn thang này. */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
   
   --sidebar: oklch(1 0 0);
   --sidebar-foreground: oklch(0.293 0.027 256.85);
@@ -152,34 +194,37 @@
   --accent-soft: var(--student-soft); 
 }
 
+/* Dark mode: chỉ đổi NEUTRAL (nền tối ấm pha tím). GIỮ NGUYÊN brand/accent/semantic
+   (--primary, --accent, --success…) để màu thương hiệu & màu nhấn role không bị mất. */
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  --background: #0E0B12;
+  --foreground: #F3EFF7;
+  --card: #171320;
+  --card-foreground: #F3EFF7;
+  --popover: #171320;
+  --popover-foreground: #F3EFF7;
+  --secondary: #2A2335;
+  --secondary-foreground: #F3EFF7;
+  --muted: #1F1A29;
+  --muted-foreground: #A79FB3;
+  --border: #2A2335;
+  --input: #2A2335;
 
-  --glass-bg: rgba(30, 41, 59, 0.4);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  /* Soft tint role ở dark: dùng rgba mờ thay cho tint gần-trắng (#FFF4F0) để không chói trên nền tối.
+     Khi người dùng chọn màu nhấn riêng, applyAccent sẽ ghi đè --accent-soft bằng rgba của màu đó. */
+  --parent-soft: rgba(245, 120, 139, 0.16);
+  --student-soft: rgba(255, 174, 86, 0.16);
+
+  --sidebar: #171320;
+  --sidebar-foreground: #F3EFF7;
+  --sidebar-border: #2A2335;
+  --sidebar-accent: var(--accent-soft);
+  --sidebar-accent-foreground: var(--accent);
+
+  --glass-bg: rgba(23, 19, 32, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.06);
   --glass-blur: 12px;
-  --glass-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
 @layer base {

@@ -37,7 +37,7 @@ export function ParentProfile() {
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
       <div className="mb-5">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Hồ sơ gia đình</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Hồ sơ gia đình</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Quản lý thông tin liên hệ của phụ huynh và hồ sơ các con liên kết.
         </p>
@@ -68,7 +68,7 @@ export function ParentProfile() {
               <CardContent className="p-5 space-y-4">
                 <div className="flex items-center gap-2">
                   <UserPlus className="size-4 text-primary" />
-                  <h3 className="text-base font-bold text-slate-900">Phụ huynh thứ hai <span className="text-sm font-medium text-slate-400">(tùy chọn)</span></h3>
+                  <h3 className="text-base font-bold text-foreground">Phụ huynh thứ hai <span className="text-sm font-medium text-muted-foreground">(tùy chọn)</span></h3>
                 </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <Field label="Họ và tên" icon={User} value={secondName} onChange={setSecondName} placeholder="Chưa cập nhật" />
@@ -88,7 +88,7 @@ export function ParentProfile() {
                 </span>
               )}
               <button type="submit" disabled={saving}
-                className="ml-auto h-11 flex items-center gap-2 rounded-xl bg-primary text-white text-sm font-bold px-6 hover:opacity-90 disabled:opacity-50 cursor-pointer">
+                className="ml-auto h-11 flex items-center gap-2 rounded-xl bg-primary text-primary-foreground text-sm font-bold px-6 hover:opacity-90 disabled:opacity-50 cursor-pointer">
                 {saving ? 'Đang lưu...' : <><Save className="size-4" /> Lưu hồ sơ</>}
               </button>
             </div>
@@ -99,7 +99,7 @@ export function ParentProfile() {
             <CardContent className="p-5 space-y-4">
               <div className="flex items-center gap-2">
                 <KeyRound className="size-4 text-primary" />
-                <h3 className="text-base font-bold text-slate-900">Đổi mật khẩu</h3>
+                <h3 className="text-base font-bold text-foreground">Đổi mật khẩu</h3>
               </div>
               <div className="grid gap-4 sm:grid-cols-3">
                 <PlainField label="Mật khẩu hiện tại" type="password" />
@@ -109,7 +109,7 @@ export function ParentProfile() {
               <button
                 type="button"
                 onClick={() => alert('Mật khẩu đã được cập nhật (demo).')}
-                className="h-10 rounded-xl border border-border bg-white px-4 text-sm font-bold text-slate-700 hover:bg-slate-50 cursor-pointer"
+                className="h-10 rounded-xl border border-border bg-card px-4 text-sm font-bold text-foreground hover:bg-muted cursor-pointer"
               >
                 Cập nhật mật khẩu
               </button>
@@ -119,7 +119,7 @@ export function ParentProfile() {
 
         {/* Right: linked children */}
         <aside className="space-y-3">
-          <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider">Học sinh liên kết ({children.length})</h3>
+          <h3 className="text-sm font-bold text-foreground uppercase tracking-wider">Học sinh liên kết ({children.length})</h3>
           {children.map((c) => (
             <Card key={c.id} className={`rounded-2xl shadow-none border ${c.id === child.id ? 'border-primary/40' : 'border-border/60'}`}>
               <CardContent className="p-4 space-y-3">
@@ -128,10 +128,10 @@ export function ParentProfile() {
                     {c.initials}
                   </span>
                   <div className="min-w-0 flex-1">
-                    <h4 className="text-sm font-bold text-slate-900 truncate">{c.name}</h4>
-                    <p className="text-sm text-slate-500 font-medium">{c.className} · {c.grade}</p>
+                    <h4 className="text-sm font-bold text-foreground truncate">{c.name}</h4>
+                    <p className="text-sm text-muted-foreground font-medium">{c.className} · {c.grade}</p>
                   </div>
-                  {c.id === child.id && <Badge className="bg-primary text-white border-none text-[10px] font-bold px-1.5 py-0.5 rounded">Đang chọn</Badge>}
+                  {c.id === child.id && <Badge className="bg-primary text-primary-foreground border-none text-[10px] font-bold px-1.5 py-0.5 rounded">Đang chọn</Badge>}
                 </div>
 
                 {/* Image consent status */}
@@ -155,7 +155,7 @@ export function ParentProfile() {
 
                 <Link
                   href={`/parent/children/${c.slug}`}
-                  className="flex items-center justify-between text-sm font-bold text-slate-700 hover:text-primary"
+                  className="flex items-center justify-between text-sm font-bold text-foreground hover:text-primary"
                 >
                   Xem hồ sơ chi tiết <ChevronRight className="size-4" />
                 </Link>
@@ -175,12 +175,12 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-bold text-slate-500 mb-1">{label}</label>
+      <label className="block text-sm font-bold text-muted-foreground mb-1">{label}</label>
       <div className="relative">
-        <Icon className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-slate-400" />
+        <Icon className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input required={required} type={type} value={value} placeholder={placeholder}
           onChange={(e) => onChange(e.target.value)}
-          className="pl-10 h-10.5 rounded-xl border-border bg-slate-50/50 font-semibold focus-visible:ring-primary" />
+          className="pl-10 h-10.5 rounded-xl border-border bg-muted/50 font-semibold focus-visible:ring-primary" />
       </div>
     </div>
   )
@@ -189,8 +189,8 @@ function Field({
 function PlainField({ label, type = 'text' }: { label: string; type?: string }) {
   return (
     <div>
-      <label className="block text-sm font-bold text-slate-500 mb-1">{label}</label>
-      <Input type={type} className="h-10.5 rounded-xl border-border bg-slate-50/50 font-semibold focus-visible:ring-primary" />
+      <label className="block text-sm font-bold text-muted-foreground mb-1">{label}</label>
+      <Input type={type} className="h-10.5 rounded-xl border-border bg-muted/50 font-semibold focus-visible:ring-primary" />
     </div>
   )
 }

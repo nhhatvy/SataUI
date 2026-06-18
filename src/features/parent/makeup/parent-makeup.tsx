@@ -80,7 +80,7 @@ export function ParentMakeup() {
         <div className="lg:col-span-2 space-y-6">
           {/* Buổi cần học bù */}
           <section className="space-y-3">
-            <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">Buổi cần học bù</h2>
+            <h2 className="text-base font-bold text-foreground uppercase tracking-wider">Buổi cần học bù</h2>
             {data.missed.length === 0 ? (
               <Card className="border-success/30 bg-success/5 rounded-2xl shadow-none">
                 <CardContent className="p-5 flex items-center gap-3 text-sm font-semibold text-success">
@@ -97,13 +97,13 @@ export function ParentMakeup() {
                         <AlertTriangle className="size-5" />
                       </span>
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-slate-900">Buổi {m.lessonIndex}: {m.lessonTitle}</p>
-                        <p className="text-sm text-slate-500 font-medium mt-0.5">Vắng ngày {m.missedDate} · {m.reason}</p>
+                        <p className="text-sm font-bold text-foreground">Buổi {m.lessonIndex}: {m.lessonTitle}</p>
+                        <p className="text-sm text-muted-foreground font-medium mt-0.5">Vắng ngày {m.missedDate} · {m.reason}</p>
                       </div>
                     </div>
                     <button
                       onClick={() => openFinder(m)}
-                      className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-white text-sm font-black hover:opacity-90 transition-opacity cursor-pointer shrink-0"
+                      className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer shrink-0"
                     >
                       <CalendarClock className="size-4" /> Tìm lịch học bù
                     </button>
@@ -115,21 +115,21 @@ export function ParentMakeup() {
 
           {/* Lịch sử */}
           <section className="space-y-3">
-            <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider flex items-center gap-2">
-              <HistoryIcon className="size-4 text-slate-400" /> Lịch sử yêu cầu học bù
+            <h2 className="text-base font-bold text-foreground uppercase tracking-wider flex items-center gap-2">
+              <HistoryIcon className="size-4 text-muted-foreground" /> Lịch sử yêu cầu học bù
             </h2>
             {history.length === 0 ? (
-              <Card className="border-border/60 rounded-2xl shadow-none p-6 text-center text-sm text-slate-400 font-semibold">
+              <Card className="border-border/60 rounded-2xl shadow-none p-6 text-center text-sm text-muted-foreground font-semibold">
                 Chưa có yêu cầu học bù nào.
               </Card>
             ) : (
               <Card className="border-border/60 rounded-2xl shadow-none overflow-hidden">
-                <CardContent className="p-0 divide-y divide-slate-100">
+                <CardContent className="p-0 divide-y divide-border">
                   {history.map((h) => (
                     <div key={h.id} className="flex flex-wrap items-center justify-between gap-3 p-4">
                       <div className="min-w-0">
-                        <p className="text-sm font-bold text-slate-900 truncate">{h.lessonTitle}</p>
-                        <p className="text-sm text-slate-500 font-medium mt-0.5">
+                        <p className="text-sm font-bold text-foreground truncate">{h.lessonTitle}</p>
+                        <p className="text-sm text-muted-foreground font-medium mt-0.5">
                           Lớp {h.targetClass} · {h.campusName} · {h.date}
                         </p>
                       </div>
@@ -146,19 +146,19 @@ export function ParentMakeup() {
 
         {/* Right: policy note */}
         <aside className="lg:sticky lg:top-20">
-          <Card className="border-border/60 rounded-2xl shadow-none bg-slate-50/60">
+          <Card className="border-border/60 rounded-2xl shadow-none bg-muted/60">
             <CardContent className="p-5 space-y-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-slate-900">
+              <div className="flex items-center gap-2 text-sm font-bold text-foreground">
                 <Building2 className="size-4 text-primary" /> Chính sách học bù
               </div>
-              <ul className="space-y-2 text-sm text-slate-600 font-medium">
+              <ul className="space-y-2 text-sm text-muted-foreground font-medium">
                 <li className="flex gap-2"><span className="text-primary">•</span> Học bù đúng nội dung buổi đã vắng.</li>
                 <li className="flex gap-2"><span className="text-primary">•</span> Cho phép học bù <strong>liên cơ sở</strong> (CS1 ↔ CS2).</li>
                 <li className="flex gap-2"><span className="text-primary">•</span> Ưu tiên hiển thị lớp tại cơ sở của con trước.</li>
                 <li className="flex gap-2"><span className="text-primary">•</span> Yêu cầu cần CRM/Quản lý duyệt trước khi học.</li>
               </ul>
-              <div className="text-sm text-slate-500 font-medium pt-1 border-t border-border/60">
-                Cơ sở của {child.shortName}: <strong className="text-slate-700">{data.homeCampus}</strong>
+              <div className="text-sm text-muted-foreground font-medium pt-1 border-t border-border/60">
+                Cơ sở của {child.shortName}: <strong className="text-foreground">{data.homeCampus}</strong>
               </div>
             </CardContent>
           </Card>
@@ -170,9 +170,9 @@ export function ParentMakeup() {
         <DialogContent className="max-w-lg p-0 overflow-hidden rounded-2xl">
           {activeMissed && (
             <div>
-              <div className="p-5 border-b border-border/60 bg-slate-50/60">
-                <DialogTitle className="text-base font-bold text-slate-900">Chọn lịch học bù</DialogTitle>
-                <p className="text-sm text-slate-500 font-medium mt-1">
+              <div className="p-5 border-b border-border/60 bg-muted/60">
+                <DialogTitle className="text-base font-bold text-foreground">Chọn lịch học bù</DialogTitle>
+                <p className="text-sm text-muted-foreground font-medium mt-1">
                   Buổi {activeMissed.lessonIndex}: {activeMissed.lessonTitle}
                 </p>
               </div>
@@ -182,8 +182,8 @@ export function ParentMakeup() {
                   <span className="grid size-14 place-items-center bg-success/10 text-success rounded-full mx-auto">
                     <CheckCircle2 className="size-8" />
                   </span>
-                  <h3 className="text-base font-bold text-slate-900">Đã gửi yêu cầu học bù!</h3>
-                  <p className="text-sm text-slate-500 font-medium max-w-sm mx-auto">
+                  <h3 className="text-base font-bold text-foreground">Đã gửi yêu cầu học bù!</h3>
+                  <p className="text-sm text-muted-foreground font-medium max-w-sm mx-auto">
                     Yêu cầu đang chờ CRM/Quản lý duyệt. Bạn sẽ nhận thông báo khi có kết quả.
                   </p>
                 </div>
@@ -199,13 +199,13 @@ export function ParentMakeup() {
                     onChange={(e) => setNote(e.target.value)}
                     rows={2}
                     placeholder="Ghi chú gửi phòng đào tạo (tùy chọn)..."
-                    className="w-full text-sm rounded-xl border border-border bg-white p-3 outline-none focus:border-primary font-medium text-slate-800"
+                    className="w-full text-sm rounded-xl border border-border bg-card p-3 outline-none focus:border-primary font-medium text-foreground"
                   />
 
                   <button
                     onClick={submitRequest}
                     disabled={!pickedId}
-                    className="w-full h-11 rounded-xl bg-primary text-white text-sm font-black hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-full h-11 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     Gửi yêu cầu học bù
                   </button>
@@ -234,7 +234,7 @@ function CampusGroup({
 }) {
   return (
     <div className="space-y-2">
-      <p className={cn('text-sm font-bold flex items-center gap-1.5', highlight ? 'text-primary' : 'text-slate-500')}>
+      <p className={cn('text-sm font-bold flex items-center gap-1.5', highlight ? 'text-primary' : 'text-muted-foreground')}>
         <MapPin className="size-3.5" /> {title}
       </p>
       <div className="space-y-2">
@@ -246,16 +246,16 @@ function CampusGroup({
               onClick={() => onPick(s.id)}
               className={cn(
                 'w-full text-left p-3.5 rounded-xl border transition-all cursor-pointer',
-                picked ? 'border-primary bg-primary/5 shadow-2xs' : 'border-border bg-white hover:border-slate-300'
+                picked ? 'border-primary bg-primary/5 shadow-2xs' : 'border-border bg-card hover:border-border'
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-black text-slate-900">Lớp {s.className}</span>
-                <Badge className="bg-slate-100 text-slate-600 border-none text-xs font-bold px-2 py-0.5 rounded-md">
+                <span className="text-sm font-black text-foreground">Lớp {s.className}</span>
+                <Badge className="bg-muted text-muted-foreground border-none text-xs font-bold px-2 py-0.5 rounded-md">
                   <Users className="size-3 mr-1" /> Còn {s.seatsLeft} chỗ
                 </Badge>
               </div>
-              <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-slate-500 font-medium mt-1">
+              <div className="flex flex-wrap gap-x-4 gap-y-0.5 text-sm text-muted-foreground font-medium mt-1">
                 <span className="inline-flex items-center gap-1"><Clock className="size-3.5" /> {s.date} · {s.time}</span>
                 <span>GV {s.teacher}</span>
               </div>
@@ -273,7 +273,7 @@ function SummaryStat({ label, value, tone }: { label: string; value: number; ton
     <Card className="border-border/60 rounded-2xl shadow-none">
       <CardContent className="p-4 text-center">
         <p className={cn('text-2xl font-bold', toneCls)}>{value}</p>
-        <p className="text-sm text-slate-500 font-medium mt-0.5 leading-tight">{label}</p>
+        <p className="text-sm text-muted-foreground font-medium mt-0.5 leading-tight">{label}</p>
       </CardContent>
     </Card>
   )

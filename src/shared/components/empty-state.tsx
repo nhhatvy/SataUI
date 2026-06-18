@@ -24,12 +24,12 @@ export function EmptyState({
       <div className="grid size-14 place-items-center rounded-2xl bg-secondary text-muted-foreground/60 mb-4 animate-bounce duration-1000">
         <Icon className="size-7" />
       </div>
-      <h3 className="text-base font-bold text-slate-900">{title}</h3>
+      <h3 className="text-base font-bold text-foreground">{title}</h3>
       <p className="text-sm text-muted-foreground mt-1.5 max-w-xs leading-relaxed">{description}</p>
       {actionLabel && onAction && (
         <button
           onClick={onAction}
-          className="mt-5 rounded-xl bg-primary px-4 py-2.5 text-sm font-black text-white hover:opacity-90 transition-all cursor-pointer shadow-md shadow-primary/15"
+          className="mt-5 rounded-xl bg-primary px-4 py-2.5 text-sm font-black text-primary-foreground hover:opacity-90 transition-all cursor-pointer shadow-md shadow-primary/15"
         >
           {actionLabel}
         </button>

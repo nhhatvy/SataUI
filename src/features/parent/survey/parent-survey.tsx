@@ -165,16 +165,16 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                       <Badge className="bg-amber-500/15 text-amber-600 border border-amber-500/30 text-xs font-bold px-2 py-0.5 rounded-md">Chưa làm</Badge>
                     )}
                   </div>
-                  <Badge className="bg-slate-100 text-slate-500 border-none text-[11px] font-bold px-2 py-0.5 rounded-md w-fit mb-1.5">{s.category}</Badge>
-                  <h3 className="text-base font-bold text-slate-900 leading-snug">{s.title}</h3>
-                  <p className="text-sm text-slate-500 font-medium mt-1 flex-1">{s.subtitle}</p>
+                  <Badge className="bg-muted text-muted-foreground border-none text-[11px] font-bold px-2 py-0.5 rounded-md w-fit mb-1.5">{s.category}</Badge>
+                  <h3 className="text-base font-bold text-foreground leading-snug">{s.title}</h3>
+                  <p className="text-sm text-muted-foreground font-medium mt-1 flex-1">{s.subtitle}</p>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
-                    <span className="text-sm text-slate-400 font-medium inline-flex items-center gap-1"><Clock className="size-3.5" /> {s.timeLimit}</span>
+                    <span className="text-sm text-muted-foreground font-medium inline-flex items-center gap-1"><Clock className="size-3.5" /> {s.timeLimit}</span>
                     <button
                       onClick={() => setActiveId(s.id)}
                       className={cn(
                         'inline-flex items-center gap-1 text-sm font-bold cursor-pointer',
-                        done ? 'text-slate-400' : 'text-primary hover:underline'
+                        done ? 'text-muted-foreground' : 'text-primary hover:underline'
                       )}
                     >
                       {done ? 'Xem lại' : 'Làm khảo sát'} <ChevronRight className="size-3.5" />
@@ -195,7 +195,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
       {!defaultSurveyId && (
         <button
           onClick={() => setActiveId(null)}
-          className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-slate-500 hover:text-slate-900 cursor-pointer"
+          className="mb-4 inline-flex items-center gap-1.5 text-sm font-bold text-muted-foreground hover:text-foreground cursor-pointer"
         >
           <ArrowLeft className="size-4" /> Tất cả khảo sát
         </button>
@@ -204,25 +204,25 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
       {success ? (
         <Card className="border-success/20 bg-success/5 rounded-3xl p-8 text-center flex flex-col items-center gap-4">
           <span className="grid size-16 place-items-center bg-success/15 text-success rounded-full"><CheckCircle2 className="size-9" /></span>
-          <h2 className="text-xl font-bold text-slate-900">Đã gửi khảo sát!</h2>
-          <p className="text-sm text-slate-600 font-semibold max-w-md leading-relaxed">
+          <h2 className="text-xl font-bold text-foreground">Đã gửi khảo sát!</h2>
+          <p className="text-sm text-muted-foreground font-semibold max-w-md leading-relaxed">
             Cảm ơn ý kiến của bạn cho khảo sát <strong>{activeSurvey.title}</strong>. SataRobo sẽ tiếp thu để cải thiện.
           </p>
           {!defaultSurveyId && (
-            <button onClick={() => setActiveId(null)} className="rounded-xl bg-primary text-white px-5 py-2.5 text-sm font-black hover:opacity-90 cursor-pointer">
+            <button onClick={() => setActiveId(null)} className="rounded-xl bg-primary text-primary-foreground px-5 py-2.5 text-sm font-black hover:opacity-90 cursor-pointer">
               Về danh sách khảo sát
             </button>
           )}
         </Card>
       ) : isLocked ? (
-        <Card className="border-border/60 rounded-3xl p-8 text-center flex flex-col items-center gap-4 bg-slate-50">
-          <span className="grid size-16 place-items-center bg-slate-100 text-slate-400 rounded-full"><Lock className="size-8" /></span>
-          <h2 className="text-xl font-bold text-slate-900">Bạn đã hoàn thành khảo sát này</h2>
+        <Card className="border-border/60 rounded-3xl p-8 text-center flex flex-col items-center gap-4 bg-muted">
+          <span className="grid size-16 place-items-center bg-muted text-muted-foreground rounded-full"><Lock className="size-8" /></span>
+          <h2 className="text-xl font-bold text-foreground">Bạn đã hoàn thành khảo sát này</h2>
           <p className="text-sm text-muted-foreground font-semibold max-w-md leading-relaxed">
             Mỗi tài khoản chỉ gửi khảo sát <strong>{activeSurvey.title}</strong> một lần cho con <strong>{child.name}</strong>.
           </p>
           {!defaultSurveyId && (
-            <button onClick={() => setActiveId(null)} className="rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-bold hover:bg-slate-50 cursor-pointer">
+            <button onClick={() => setActiveId(null)} className="rounded-xl border border-border bg-card px-5 py-2.5 text-sm font-bold hover:bg-muted cursor-pointer">
               Về danh sách
             </button>
           )}
@@ -238,7 +238,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
             <CardContent className="p-6 space-y-7 divide-y divide-border/50">
               {activeSurvey.fields.map((f, idx) => (
                 <div key={f.id} className={idx > 0 ? 'pt-6 space-y-3' : 'space-y-3'}>
-                  <label className="text-sm font-bold text-slate-800 leading-relaxed flex items-start gap-1.5">
+                  <label className="text-sm font-bold text-foreground leading-relaxed flex items-start gap-1.5">
                     <span className="text-primary">{idx + 1}.</span>
                     <span>{f.question}{f.required && <span className="text-destructive"> *</span>}</span>
                   </label>
@@ -251,14 +251,14 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                           {star <= (formData[f.id] || 0) ? '★' : '☆'}
                         </button>
                       ))}
-                      <span className="text-sm font-bold text-slate-400 ml-2">{formData[f.id] || 0}/5</span>
+                      <span className="text-sm font-bold text-muted-foreground ml-2">{formData[f.id] || 0}/5</span>
                     </div>
                   )}
 
                   {f.type === 'choice' && f.options && (
                     <div className="space-y-2 pl-4">
                       {f.options.map((opt) => (
-                        <label key={opt} className="flex items-center gap-3 text-sm text-slate-700 font-semibold cursor-pointer min-h-10">
+                        <label key={opt} className="flex items-center gap-3 text-sm text-foreground font-semibold cursor-pointer min-h-10">
                           <input type="radio" name={f.id} checked={formData[f.id] === opt} onChange={() => setFormData((p) => ({ ...p, [f.id]: opt }))} className="size-4.5 accent-primary cursor-pointer" />
                           {opt}
                         </label>
@@ -271,7 +271,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                       {f.options.map((opt) => {
                         const checked = ((formData[f.id] as string[]) || []).includes(opt)
                         return (
-                          <label key={opt} className="flex items-start gap-3 text-sm text-slate-700 font-semibold cursor-pointer min-h-10">
+                          <label key={opt} className="flex items-start gap-3 text-sm text-foreground font-semibold cursor-pointer min-h-10">
                             <input type="checkbox" checked={checked} onChange={() => setFormData((p) => {
                               const cur = (p[f.id] as string[]) || []
                               return { ...p, [f.id]: checked ? cur.filter((o) => o !== opt) : [...cur, opt] }
@@ -286,7 +286,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                   {f.type === 'text' && (
                     <div className="pl-4">
                       <textarea rows={3} value={formData[f.id] || ''} onChange={(e) => setFormData((p) => ({ ...p, [f.id]: e.target.value }))}
-                        placeholder="Nhập ý kiến của bạn..." className="w-full text-sm rounded-xl border border-border bg-white p-3 outline-none focus:border-primary font-medium text-slate-800" />
+                        placeholder="Nhập ý kiến của bạn..." className="w-full text-sm rounded-xl border border-border bg-card p-3 outline-none focus:border-primary font-medium text-foreground" />
                     </div>
                   )}
 
@@ -295,10 +295,10 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                       <div className="flex items-center gap-4">
                         <input type="range" min={f.min || 1} max={f.max || 10} value={formData[f.id] || 5}
                           onChange={(e) => setFormData((p) => ({ ...p, [f.id]: parseInt(e.target.value) }))}
-                          className="w-full h-2 bg-slate-100 rounded-lg appearance-none cursor-pointer accent-primary" />
-                        <span className="size-10 grid place-items-center bg-primary text-white rounded-full text-base font-black shrink-0">{formData[f.id] || 5}</span>
+                          className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary" />
+                        <span className="size-10 grid place-items-center bg-primary text-primary-foreground rounded-full text-base font-black shrink-0">{formData[f.id] || 5}</span>
                       </div>
-                      <div className="flex justify-between text-sm text-slate-400 font-medium px-1">
+                      <div className="flex justify-between text-sm text-muted-foreground font-medium px-1">
                         <span>{f.minLabel || 'Thấp'}</span><span>{f.maxLabel || 'Cao'}</span>
                       </div>
                     </div>
@@ -315,7 +315,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
           )}
 
           <button type="submit" disabled={submitting}
-            className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-primary text-sm font-black text-white hover:opacity-90 disabled:opacity-50 cursor-pointer">
+            className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-primary text-sm font-black text-primary-foreground hover:opacity-90 disabled:opacity-50 cursor-pointer">
             {submitting ? 'Đang gửi...' : <><Send className="size-4" /> Gửi khảo sát</>}
           </button>
         </form>

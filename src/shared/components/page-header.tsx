@@ -25,7 +25,7 @@ export function PageHeader({
           </span>
         )}
         <div className="min-w-0">
-          <h1 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold tracking-tight text-slate-900 text-balance">{title}</h1>
+          <h1 className="text-[clamp(1.5rem,4vw,2.25rem)] font-bold tracking-tight text-foreground text-balance">{title}</h1>
           {subtitle && <p className="text-[clamp(0.875rem,2.2vw,1rem)] text-muted-foreground mt-1 max-w-2xl leading-relaxed">{subtitle}</p>}
         </div>
       </div>
@@ -38,8 +38,8 @@ export function PageHeader({
 export function SectionTitle({ children, hint }: { children: React.ReactNode; hint?: string }) {
   return (
     <div className="mb-3">
-      <h2 className="text-base font-bold text-slate-900 uppercase tracking-wider">{children}</h2>
-      {hint && <p className="text-sm text-slate-400 font-medium mt-0.5">{hint}</p>}
+      <h2 className="text-base font-bold text-foreground uppercase tracking-wider">{children}</h2>
+      {hint && <p className="text-sm text-muted-foreground font-medium mt-0.5">{hint}</p>}
     </div>
   )
 }
@@ -56,7 +56,7 @@ export function InfoNote({
   const cls =
     variant === 'tip'
       ? 'border-amber-500/25 bg-amber-500/10 text-amber-700'
-      : 'border-primary/20 bg-primary/5 text-slate-600'
+      : 'border-primary/20 bg-primary/5 text-muted-foreground'
   const iconCls = variant === 'tip' ? 'text-amber-600' : 'text-primary'
   return (
     <div className={cn('flex items-start gap-2.5 rounded-xl border p-3.5 text-sm font-medium leading-relaxed', cls)}>

@@ -79,7 +79,7 @@ export function DialogTitle({
   className?: string
 }) {
   return (
-    <h2 className={cn("text-base font-bold text-slate-900 text-foreground", className)}>
+    <h2 className={cn("text-base font-bold text-foreground text-foreground", className)}>
       {children}
     </h2>
   )

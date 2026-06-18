@@ -4,7 +4,7 @@ import React, { useMemo, useState, useEffect } from 'react'
 import { Badge } from '@/shared/components/ui/badge'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { getChildData } from '@/shared/mock-data/parent-data'
-import { getReportCardList, type ReportCardEntry } from '@/shared/mock-data/student-data'
+import { getReportCardList, getAttendanceStats, type ReportCardEntry } from '@/shared/mock-data/student-data'
 import { Printer, Download, Lock, CheckCircle2, GraduationCap } from 'lucide-react'
 import { cn } from '@/shared/utils/utils'
 
@@ -25,12 +25,12 @@ export function ReportCardView() {
 
   if (published.length === 0) {
     return (
-      <div className="rounded-3xl border border-border/60 bg-slate-50/60 p-12 text-center">
-        <span className="grid size-16 place-items-center bg-slate-100 text-slate-400 rounded-full mx-auto mb-4">
+      <div className="rounded-3xl border border-border/60 bg-muted/60 p-12 text-center">
+        <span className="grid size-16 place-items-center bg-muted text-muted-foreground rounded-full mx-auto mb-4">
           <Lock className="size-8" />
         </span>
-        <h2 className="text-lg font-bold text-slate-900">Học bạ chưa được phát hành</h2>
-        <p className="text-sm text-slate-500 font-medium mt-1 max-w-sm mx-auto">
+        <h2 className="text-lg font-bold text-foreground">Học bạ chưa được phát hành</h2>
+        <p className="text-sm text-muted-foreground font-medium mt-1 max-w-sm mx-auto">
           Học bạ của {child.shortName} sẽ hiển thị tại đây sau khi được trung tâm phát hành chính thức.
         </p>
       </div>
@@ -41,7 +41,7 @@ export function ReportCardView() {
     <div className="space-y-4">
       {/* Selector bar */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="text-sm font-bold text-slate-500 mr-1">Chọn học bạ:</span>
+        <span className="text-sm font-bold text-muted-foreground mr-1">Chọn học bạ:</span>
         {reports.map((r) => {
           const isPublished = r.status === 'published'
           const selected = r.id === selectedId
@@ -55,13 +55,13 @@ export function ReportCardView() {
                 selected
                   ? 'border-primary bg-primary/5 text-primary'
                   : isPublished
-                    ? 'border-border bg-white text-slate-600 hover:border-slate-300 cursor-pointer'
-                    : 'border-border bg-slate-50 text-slate-400 cursor-not-allowed'
+                    ? 'border-border bg-card text-muted-foreground hover:border-border cursor-pointer'
+                    : 'border-border bg-muted text-muted-foreground cursor-not-allowed'
               )}
             >
               {r.period}
               {!isPublished && (
-                <span className="text-[10px] font-bold text-slate-400">
+                <span className="text-[10px] font-bold text-muted-foreground">
                   ({r.status === 'draft' ? 'nháp' : 'chờ duyệt'})
                 </span>
               )}
@@ -83,7 +83,7 @@ function ratingFromValue(v: number) {
 }
 
 function ReportPaper({ report, child, childData }: { report: ReportCardEntry; child: any; childData: any }) {
-  const att = childData?.attendanceSummary ?? { completed: 0, total: 0, present: 0, excused: 0, late: 0, unexcused: 0, makeup: 0, rate: 0 }
+  const att = getAttendanceStats(child.id)
   const assignments = (childData?.assignments ?? []) as any[]
   const skills = (childData?.skillRadar ?? []) as any[]
   const teacher = child.id === 'minh' ? 'Thầy Hoàng Minh' : 'Cô Lan Anh'
@@ -93,22 +93,22 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
     <div className="animate-in fade-in duration-300">
       {/* Actions */}
       <div className="mb-3 flex justify-end gap-2 print:hidden">
-        <button onClick={() => window.print()} className="flex items-center gap-1.5 px-3 py-2 bg-white border border-border hover:bg-slate-50 text-slate-700 text-sm font-bold rounded-xl cursor-pointer shadow-2xs">
+        <button onClick={() => window.print()} className="flex items-center gap-1.5 px-3 py-2 bg-card border border-border hover:bg-muted text-foreground text-sm font-bold rounded-xl cursor-pointer shadow-2xs">
           <Printer className="size-4" /> In học bạ
         </button>
-        <button onClick={() => alert('Đang tải học bạ PDF...')} className="flex items-center gap-1.5 px-3.5 py-2 bg-primary text-white hover:opacity-90 text-sm font-black rounded-xl cursor-pointer border-none shadow-sm shadow-primary/20">
+        <button onClick={() => alert('Đang tải học bạ PDF...')} className="flex items-center gap-1.5 px-3.5 py-2 bg-primary text-primary-foreground hover:opacity-90 text-sm font-black rounded-xl cursor-pointer border-none shadow-sm shadow-primary/20">
           <Download className="size-4" /> Tải PDF
         </button>
       </div>
 
-      <div className="bg-white rounded-3xl border border-border/60 overflow-hidden shadow-sm print:border-none print:shadow-none">
+      <div className="bg-card rounded-3xl border border-border/60 overflow-hidden shadow-sm print:border-none print:shadow-none">
         {/* Document header */}
         <div className="bg-gradient-to-br from-slate-950 to-slate-900 text-white p-6 flex items-start gap-4">
           <span className="grid size-12 place-items-center rounded-2xl bg-primary/20 text-primary shrink-0">
             <GraduationCap className="size-6" />
           </span>
           <div className="min-w-0 flex-1">
-            <Badge className="bg-primary text-white text-xs font-black px-2.5 py-0.5 rounded-md border-none uppercase tracking-wide">Học bạ chính thức</Badge>
+            <Badge className="bg-primary text-primary-foreground text-xs font-black px-2.5 py-0.5 rounded-md border-none uppercase tracking-wide">Học bạ chính thức</Badge>
             <h2 className="text-xl font-black text-white mt-2 leading-tight">{report.title}</h2>
             <p className="text-sm text-slate-300 font-semibold mt-1">
               Kỳ: {report.period} · Ngày công bố: {report.date} · Đơn vị: {report.author}
@@ -147,9 +147,9 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
                 </table>
               </div>
               <div className="rounded-xl border border-success/30 bg-success/5 p-5 flex flex-col items-center justify-center text-center">
-                <p className="text-sm font-bold text-slate-500 uppercase tracking-wider">Tỷ lệ chuyên cần</p>
+                <p className="text-sm font-bold text-muted-foreground uppercase tracking-wider">Tỷ lệ chuyên cần</p>
                 <p className="text-4xl font-black text-success mt-1">{att.rate}%</p>
-                <p className="text-sm text-slate-500 font-medium mt-1">{att.present}/{att.total} buổi có mặt đúng giờ</p>
+                <p className="text-sm text-muted-foreground font-medium mt-1">{att.attended}/{att.done} buổi đã tham gia (gồm học bù)</p>
               </div>
             </div>
           </Section>
@@ -159,26 +159,26 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
             <div className="overflow-x-auto rounded-xl border border-border/60">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 text-left text-slate-500 font-bold uppercase tracking-wider text-xs">
+                  <tr className="bg-muted text-left text-muted-foreground font-bold uppercase tracking-wider text-xs">
                     <th className="px-4 py-2.5">Nội dung</th>
                     <th className="px-4 py-2.5">Trạng thái</th>
                     <th className="px-4 py-2.5 text-right">Điểm</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-border/60 font-semibold text-slate-700">
+                <tbody className="divide-y divide-border/60 font-semibold text-foreground">
                   {assignments.length === 0 ? (
-                    <tr><td colSpan={3} className="px-4 py-4 text-center text-slate-400">Chưa có dữ liệu.</td></tr>
+                    <tr><td colSpan={3} className="px-4 py-4 text-center text-muted-foreground">Chưa có dữ liệu.</td></tr>
                   ) : (
                     assignments.map((a, i) => (
                       <tr key={i}>
-                        <td className="px-4 py-3 font-bold text-slate-900">{a.title}</td>
+                        <td className="px-4 py-3 font-bold text-foreground">{a.title}</td>
                         <td className="px-4 py-3">
                           <Badge className={cn('text-xs font-bold px-2 py-0.5 rounded-md border-none',
-                            a.status === 'graded' ? 'bg-success/15 text-success' : a.status === 'submitted' ? 'bg-blue-500/15 text-blue-600' : 'bg-slate-100 text-slate-500')}>
+                            a.status === 'graded' ? 'bg-success/15 text-success' : a.status === 'submitted' ? 'bg-blue-500/15 text-blue-600' : 'bg-muted text-muted-foreground')}>
                             {a.status === 'graded' ? 'Đã chấm' : a.status === 'submitted' ? 'Đã nộp' : 'Chưa nộp'}
                           </Badge>
                         </td>
-                        <td className="px-4 py-3 text-right font-black text-slate-900">{a.status === 'graded' ? `${a.score}/10` : '—'}</td>
+                        <td className="px-4 py-3 text-right font-black text-foreground">{a.status === 'graded' ? `${a.score}/10` : '—'}</td>
                       </tr>
                     ))
                   )}
@@ -192,7 +192,7 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
             <div className="overflow-x-auto rounded-xl border border-border/60">
               <table className="w-full text-sm border-collapse">
                 <thead>
-                  <tr className="bg-slate-50 text-left text-slate-500 font-bold uppercase tracking-wider text-xs">
+                  <tr className="bg-muted text-left text-muted-foreground font-bold uppercase tracking-wider text-xs">
                     <th className="px-4 py-2.5">Kỹ năng</th>
                     <th className="px-4 py-2.5 w-1/2">Mức độ đạt được</th>
                     <th className="px-4 py-2.5 text-right">Xếp loại</th>
@@ -203,13 +203,13 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
                     const r = ratingFromValue(s.value)
                     return (
                       <tr key={i}>
-                        <td className="px-4 py-3 font-bold text-slate-700">{s.skill}</td>
+                        <td className="px-4 py-3 font-bold text-foreground">{s.skill}</td>
                         <td className="px-4 py-3">
                           <div className="flex items-center gap-2">
-                            <div className="h-2.5 flex-1 rounded-full bg-slate-100 overflow-hidden">
+                            <div className="h-2.5 flex-1 rounded-full bg-muted overflow-hidden">
                               <div className={cn('h-full rounded-full', r.bar)} style={{ width: `${s.value}%` }} />
                             </div>
-                            <span className="text-sm font-bold text-slate-500 w-10 text-right">{s.value}%</span>
+                            <span className="text-sm font-bold text-muted-foreground w-10 text-right">{s.value}%</span>
                           </div>
                         </td>
                         <td className={cn('px-4 py-3 text-right font-black whitespace-nowrap', r.text)}>{r.label}</td>
@@ -219,7 +219,7 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
                 </tbody>
               </table>
             </div>
-            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-slate-500">
+            <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-muted-foreground">
               <Legend cls="bg-success" t="Xuất sắc (≥85%)" />
               <Legend cls="bg-blue-500" t="Tốt (≥70%)" />
               <Legend cls="bg-amber-500" t="Khá (≥50%)" />
@@ -230,15 +230,15 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
           {/* 5. Nhận xét */}
           <Section title="Nhận xét tổng kết">
             <div className="grid gap-3 sm:grid-cols-2">
-              <div className="rounded-xl border border-border/60 bg-slate-50/60 p-4">
+              <div className="rounded-xl border border-border/60 bg-muted/60 p-4">
                 <p className="text-sm font-bold text-primary uppercase tracking-wide mb-1">Giữa khóa</p>
-                <p className="text-sm text-slate-700 font-medium leading-relaxed">
+                <p className="text-sm text-foreground font-medium leading-relaxed">
                   {child.id === 'minh' ? 'Tiếp thu nhanh, hăng hái xây dựng bài. Cần rèn thêm tập trung khi viết câu lệnh phức tạp.' : 'Chăm ngoan, tư duy mỹ thuật lập trình nổi bật, nắm rõ kiến thức sự kiện và vòng lặp.'}
                 </p>
               </div>
-              <div className="rounded-xl border border-border/60 bg-slate-50/60 p-4">
+              <div className="rounded-xl border border-border/60 bg-muted/60 p-4">
                 <p className="text-sm font-bold text-primary uppercase tracking-wide mb-1">Cuối khóa</p>
-                <p className="text-sm text-slate-700 font-medium leading-relaxed">
+                <p className="text-sm text-foreground font-medium leading-relaxed">
                   {child.id === 'minh' ? 'Hoàn thành xuất sắc mô hình robot tránh vật cản tự động.' : 'Hoàn thành tốt game hứng quả, sáng tạo đồ họa nhân vật.'}
                 </p>
               </div>
@@ -250,7 +250,7 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
             <span className="inline-flex items-center gap-2 text-sm font-black text-success uppercase">
               <CheckCircle2 className="size-5" /> Trạng thái: Hoàn thành xuất sắc
             </span>
-            <span className="text-sm font-semibold text-slate-500">Xác nhận bởi: {report.author}</span>
+            <span className="text-sm font-semibold text-muted-foreground">Xác nhận bởi: {report.author}</span>
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@ function ReportPaper({ report, child, childData }: { report: ReportCardEntry; ch
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="space-y-3">
-      <h3 className="text-sm font-bold text-slate-900 uppercase tracking-wider border-l-4 border-primary pl-2.5">{title}</h3>
+      <h3 className="text-sm font-bold text-foreground uppercase tracking-wider border-l-4 border-primary pl-2.5">{title}</h3>
       {children}
     </section>
   )
@@ -270,19 +270,19 @@ function Section({ title, children }: { title: string; children: React.ReactNode
 function Row2({ a, av, b, bv }: { a: string; av: string; b: string; bv: string }) {
   return (
     <tr>
-      <td className="px-4 py-3 bg-slate-50/60 font-bold text-slate-500 w-1/4 align-top">{a}</td>
-      <td className="px-4 py-3 font-bold text-slate-900 w-1/4 align-top">{av}</td>
-      <td className="px-4 py-3 bg-slate-50/60 font-bold text-slate-500 w-1/4 align-top">{b}</td>
-      <td className="px-4 py-3 font-bold text-slate-900 w-1/4 align-top">{bv}</td>
+      <td className="px-4 py-3 bg-muted/60 font-bold text-muted-foreground w-1/4 align-top">{a}</td>
+      <td className="px-4 py-3 font-bold text-foreground w-1/4 align-top">{av}</td>
+      <td className="px-4 py-3 bg-muted/60 font-bold text-muted-foreground w-1/4 align-top">{b}</td>
+      <td className="px-4 py-3 font-bold text-foreground w-1/4 align-top">{bv}</td>
     </tr>
   )
 }
 
 function RowKV({ k, v, vClass, bold }: { k: string; v: string; vClass?: string; bold?: boolean }) {
   return (
-    <tr className={bold ? 'bg-slate-50/40' : ''}>
-      <td className="px-4 py-2.5 font-semibold text-slate-600">{k}</td>
-      <td className={cn('px-4 py-2.5 text-right font-bold', vClass || 'text-slate-900')}>{v}</td>
+    <tr className={bold ? 'bg-muted/40' : ''}>
+      <td className="px-4 py-2.5 font-semibold text-muted-foreground">{k}</td>
+      <td className={cn('px-4 py-2.5 text-right font-bold', vClass || 'text-foreground')}>{v}</td>
     </tr>
   )
 }

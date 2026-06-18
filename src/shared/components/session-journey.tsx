@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { cn } from '@/shared/utils/utils'
-import { getCourseSyllabus, getMakeupData } from '@/shared/mock-data/student-data'
+import { getCourseSyllabus } from '@/shared/mock-data/student-data'
 
 type JourneyStatus = 'd' | 'm' | 'a' | 'u' | 'c'
 
@@ -13,50 +13,34 @@ interface SessionJourneyProps {
 
 export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProps) {
   const syllabus = getCourseSyllabus(childId)
-  const makeupData = getMakeupData(childId)
 
   const lessons = syllabus?.lessons ?? []
   if (lessons.length === 0) return null
 
-  // Map lesson to journey status
+  // Trạng thái buổi suy ra trực tiếp từ điểm danh trong syllabus (nguồn sự thật duy nhất)
   const getSessionStatus = (lesson: any): JourneyStatus => {
-    if (lesson.progress === 'upcoming') {
-      return 'u'
-    }
-    if (lesson.progress === 'current') {
-      return 'c'
-    }
-    // Check if missed (absent)
-    const isMissed = makeupData?.missed?.some((m: any) => m.lessonIndex === lesson.index)
-    if (isMissed) {
-      return 'a'
-    }
-    // Check if made up
-    const isMakeup = makeupData?.history?.some(
-      (h: any) => h.lessonTitle.toLowerCase().includes(lesson.title.toLowerCase()) || 
-                  lesson.title.toLowerCase().includes(h.lessonTitle.toLowerCase())
-    )
-    if (isMakeup) {
-      return 'm'
-    }
+    if (lesson.progress === 'upcoming') return 'u'
+    if (lesson.progress === 'current') return 'c'
+    if (lesson.attendance === 'excused' || lesson.attendance === 'absent') return 'a'
+    if (lesson.attendance === 'makeup') return 'm'
     return 'd'
   }
 
   const DOT_STYLES: Record<JourneyStatus, { bg: string; border: string; ring: string | null }> = {
-    d: { bg: 'bg-[#FF6A1C]', border: 'border-[#D9560F]', ring: null },
-    m: { bg: 'bg-[#FF6A1C]', border: 'border-[#D9560F]', ring: 'ring-3 ring-[#3F9D6E]' },
-    a: { bg: 'bg-white', border: 'border-[#E0524B]', ring: null },
-    u: { bg: 'bg-white', border: 'border-[#CFCABD]', ring: null },
-    c: { bg: 'bg-white', border: 'border-[#FF6A1C]', ring: 'ring-3 ring-[#FF6A1C]/20' },
+    d: { bg: 'bg-primary', border: 'border-primary', ring: null },
+    m: { bg: 'bg-primary', border: 'border-primary', ring: 'ring-3 ring-success' },
+    a: { bg: 'bg-card', border: 'border-destructive', ring: null },
+    u: { bg: 'bg-card', border: 'border-border', ring: null },
+    c: { bg: 'bg-card', border: 'border-primary', ring: 'ring-3 ring-primary/20' },
   }
 
   // Draw the timeline
   if (variant === 'line') {
     return (
-      <div className="space-y-6 select-none">
-        <div className="relative flex items-center justify-between px-2 pt-6">
+      <div className="space-y-5 sm:space-y-6 select-none">
+        <div className="relative flex items-center justify-between gap-0.5 px-1 sm:px-2 pt-6">
           {/* Connector Line behind dots */}
-          <div className="absolute left-6 right-6 top-1/2 h-0.5 -translate-y-1/2 bg-[#EFECE4]" />
+          <div className="absolute left-3 right-3 sm:left-6 sm:right-6 top-1/2 h-0.5 -translate-y-1/2 bg-border" />
 
           {lessons.map((lesson, idx) => {
             const status = getSessionStatus(lesson)
@@ -67,7 +51,7 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
               <div key={lesson.index} className="relative z-10 flex flex-col items-center">
                 {/* Current marker */}
                 {isToday && (
-                  <span className="absolute -top-7 text-[10px] font-black text-[#FF6A1C] uppercase whitespace-nowrap tracking-wider animate-bounce">
+                  <span className="absolute -top-6 sm:-top-7 text-[9px] sm:text-[10px] font-black text-primary uppercase whitespace-nowrap tracking-wider animate-bounce">
                     hôm nay ▾
                   </span>
                 )}
@@ -76,7 +60,7 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
                 <div
                   title={`Buổi ${lesson.index}: ${lesson.title} (${lesson.date})`}
                   className={cn(
-                    'grid size-5.5 place-items-center rounded-full border-2 text-white transition-all',
+                    'grid size-4 sm:size-5.5 place-items-center rounded-full border-2 text-primary-foreground transition-all',
                     style.bg,
                     style.border,
                     style.ring
@@ -85,7 +69,7 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
 
                 {/* Index label below */}
                 {(lesson.index % 2 !== 0 || idx === lessons.length - 1) && (
-                  <span className="absolute -bottom-6 text-[10.5px] font-bold text-slate-500">
+                  <span className="absolute -bottom-5 sm:-bottom-6 text-[10px] sm:text-[10.5px] font-bold text-muted-foreground">
                     {lesson.index}
                   </span>
                 )}
@@ -95,12 +79,12 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
         </div>
 
         {/* Legend */}
-        <div className="pt-4 flex flex-wrap gap-x-5 gap-y-2 border-t border-slate-100">
-          <LegendItem label="Đã học" bg="bg-[#FF6A1C]" border="border-[#D9560F]" />
-          <LegendItem label="Học bù" bg="bg-[#FF6A1C]" border="border-[#D9560F]" ring="ring-2 ring-[#3F9D6E]" />
-          <LegendItem label="Vắng (cần bù)" bg="bg-white" border="border-[#E0524B]" />
-          <LegendItem label="Sắp tới" bg="bg-white" border="border-[#CFCABD]" />
-          <LegendItem label="Hôm nay / Đang học" bg="bg-white" border="border-[#FF6A1C]" ring="ring-2 ring-[#FF6A1C]/20" />
+        <div className="pt-4 flex flex-wrap gap-x-3 gap-y-2 sm:gap-x-5 border-t border-border">
+          <LegendItem label="Đã học" bg="bg-primary" border="border-primary" />
+          <LegendItem label="Học bù" bg="bg-primary" border="border-primary" ring="ring-2 ring-success" />
+          <LegendItem label="Vắng (cần bù)" bg="bg-card" border="border-destructive" />
+          <LegendItem label="Sắp tới" bg="bg-card" border="border-border" />
+          <LegendItem label="Hôm nay / Đang học" bg="bg-card" border="border-primary" ring="ring-2 ring-primary/20" />
         </div>
       </div>
     )
@@ -124,7 +108,7 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
                 style.bg,
                 style.border,
                 style.ring,
-                isDone ? 'text-white' : 'text-slate-500'
+                isDone ? 'text-primary-foreground' : 'text-muted-foreground'
               )}
             >
               {lesson.index}
@@ -134,11 +118,11 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
       </div>
 
       {/* Legend */}
-      <div className="pt-2 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-slate-100">
-        <LegendItem label="Đã học" bg="bg-[#FF6A1C]" border="border-[#D9560F]" />
-        <LegendItem label="Học bù" bg="bg-[#FF6A1C]" border="border-[#D9560F]" ring="ring-2 ring-[#3F9D6E]" />
-        <LegendItem label="Vắng" bg="bg-white" border="border-[#E0524B]" />
-        <LegendItem label="Chưa diễn ra" bg="bg-white" border="border-[#CFCABD]" />
+      <div className="pt-2 flex flex-wrap gap-x-4 gap-y-1.5 border-t border-border">
+        <LegendItem label="Đã học" bg="bg-primary" border="border-primary" />
+        <LegendItem label="Học bù" bg="bg-primary" border="border-primary" ring="ring-2 ring-success" />
+        <LegendItem label="Vắng" bg="bg-card" border="border-destructive" />
+        <LegendItem label="Chưa diễn ra" bg="bg-card" border="border-border" />
       </div>
     </div>
   )
@@ -156,7 +140,7 @@ function LegendItem({
   ring?: string
 }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500">
+    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-muted-foreground">
       <span className={cn('size-3 rounded-full border', bg, border, ring)} />
       <span>{label}</span>
     </span>

@@ -361,16 +361,18 @@ export const childDataMap: Record<string, {
         unread: false,
       },
     ],
+    // LƯU Ý: số liệu chuyên cần thật được suy ra từ getAttendanceStats(childId) (student-data).
+    // Khối này giữ cho tương thích kiểu, đã đồng bộ 14 buổi.
     attendanceSummary: {
-      present: 16,
+      present: 4,
       absent: 2,
-      late: 2,
+      late: 0,
       excused: 1,
-      unexcused: 1,
-      makeup: 2,
-      completed: 18,
-      total: 20,
-      rate: 90,
+      unexcused: 0,
+      makeup: 1,
+      completed: 7,
+      total: 14,
+      rate: 83,
     },
     weeklyScores: [
       { week: 'T1', score: 7.2 },
@@ -401,58 +403,30 @@ export const childDataMap: Record<string, {
     ],
     weekSchedule: [
       {
-        day: 'Thứ 2',
-        date: '09/06',
-        items: [
-          {
-            id: 'w1',
-            subject: 'Lập trình Robot cơ bản',
-            time: '08:00 - 09:30',
-            room: 'Lab 2',
-            teacher: 'Thầy Hoàng',
-            status: 'done',
-          },
-        ],
-      },
-      {
-        day: 'Thứ 4',
-        date: '10/06',
+        day: 'Thứ 3',
+        date: '26/05',
         isToday: true,
         items: [
           {
-            id: 'w2',
-            subject: 'Lập trình Robot cơ bản',
+            id: 'w1',
+            subject: 'Buổi 7: Lắp ráp khung gầm nâng cao',
             time: '08:00 - 09:30',
             room: 'Lab 2',
-            teacher: 'Thầy Hoàng',
+            teacher: 'Thầy Hoàng Minh',
             status: 'today',
           },
         ],
       },
       {
-        day: 'Thứ 5',
-        date: '11/06',
-        items: [
-          {
-            id: 'w3',
-            subject: 'Tư duy thuật toán',
-            time: '14:00 - 15:30',
-            room: 'Phòng 305',
-            teacher: 'Cô Lan',
-            status: 'upcoming',
-          },
-        ],
-      },
-      {
         day: 'Thứ 6',
-        date: '12/06',
+        date: '29/05',
         items: [
           {
-            id: 'w4',
-            subject: 'Thực hành lắp ráp',
+            id: 'w2',
+            subject: 'Buổi 8: Cánh tay robot & servo',
             time: '08:00 - 09:30',
-            room: 'Lab 1',
-            teacher: 'Thầy Hoàng',
+            room: 'Lab 2',
+            teacher: 'Thầy Hoàng Minh',
             status: 'upcoming',
           },
         ],
@@ -461,11 +435,11 @@ export const childDataMap: Record<string, {
     courses: [
       {
         id: 'c1',
-        title: 'Lập trình Robot cơ bản',
+        title: 'Robotics cơ bản & Lắp ráp',
         subject: 'Robotics',
-        progress: 85,
-        lessons: 20,
-        completed: 17,
+        progress: 50,
+        lessons: 14,
+        completed: 7,
         color: 'oklch(0.748 0.169 56.8)',
       },
       {
@@ -549,11 +523,14 @@ export const childDataMap: Record<string, {
       },
     ],
     calendarMonthEvents: {
-      "2026-06-02": { type: "normal", label: "Lớp Robot cơ bản" },
-      "2026-06-09": { type: "normal", label: "Lớp Robot cơ bản" },
-      "2026-06-12": { type: "makeup", label: "Học bù Bài 4" },
-      "2026-06-16": { type: "exam", label: "Kiểm tra Giữa kỳ" },
-      "2026-06-23": { type: "holiday", label: "Nghỉ lễ Giỗ Tổ" },
+      "2026-05-05": { type: "normal", label: "Buổi 1: Làm quen bộ kit" },
+      "2026-05-08": { type: "normal", label: "Buổi 2: Cảm biến siêu âm" },
+      "2026-05-12": { type: "makeup", label: "Buổi 3: Động cơ DC (học bù)" },
+      "2026-05-15": { type: "normal", label: "Buổi 4: Xe dò đường" },
+      "2026-05-19": { type: "normal", label: "Buổi 5: Vòng lặp & rẽ nhánh" },
+      "2026-05-22": { type: "normal", label: "Buổi 6: Robot tránh vật cản" },
+      "2026-05-26": { type: "normal", label: "Buổi 7: Lắp ráp khung gầm" },
+      "2026-05-29": { type: "normal", label: "Buổi 8: Cánh tay robot & servo" },
     }
   },
   an: {
@@ -639,16 +616,17 @@ export const childDataMap: Record<string, {
         unread: false,
       },
     ],
+    // LƯU Ý: số liệu chuyên cần thật được suy ra từ getAttendanceStats(childId) (student-data).
     attendanceSummary: {
-      present: 13,
+      present: 4,
       absent: 2,
-      late: 1,
+      late: 0,
       excused: 1,
-      unexcused: 1,
+      unexcused: 0,
       makeup: 1,
-      completed: 14,
-      total: 16,
-      rate: 81.25,
+      completed: 7,
+      total: 14,
+      rate: 83,
     },
     weeklyScores: [
       { week: 'T1', score: 8.0 },
@@ -676,30 +654,30 @@ export const childDataMap: Record<string, {
     weekSchedule: [
       {
         day: 'Thứ 3',
-        date: '09/06',
+        date: '26/05',
+        isToday: true,
         items: [
           {
             id: 'w5',
-            subject: 'Lập trình Scratch sáng tạo',
+            subject: 'Buổi 7: Game hứng quả phần 2',
             time: '10:00 - 11:30',
             room: 'Phòng 204',
             teacher: 'Cô Lan Anh',
-            status: 'done',
+            status: 'today',
           },
         ],
       },
       {
         day: 'Thứ 5',
-        date: '11/06',
-        isToday: true,
+        date: '28/05',
         items: [
           {
             id: 'w6',
-            subject: 'Lập trình Scratch sáng tạo',
+            subject: 'Buổi 8: Âm thanh & hiệu ứng',
             time: '10:00 - 11:30',
             room: 'Phòng 204',
             teacher: 'Cô Lan Anh',
-            status: 'today',
+            status: 'upcoming',
           },
         ],
       },
@@ -709,9 +687,9 @@ export const childDataMap: Record<string, {
         id: 'c4',
         title: 'Lập trình Scratch sáng tạo',
         subject: 'Scratch',
-        progress: 78,
-        lessons: 16,
-        completed: 12,
+        progress: 50,
+        lessons: 14,
+        completed: 7,
         color: 'oklch(0.62 0.18 250)',
       },
     ],
@@ -762,9 +740,14 @@ export const childDataMap: Record<string, {
       },
     ],
     calendarMonthEvents: {
-      "2026-06-03": { type: "normal", label: "Lớp Scratch cơ bản" },
-      "2026-06-10": { type: "normal", label: "Lớp Scratch cơ bản" },
-      "2026-06-17": { type: "normal", label: "Lớp Scratch cơ bản" },
+      "2026-05-04": { type: "normal", label: "Buổi 1: Làm quen Scratch" },
+      "2026-05-07": { type: "makeup", label: "Buổi 2: Khối lệnh (học bù)" },
+      "2026-05-11": { type: "normal", label: "Buổi 3: Vẽ hình bằng vòng lặp" },
+      "2026-05-14": { type: "normal", label: "Buổi 4: Biến số & điểm số" },
+      "2026-05-18": { type: "normal", label: "Buổi 5: Thiết kế nhân vật" },
+      "2026-05-21": { type: "normal", label: "Buổi 6: Game hứng quả P1" },
+      "2026-05-26": { type: "normal", label: "Buổi 7: Game hứng quả P2" },
+      "2026-05-28": { type: "normal", label: "Buổi 8: Âm thanh & hiệu ứng" },
     }
   }
 }

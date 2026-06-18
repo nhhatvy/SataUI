@@ -23,7 +23,7 @@ export function ParentFeedback() {
   return (
     <main className="mx-auto w-full max-w-4xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">Nhận xét theo buổi học</h1>
+        <h1 className="text-2xl font-bold tracking-tight text-foreground sm:text-3xl">Nhận xét theo buổi học</h1>
         <p className="text-sm text-muted-foreground mt-1">
           Nhận xét của giáo viên dành cho {child.name} sau mỗi buổi học của khóa {syllabus.courseName}.
         </p>
@@ -38,8 +38,8 @@ export function ParentFeedback() {
           <Card className="border-border/60 rounded-2xl shadow-none p-10 text-center">
             <CardContent className="flex flex-col items-center gap-3 p-0">
               <MessageSquareHeart className="size-10 text-slate-300" />
-              <p className="text-sm font-bold text-slate-600">Chưa có nhận xét nào</p>
-              <p className="text-sm text-slate-400 max-w-xs">Nhận xét sẽ xuất hiện theo từng buổi học khi giáo viên cập nhật.</p>
+              <p className="text-sm font-bold text-muted-foreground">Chưa có nhận xét nào</p>
+              <p className="text-sm text-muted-foreground max-w-xs">Nhận xét sẽ xuất hiện theo từng buổi học khi giáo viên cập nhật.</p>
             </CardContent>
           </Card>
         ) : (
@@ -51,14 +51,14 @@ export function ParentFeedback() {
                 <div key={lesson.index} className="relative">
                   {/* Session header chip */}
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-white text-sm font-black shrink-0">
+                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-black shrink-0">
                       {lesson.index}
                     </span>
                     <div className="min-w-0">
-                      <p className="text-sm font-bold text-slate-900 leading-tight truncate">
+                      <p className="text-sm font-bold text-foreground leading-tight truncate">
                         Buổi {lesson.index}: {lesson.title}
                       </p>
-                      <p className="text-xs text-slate-400 font-medium">Ngày học: {lesson.date}</p>
+                      <p className="text-xs text-muted-foreground font-medium">Ngày học: {lesson.date}</p>
                     </div>
                   </div>
 
@@ -72,7 +72,7 @@ export function ParentFeedback() {
                             {c.initials}
                           </span>
                           <div>
-                            <h3 className="text-sm font-bold text-slate-900 leading-tight">{c.teacher}</h3>
+                            <h3 className="text-sm font-bold text-foreground leading-tight">{c.teacher}</h3>
                             <p className="text-sm text-muted-foreground font-semibold mt-0.5">{c.role}</p>
                           </div>
                         </div>
@@ -89,7 +89,7 @@ export function ParentFeedback() {
                         </Badge>
                       </div>
 
-                      <p className="mt-3.5 text-sm leading-relaxed text-slate-700 font-semibold bg-slate-50 p-4 rounded-xl border border-border/40">
+                      <p className="mt-3.5 text-sm leading-relaxed text-foreground font-semibold bg-muted p-4 rounded-xl border border-border/40">
                         {c.content}
                       </p>
                     </CardContent>

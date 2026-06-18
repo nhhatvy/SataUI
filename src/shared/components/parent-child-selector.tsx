@@ -13,7 +13,7 @@ export function ParentChildSelector({ className }: { className?: string }) {
 
   return (
     <div className={cn('mb-5 flex flex-wrap items-center gap-2.5', className)}>
-      <span className="text-sm font-bold text-slate-500">Đang xem con:</span>
+      <span className="text-sm font-bold text-muted-foreground">Đang xem con:</span>
       <div className="flex gap-2 flex-wrap">
         {allChildren.map((c) => {
           const active = c.id === activeChildId
@@ -25,7 +25,7 @@ export function ParentChildSelector({ className }: { className?: string }) {
                 'flex items-center gap-2 px-3 py-1.5 rounded-xl border text-sm font-bold transition-all cursor-pointer',
                 active
                   ? 'bg-parent text-white border-parent shadow-2xs'
-                  : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
+                  : 'bg-card text-muted-foreground border-border hover:bg-muted'
               )}
             >
               <span

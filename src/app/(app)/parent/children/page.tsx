@@ -6,6 +6,7 @@ import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { Progress } from '@/shared/components/ui/progress'
 import { children as allChildren, getChildData } from '@/shared/mock-data/parent-data'
+import { getAttendanceStats } from '@/shared/mock-data/student-data'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { ArrowRight, ShieldCheck, ShieldAlert, Users } from 'lucide-react'
 import { PageHeader } from '@/shared/components/page-header'
@@ -31,8 +32,8 @@ export default function ParentChildrenPage() {
         {allChildren.map((c) => {
           const data = getChildData(c.id)
           const course = data?.courses?.[0]
-          const summary = data?.attendanceSummary
-          const progress = course?.progress ?? 0
+          const att = getAttendanceStats(c.id)
+          const progress = att.progressPct
           return (
             <Card key={c.id} className="border-border/60 rounded-2xl shadow-none overflow-hidden">
               <CardContent className="p-5 space-y-4">
@@ -44,8 +45,8 @@ export default function ParentChildrenPage() {
                     {c.initials}
                   </span>
                   <div className="min-w-0">
-                    <h3 className="text-base font-bold text-slate-900 truncate">{c.name}</h3>
-                    <p className="text-sm text-slate-500 font-medium truncate">
+                    <h3 className="text-base font-bold text-foreground truncate">{c.name}</h3>
+                    <p className="text-sm text-muted-foreground font-medium truncate">
                       {c.className} · {c.grade}
                     </p>
                   </div>
@@ -68,27 +69,25 @@ export default function ParentChildrenPage() {
 
                 <div className="space-y-1.5">
                   <div className="flex justify-between text-sm font-semibold">
-                    <span className="text-slate-500">Tiến độ khóa học</span>
+                    <span className="text-muted-foreground">Tiến độ khóa học</span>
                     <span className="text-primary">{progress}%</span>
                   </div>
-                  <Progress value={progress} className="h-2 bg-slate-100" />
-                  {summary && (
-                    <p className="text-xs text-slate-400 font-medium pt-1">
-                      Đã học {summary.completed}/{summary.total} buổi · Học bù {summary.makeup}
-                    </p>
-                  )}
+                  <Progress value={progress} className="h-2 bg-muted" />
+                  <p className="text-xs text-muted-foreground font-medium pt-1">
+                    Đã học {att.completed}/{att.total} buổi · Học bù {att.doneMakeup}
+                  </p>
                 </div>
 
                 <div className="flex items-center gap-2 pt-1">
                   <Link
                     href={`/parent/children/${c.slug}`}
-                    className="flex-1 text-center py-2 rounded-xl border border-border bg-white hover:bg-slate-50 text-sm font-bold text-slate-700 transition-colors"
+                    className="flex-1 text-center py-2 rounded-xl border border-border bg-card hover:bg-muted text-sm font-bold text-foreground transition-colors"
                   >
                     Xem hồ sơ
                   </Link>
                   <button
                     onClick={() => openStudentMode(c.id)}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-primary text-white text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
                   >
                     Cổng học sinh <ArrowRight className="size-4" />
                   </button>

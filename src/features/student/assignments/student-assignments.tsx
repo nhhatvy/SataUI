@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState, useEffect, useMemo } from 'react'
-import Link from 'next/link'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { Progress } from '@/shared/components/ui/progress'
@@ -26,7 +25,6 @@ import {
   Check,
   X,
   History,
-  Trophy
 } from 'lucide-react'
 
 type Question = {
@@ -484,9 +482,9 @@ export function StudentAssignments({
       {/* Draft Restore Confirmation Dialog */}
       {draftToRestore && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/40 backdrop-blur-xs p-4 animate-in fade-in duration-200 no-print">
-          <div className="bg-white border border-slate-200 p-6 w-full max-w-md rounded-2xl shadow-xl relative text-center space-y-4">
+          <div className="bg-card border border-border p-6 w-full max-w-md rounded-2xl shadow-xl relative text-center space-y-4">
             <span className="text-4xl block animate-bounce">📝</span>
-            <h3 className="text-base font-bold text-slate-900">Tiếp tục bài đang làm dở?</h3>
+            <h3 className="text-base font-bold text-foreground">Tiếp tục bài đang làm dở?</h3>
             <p className="text-sm text-muted-foreground leading-relaxed font-semibold">
               Hệ thống tìm thấy bản nháp được tự động lưu của bài thi này từ lần làm trước. Bạn có muốn khôi phục và tiếp tục làm không?
             </p>
@@ -499,7 +497,7 @@ export function StudentAssignments({
                   startFreshQuiz(draftToRestore.assignmentId)
                   setDraftToRestore(null)
                 }}
-                className="h-10 rounded-xl border border-border bg-card px-4 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition-all cursor-pointer min-w-[100px]"
+                className="h-10 rounded-xl border border-border bg-card px-4 text-sm font-semibold text-foreground hover:bg-muted transition-all cursor-pointer min-w-[100px]"
               >
                 Không, làm mới
               </button>
@@ -508,7 +506,7 @@ export function StudentAssignments({
                 onClick={() => {
                   restoreDraftQuiz()
                 }}
-                className="h-10 rounded-xl bg-primary px-5 text-sm font-black text-white hover:opacity-90 transition-all cursor-pointer border-none shadow-xs min-w-[100px]"
+                className="h-10 rounded-xl bg-primary px-5 text-sm font-black text-primary-foreground hover:opacity-90 transition-all cursor-pointer border-none shadow-xs min-w-[100px]"
               >
                 Đồng ý, khôi phục
               </button>
@@ -543,7 +541,7 @@ export function StudentAssignments({
                   subtitle="Theo dõi lộ trình từng buổi học, làm bài tập về nhà và bài kiểm tra của giáo viên."
                 />
                 <InfoNote variant="tip">
-                  Em làm bài trắc nghiệm <strong>ngay trên web</strong> (bấm "Làm bài tập"). Sau khi nộp sẽ được chấm điểm tự động và <strong>cộng điểm vào Bảng xếp hạng lớp</strong>.
+                  Em làm bài trắc nghiệm <strong>ngay trên web</strong> (bấm "Làm bài tập"). Sau khi nộp sẽ được <strong>chấm điểm tự động</strong> và lưu vào kết quả học tập của em.
                 </InfoNote>
               </div>
 
@@ -553,27 +551,27 @@ export function StudentAssignments({
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div>
                       <Badge className="bg-primary/10 text-primary border-none text-xs font-bold px-2 py-0.5 rounded-md mb-1">Khóa học</Badge>
-                      <h2 className="text-lg font-bold text-slate-900">{syllabus.courseName}</h2>
-                      <p className="text-sm text-slate-500 font-medium mt-0.5">Giáo viên: {syllabus.teacher}</p>
+                      <h2 className="text-lg font-bold text-foreground">{syllabus.courseName}</h2>
+                      <p className="text-sm text-muted-foreground font-medium mt-0.5">Giáo viên: {syllabus.teacher}</p>
                     </div>
                     <div className="text-right">
                       <p className="text-2xl font-bold text-primary">{doneCount}/{syllabus.totalSessions}</p>
-                      <p className="text-sm text-slate-500 font-medium">buổi đã học</p>
+                      <p className="text-sm text-muted-foreground font-medium">buổi đã học</p>
                     </div>
                   </div>
                   <div className="space-y-1.5">
                     <div className="flex justify-between text-sm font-semibold">
-                      <span className="text-slate-500">Tiến độ chương trình</span>
+                      <span className="text-muted-foreground">Tiến độ chương trình</span>
                       <span className="text-primary">{progressPct}%</span>
                     </div>
-                    <Progress value={progressPct} className="h-2.5 bg-slate-100" />
+                    <Progress value={progressPct} className="h-2.5 bg-muted" />
                   </div>
                 </CardContent>
               </Card>
 
               {/* Lessons (14 sessions) */}
               <div className="space-y-3">
-                <h3 className="text-base font-bold text-slate-900 uppercase tracking-wider">
+                <h3 className="text-base font-bold text-foreground uppercase tracking-wider">
                   Lộ trình {syllabus.totalSessions} buổi học
                 </h3>
                 <div className="space-y-2.5">
@@ -586,7 +584,7 @@ export function StudentAssignments({
                         className={cn(
                           'rounded-2xl border p-4 flex flex-wrap items-center justify-between gap-3 transition-colors',
                           isUpcoming
-                            ? 'border-slate-200 bg-slate-50/60'
+                            ? 'border-border bg-muted/60'
                             : isCurrent
                               ? 'border-primary/40 bg-primary/5'
                               : 'border-success/30 bg-success/5'
@@ -596,27 +594,27 @@ export function StudentAssignments({
                           <span
                             className={cn(
                               'grid size-9 shrink-0 place-items-center rounded-xl text-sm font-black',
-                              isUpcoming ? 'bg-slate-200 text-slate-500' : isCurrent ? 'bg-primary text-white' : 'bg-success text-white'
+                              isUpcoming ? 'bg-muted text-muted-foreground' : isCurrent ? 'bg-primary text-primary-foreground' : 'bg-success text-primary-foreground'
                             )}
                           >
                             {lesson.progress === 'done' ? '✓' : lesson.index}
                           </span>
                           <div className="min-w-0">
                             <div className="flex items-center gap-2 flex-wrap">
-                              <h4 className={cn('text-sm font-bold leading-snug', isUpcoming ? 'text-slate-500' : 'text-slate-900')}>
+                              <h4 className={cn('text-sm font-bold leading-snug', isUpcoming ? 'text-muted-foreground' : 'text-foreground')}>
                                 Buổi {lesson.index}: {lesson.title}
                               </h4>
                               {isCurrent && (
-                                <Badge className="bg-primary text-white border-none text-[11px] font-bold px-2 py-0.5 rounded-md">Đang học</Badge>
+                                <Badge className="bg-primary text-primary-foreground border-none text-[11px] font-bold px-2 py-0.5 rounded-md">Đang học</Badge>
                               )}
                               {isUpcoming && (
-                                <Badge className="bg-slate-200 text-slate-500 border-none text-[11px] font-bold px-2 py-0.5 rounded-md">Chưa học</Badge>
+                                <Badge className="bg-muted text-muted-foreground border-none text-[11px] font-bold px-2 py-0.5 rounded-md">Chưa học</Badge>
                               )}
                             </div>
-                            <p className="text-sm text-slate-400 font-medium mt-0.5">Ngày học: {lesson.date}</p>
+                            <p className="text-sm text-muted-foreground font-medium mt-0.5">Ngày học: {lesson.date}</p>
                             {lesson.homework && (
-                              <p className="text-sm text-slate-500 font-semibold mt-1">
-                                {lesson.homework.title} · Hạn: <span className="text-slate-700">{lesson.homework.due}</span>
+                              <p className="text-sm text-muted-foreground font-semibold mt-1">
+                                {lesson.homework.title} · Hạn: <span className="text-foreground">{lesson.homework.due}</span>
                               </p>
                             )}
                           </div>
@@ -630,14 +628,14 @@ export function StudentAssignments({
                             <button
                               type="button"
                               onClick={() => handleStartQuiz(lesson.homework!.quizId, lesson.homework!.title)}
-                              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-white text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
+                              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
                             >
                               <BookOpen className="size-4 shrink-0" />
                               {lesson.homework.state === 'submitted' ? 'Làm lại' : 'Làm bài tập'}
                             </button>
                           </div>
                         ) : (
-                          <span className="text-sm font-semibold text-slate-400 shrink-0">
+                          <span className="text-sm font-semibold text-muted-foreground shrink-0">
                             {isUpcoming ? 'Chưa mở' : 'Không có bài tập'}
                           </span>
                         )}
@@ -650,7 +648,7 @@ export function StudentAssignments({
               {/* Teacher-created tests */}
               {syllabus.tests.length > 0 && (
                 <div className="space-y-3">
-                  <h3 className="text-base font-bold text-slate-900 uppercase tracking-wider">Bài kiểm tra của giáo viên</h3>
+                  <h3 className="text-base font-bold text-foreground uppercase tracking-wider">Bài kiểm tra của giáo viên</h3>
                   <div className="space-y-2.5">
                     {syllabus.tests.map((test) => {
                       const b = hwBadge(test.state)
@@ -661,9 +659,9 @@ export function StudentAssignments({
                               <ClipboardList className="size-4.5" />
                             </span>
                             <div className="min-w-0">
-                              <h4 className="text-sm font-bold text-slate-900 leading-snug">{test.title}</h4>
-                              <p className="text-sm text-slate-400 font-medium mt-0.5">
-                                {test.questionCount} câu · {test.durationMinutes} phút · Hạn: <span className="text-slate-700 font-semibold">{test.due}</span>
+                              <h4 className="text-sm font-bold text-foreground leading-snug">{test.title}</h4>
+                              <p className="text-sm text-muted-foreground font-medium mt-0.5">
+                                {test.questionCount} câu · {test.durationMinutes} phút · Hạn: <span className="text-foreground font-semibold">{test.due}</span>
                               </p>
                             </div>
                           </div>
@@ -718,7 +716,7 @@ export function StudentAssignments({
 
             {/* Quiz Card */}
             <Card className="border-border/60 rounded-3xl shadow-sm overflow-hidden">
-              <div className="h-2 bg-slate-100 w-full">
+              <div className="h-2 bg-muted w-full">
                 <div
                   className="h-full bg-primary transition-all duration-300"
                   style={{ width: `${((currentQuestionIdx + 1) / currentQuestions.length) * 100}%` }}
@@ -735,14 +733,14 @@ export function StudentAssignments({
                       {currentQuestions[currentQuestionIdx].type === 'multiple' ? 'Chọn nhiều đáp án (Checkbox)' : 'Chọn một đáp án'}
                     </span>
                   </div>
-                  <h2 className="text-base font-bold text-slate-900 text-foreground leading-snug">
+                  <h2 className="text-base font-bold text-foreground text-foreground leading-snug">
                     {currentQuestions[currentQuestionIdx].question}
                   </h2>
                 </div>
 
                 {/* Render visual diagram if present */}
                 {currentQuestions[currentQuestionIdx].visualType && (
-                  <div className="py-4 bg-slate-50 rounded-2xl border border-border/40 flex items-center justify-center">
+                  <div className="py-4 bg-muted rounded-2xl border border-border/40 flex items-center justify-center">
                     {currentQuestions[currentQuestionIdx].visualType === 'scratch-loop' ? (
                       <svg viewBox="0 0 320 160" className="w-full max-w-xs rounded-xl border bg-[#fcfcfc] p-2">
                         {/* Outer orange repeat 12 block */}
@@ -805,8 +803,8 @@ export function StudentAssignments({
                           className={cn(
                             "flex flex-col items-center justify-center p-6 rounded-2xl border transition-all cursor-pointer min-h-[120px]",
                             isSelected
-                              ? "bg-primary border-primary text-white font-extrabold shadow-md shadow-primary/25"
-                              : "bg-slate-50 border-border/40 text-slate-800 hover:bg-slate-100 font-semibold"
+                              ? "bg-primary border-primary text-primary-foreground font-extrabold shadow-md shadow-primary/25"
+                              : "bg-muted border-border/40 text-foreground hover:bg-muted font-semibold"
                           )}
                           style={{ minHeight: '44px' }}
                         >
@@ -832,14 +830,14 @@ export function StudentAssignments({
                             "w-full text-left p-4 rounded-xl border transition-all cursor-pointer flex items-center justify-between gap-3 min-h-[50px] text-sm",
                             isSelected
                               ? "bg-primary/5 border-primary text-primary font-extrabold"
-                              : "bg-slate-50 border-border/40 text-slate-800 hover:border-slate-300 font-semibold"
+                              : "bg-muted border-border/40 text-foreground hover:border-border font-semibold"
                           )}
                           style={{ minHeight: '44px' }}
                         >
                           <div className="flex items-center gap-3">
                             <span className={cn(
                               "size-5.5 rounded-md flex items-center justify-center border font-bold text-sm shrink-0",
-                              isSelected ? "bg-primary border-primary text-white" : "border-slate-300 bg-white"
+                              isSelected ? "bg-primary border-primary text-primary-foreground" : "border-border bg-card"
                             )}>
                               {isSelected && '✓'}
                             </span>
@@ -865,14 +863,14 @@ export function StudentAssignments({
                           className={cn(
                             "w-full text-left p-4 rounded-xl border transition-all cursor-pointer flex items-center gap-3 min-h-[50px] text-sm",
                             isSelected
-                              ? "bg-primary border-primary text-white font-extrabold shadow-sm shadow-primary/25"
-                              : "bg-slate-50 border-border/40 text-slate-800 hover:border-slate-300 font-semibold"
+                              ? "bg-primary border-primary text-primary-foreground font-extrabold shadow-sm shadow-primary/25"
+                              : "bg-muted border-border/40 text-foreground hover:border-border font-semibold"
                           )}
                           style={{ minHeight: '44px' }}
                         >
                           <span className={cn(
                             "size-6.5 shrink-0 rounded-full flex items-center justify-center font-black text-sm",
-                            isSelected ? "bg-white/20 text-white" : "bg-slate-200 text-slate-700"
+                            isSelected ? "bg-card/20 text-primary-foreground" : "bg-background text-foreground"
                           )}>
                             {alphabet}
                           </span>
@@ -889,7 +887,7 @@ export function StudentAssignments({
                     type="button"
                     disabled={currentQuestionIdx === 0}
                     onClick={() => setCurrentQuestionIdx(prev => prev - 1)}
-                    className="h-11 rounded-xl border border-border px-4 py-2 text-sm font-bold text-foreground hover:bg-slate-50 transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer bg-card"
+                    className="h-11 rounded-xl border border-border px-4 py-2 text-sm font-bold text-foreground hover:bg-muted transition-all disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer bg-card"
                   >
                     Câu trước
                   </button>
@@ -898,7 +896,7 @@ export function StudentAssignments({
                     <button
                       type="button"
                       onClick={() => setCurrentQuestionIdx(prev => prev + 1)}
-                      className="h-11 rounded-xl bg-primary px-5 py-2 text-sm font-black text-white hover:opacity-90 transition-all cursor-pointer border-none shadow-xs"
+                      className="h-11 rounded-xl bg-primary px-5 py-2 text-sm font-black text-primary-foreground hover:opacity-90 transition-all cursor-pointer border-none shadow-xs"
                     >
                       Câu tiếp theo
                     </button>
@@ -935,47 +933,39 @@ export function StudentAssignments({
               <CardContent className="p-6 space-y-6">
                 {/* Score stats */}
                 <div className="grid grid-cols-2 gap-4 text-center">
-                  <div className="p-4 bg-slate-50 border border-border/40 rounded-2xl">
+                  <div className="p-4 bg-muted border border-border/40 rounded-2xl">
                     <p className="text-sm font-bold text-muted-foreground uppercase">Điểm số</p>
-                    <p className="text-2xl font-bold tracking-tight text-slate-900 text-primary mt-1">{score}/10</p>
+                    <p className="text-2xl font-bold tracking-tight text-foreground text-primary mt-1">{score}/10</p>
                   </div>
-                  <div className="p-4 bg-slate-50 border border-border/40 rounded-2xl">
+                  <div className="p-4 bg-muted border border-border/40 rounded-2xl">
                     <p className="text-sm font-bold text-muted-foreground uppercase">Tỷ lệ đúng</p>
-                    <p className="text-2xl font-bold tracking-tight text-slate-900 text-emerald-500 mt-1">
+                    <p className="text-2xl font-bold tracking-tight text-foreground text-emerald-500 mt-1">
                       {Math.round((score / 10) * 100)}%
                     </p>
                   </div>
                 </div>
 
-                {/* Điểm thành tích cộng vào bảng xếp hạng */}
+                {/* Điểm thành tích của em */}
                 <div className="rounded-2xl bg-primary/5 border border-primary/20 p-3.5 flex items-center justify-between">
-                  <span className="text-sm font-bold text-slate-700">Điểm thành tích nhận được</span>
+                  <span className="text-sm font-bold text-foreground">Điểm thành tích nhận được</span>
                   <span className="text-lg font-black text-primary">+{score * 10} điểm</span>
                 </div>
 
                 <p className="text-sm text-center text-muted-foreground font-semibold">
-                  Điểm đã được cộng vào bảng xếp hạng lớp. Em có thể xem lại lời giải trong lịch sử thử thách.
+                  Kết quả đã được ghi nhận. Em có thể xem lại lời giải trong lịch sử thử thách.
                 </p>
 
                 {/* Actions */}
-                <div className="flex flex-col sm:flex-row gap-2">
-                  <Link
-                    href="/student/leaderboard"
-                    className="flex-1 h-12 rounded-2xl border border-primary/30 bg-white text-primary text-sm font-black hover:bg-primary/5 transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                  >
-                    <Trophy className="size-4.5" /> Xem bảng xếp hạng
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setViewState('list')
-                      setSelectedAssignmentId(null)
-                    }}
-                    className="flex-1 h-12 rounded-2xl bg-primary text-sm font-black text-white hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-primary/20 border-none cursor-pointer"
-                  >
-                    Quay về danh sách <ArrowRight className="size-4.5" />
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewState('list')
+                    setSelectedAssignmentId(null)
+                  }}
+                  className="w-full h-12 rounded-2xl bg-primary text-sm font-black text-primary-foreground hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-primary/20 border-none cursor-pointer"
+                >
+                  Quay về danh sách <ArrowRight className="size-4.5" />
+                </button>
               </CardContent>
             </Card>
           </div>
@@ -997,13 +987,13 @@ export function StudentAssignments({
                 <ArrowLeft className="size-4" /> Quay về danh sách
               </button>
 
-              <Badge className="bg-primary text-white text-sm font-black px-3 py-1.5 rounded-xl border-none">
+              <Badge className="bg-primary text-primary-foreground text-sm font-black px-3 py-1.5 rounded-xl border-none">
                 Độ chính xác: {activeReviewAttempt.score}/10 điểm
               </Badge>
             </div>
 
             <div className="space-y-6">
-              <div className="bg-slate-50 p-4 rounded-2xl border border-border/40 text-sm font-semibold flex items-start gap-3">
+              <div className="bg-muted p-4 rounded-2xl border border-border/40 text-sm font-semibold flex items-start gap-3">
                 <Info className="size-5 text-primary shrink-0 mt-0.5" />
                 <div>
                   <h4 className="font-bold text-foreground">Chế độ xem lời giải và đáp án chi tiết</h4>
@@ -1029,19 +1019,19 @@ export function StudentAssignments({
                   <Card key={q.id} className="border-border/60 rounded-3xl overflow-hidden shadow-xs">
                     <CardContent className="p-6 space-y-4">
                       <div className="flex justify-between items-start gap-4">
-                        <Badge className="bg-slate-100 text-slate-700 text-sm font-black px-2.5 py-0.5 rounded-md">
+                        <Badge className="bg-muted text-foreground text-sm font-black px-2.5 py-0.5 rounded-md">
                           Câu hỏi {idx + 1}
                         </Badge>
 
                         <Badge className={cn(
-                          "px-2.5 py-0.5 rounded-md text-sm font-semibold tracking-wider text-slate-500 uppercase border-none",
+                          "px-2.5 py-0.5 rounded-md text-sm font-semibold tracking-wider text-muted-foreground uppercase border-none",
                           isCorrect ? "bg-success/15 text-success" : "bg-destructive/15 text-destructive"
                         )}>
                           {isCorrect ? 'Đúng' : 'Sai'}
                         </Badge>
                       </div>
 
-                      <h3 className="text-base font-bold text-slate-900">{q.question}</h3>
+                      <h3 className="text-base font-bold text-foreground">{q.question}</h3>
 
                       {/* Options rendering with colors */}
                       <div className="space-y-2.5">
@@ -1071,13 +1061,13 @@ export function StudentAssignments({
                                   ? "bg-success/5 border-success/40 text-success"
                                   : isUserSelected && !isOptionCorrect
                                     ? "bg-destructive/5 border-destructive/30 text-destructive"
-                                    : "bg-slate-50 border-border/40 text-slate-700"
+                                    : "bg-muted border-border/40 text-foreground"
                               )}
                             >
                               <div className="flex items-center gap-2.5">
                                 <span className={cn(
                                   "size-6.5 rounded-full flex items-center justify-center font-bold text-sm shrink-0",
-                                  isOptionCorrect ? "bg-success text-white" : "bg-slate-200 text-slate-700"
+                                  isOptionCorrect ? "bg-success text-white" : "bg-background text-foreground"
                                 )}>
                                   {alphabet}
                                 </span>
@@ -1085,7 +1075,7 @@ export function StudentAssignments({
                               </div>
                               <div className="flex items-center gap-1.5">
                                 {isUserSelected && (
-                                  <Badge className="bg-slate-200/50 text-slate-700 text-sm font-black py-0.5 shadow-none rounded-md border-none">Bài làm của em</Badge>
+                                  <Badge className="bg-foreground/10 text-foreground text-sm font-black py-0.5 shadow-none rounded-md border-none">Bài làm của em</Badge>
                                 )}
                                 {isOptionCorrect ? (
                                   <Check className="size-4 text-success" />
@@ -1099,7 +1089,7 @@ export function StudentAssignments({
                       </div>
 
                       {/* Explanation box */}
-                      <div className="p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-2xl text-sm leading-relaxed text-slate-700 font-semibold space-y-1">
+                      <div className="p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-2xl text-sm leading-relaxed text-foreground font-semibold space-y-1">
                         <p className="text-sm font-black text-indigo-600 uppercase">Giải thích chi tiết:</p>
                         <p>{q.explanation}</p>
                       </div>

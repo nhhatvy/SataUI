@@ -22,7 +22,7 @@ export function ErrorState({
       <div className="grid size-14 place-items-center rounded-2xl bg-destructive/10 text-destructive mb-4">
         <AlertCircle className="size-7" />
       </div>
-      <h3 className="text-base font-bold text-slate-900">{title}</h3>
+      <h3 className="text-base font-bold text-foreground">{title}</h3>
       <p className="text-sm text-muted-foreground mt-1.5 max-w-xs leading-relaxed">{description}</p>
       {onRetry && (
         <button

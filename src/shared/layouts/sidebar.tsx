@@ -57,7 +57,7 @@ export function Sidebar() {
                 'flex w-full items-center gap-3 rounded-r-xl py-2.5 text-sm transition-all duration-150',
                 active
                   ? 'bg-accent-soft text-accent font-bold border-l-4 border-accent pl-2'
-                  : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900 font-medium pl-3'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground font-medium pl-3'
               )}
             >
               <Icon className="size-4.5 shrink-0" />
@@ -86,7 +86,7 @@ export function Sidebar() {
             </>
           )}
         </p>
-        <p className="text-[11px] leading-relaxed text-slate-500 font-medium">
+        <p className="text-[11px] leading-relaxed text-muted-foreground font-medium">
           {isStudentMode
             ? `Đang xem dữ liệu học tập của ${child?.shortName}. Đổi con ở góc trên phải.`
             : 'Quản lý lịch trình, học phí và tiến độ học tập của các con.'}

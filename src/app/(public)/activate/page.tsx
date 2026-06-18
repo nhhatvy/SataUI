@@ -137,7 +137,7 @@ function ActivatePageContent() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-primary text-white text-sm font-bold hover:opacity-90 disabled:opacity-50 transition-all cursor-pointer shadow-sm shadow-primary/20"
+                className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 disabled:opacity-50 transition-all cursor-pointer shadow-sm shadow-primary/20"
               >
                 {submitting ? 'Đang kích hoạt...' : 'Kích hoạt tài khoản'}
               </button>

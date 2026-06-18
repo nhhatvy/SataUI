@@ -4,7 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { cn } from '@/shared/utils/utils'
-import { Home, Users, Wallet, Bell, Calendar, Pencil, List, Trophy } from 'lucide-react'
+import { Home, Users, Wallet, Bell, Calendar, Pencil, List } from 'lucide-react'
 
 interface TabItem {
   label: string
@@ -27,7 +27,6 @@ export function BottomNav() {
     { label: 'Lịch học', icon: Calendar, href: '/student/schedule' },
     { label: 'Buổi học', icon: List, href: '/student/sessions' },
     { label: 'Bài tập', icon: Pencil, href: '/student/homework' },
-    { label: 'Xếp hạng', icon: Trophy, href: '/student/leaderboard' },
   ]
 
   const isStudentView = pathname.startsWith('/student')
@@ -53,7 +52,7 @@ export function BottomNav() {
               <span className="relative">
                 <tab.icon className={cn('size-5 transition-colors', active ? 'text-primary' : 'text-muted-foreground')} />
               </span>
-              <span className={cn('text-[11px] font-bold leading-tight text-center transition-colors', active ? 'text-primary' : 'text-muted-foreground')}>
+              <span className={cn('text-xs font-bold leading-tight text-center transition-colors', active ? 'text-primary' : 'text-muted-foreground')}>
                 {tab.label}
               </span>
             </Link>

@@ -73,7 +73,7 @@ export default function LoginPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex items-center justify-center gap-2 rounded-xl w-full py-3 text-sm font-bold text-white transition-all cursor-pointer bg-primary hover:opacity-90 disabled:opacity-50"
+                className="flex items-center justify-center gap-2 rounded-xl w-full py-3 text-sm font-bold text-primary-foreground transition-all cursor-pointer bg-primary hover:opacity-90 disabled:opacity-50"
               >
                 {isSubmitting ? (
                   <>
