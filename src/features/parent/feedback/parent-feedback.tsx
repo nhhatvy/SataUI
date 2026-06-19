@@ -51,7 +51,7 @@ export function ParentFeedback() {
                 <div key={lesson.index} className="relative">
                   {/* Session header chip */}
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-black shrink-0">
+                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-bold shrink-0">
                       {lesson.index}
                     </span>
                     <div className="min-w-0">
@@ -68,7 +68,7 @@ export function ParentFeedback() {
                     <CardContent className="p-5 pl-6">
                       <div className="flex flex-wrap items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <span className="grid size-10 place-items-center rounded-xl bg-slate-900 text-sm font-black text-white">
+                          <span className="grid size-10 place-items-center rounded-xl bg-slate-900 text-sm font-bold text-white">
                             {c.initials}
                           </span>
                           <div>
@@ -78,7 +78,7 @@ export function ParentFeedback() {
                         </div>
                         <Badge
                           className={cn(
-                            'rounded-md font-black text-sm px-2.5 py-1 shadow-none flex items-center gap-1 border',
+                            'rounded-md font-bold text-sm px-2.5 py-1 shadow-none flex items-center gap-1 border',
                             positive
                               ? 'bg-success/15 text-success border-success/30'
                               : 'bg-primary/10 text-primary border-primary/20'

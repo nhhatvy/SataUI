@@ -55,7 +55,7 @@ export function NotificationCenter({
       {Icon && <Icon className="size-4 shrink-0" />}
       <span className="flex-1 text-left whitespace-nowrap">{label}</span>
       {count > 0 && (
-        <span className={cn('grid h-5 min-w-5 place-items-center rounded-full px-1.5 text-xs font-black', active === key ? 'bg-accent text-accent-foreground' : 'bg-primary/10 text-primary')}>
+        <span className={cn('grid h-5 min-w-5 place-items-center rounded-full px-1.5 text-xs font-bold', active === key ? 'bg-accent text-accent-foreground' : 'bg-primary/10 text-primary')}>
           {count}
         </span>
       )}

@@ -125,7 +125,7 @@ export function ParentComments() {
                           className={cn('w-full text-left p-3.5 flex items-start gap-3 transition-colors relative', selected ? 'bg-primary/5' : 'hover:bg-muted')}
                         >
                           {selected && <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />}
-                          <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-black shrink-0', selected ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}>
+                          <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-bold shrink-0', selected ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}>
                             {i.index}
                           </span>
                           <div className="min-w-0 flex-1">

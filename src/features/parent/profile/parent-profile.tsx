@@ -43,7 +43,7 @@ export function ParentProfile() {
         </p>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
         {/* Left: forms */}
         <div className="lg:col-span-2 space-y-6">
           <form onSubmit={handleSave} className="space-y-6">
@@ -124,14 +124,14 @@ export function ParentProfile() {
             <Card key={c.id} className={`rounded-2xl shadow-none border ${c.id === child.id ? 'border-primary/40' : 'border-border/60'}`}>
               <CardContent className="p-4 space-y-3">
                 <div className="flex items-center gap-3">
-                  <span className="grid size-10 shrink-0 place-items-center rounded-xl text-sm font-black text-white" style={{ backgroundColor: c.avatarColor }}>
+                  <span className="grid size-10 shrink-0 place-items-center rounded-xl text-sm font-bold text-white" style={{ backgroundColor: c.avatarColor }}>
                     {c.initials}
                   </span>
                   <div className="min-w-0 flex-1">
                     <h4 className="text-sm font-bold text-foreground truncate">{c.name}</h4>
                     <p className="text-sm text-muted-foreground font-medium">{c.className} · {c.grade}</p>
                   </div>
-                  {c.id === child.id && <Badge className="bg-primary text-primary-foreground border-none text-[10px] font-bold px-1.5 py-0.5 rounded">Đang chọn</Badge>}
+                  {c.id === child.id && <Badge className="bg-primary text-primary-foreground border-none text-xs font-bold px-1.5 py-0.5 rounded">Đang chọn</Badge>}
                 </div>
 
                 {/* Image consent status */}

@@ -506,7 +506,7 @@ export function StudentAssignments({
                 onClick={() => {
                   restoreDraftQuiz()
                 }}
-                className="h-10 rounded-xl bg-primary px-5 text-sm font-black text-primary-foreground hover:opacity-90 transition-all cursor-pointer border-none shadow-xs min-w-[100px]"
+                className="h-10 rounded-xl bg-primary px-5 text-sm font-bold text-primary-foreground hover:opacity-90 transition-all cursor-pointer border-none shadow-xs min-w-[100px]"
               >
                 Đồng ý, khôi phục
               </button>
@@ -593,7 +593,7 @@ export function StudentAssignments({
                         <div className="flex items-start gap-3 min-w-0">
                           <span
                             className={cn(
-                              'grid size-9 shrink-0 place-items-center rounded-xl text-sm font-black',
+                              'grid size-9 shrink-0 place-items-center rounded-xl text-sm font-bold',
                               isUpcoming ? 'bg-muted text-muted-foreground' : isCurrent ? 'bg-primary text-primary-foreground' : 'bg-success text-primary-foreground'
                             )}
                           >
@@ -605,10 +605,10 @@ export function StudentAssignments({
                                 Buổi {lesson.index}: {lesson.title}
                               </h4>
                               {isCurrent && (
-                                <Badge className="bg-primary text-primary-foreground border-none text-[11px] font-bold px-2 py-0.5 rounded-md">Đang học</Badge>
+                                <Badge className="bg-primary text-primary-foreground border-none text-xs font-bold px-2 py-0.5 rounded-md">Đang học</Badge>
                               )}
                               {isUpcoming && (
-                                <Badge className="bg-muted text-muted-foreground border-none text-[11px] font-bold px-2 py-0.5 rounded-md">Chưa học</Badge>
+                                <Badge className="bg-muted text-muted-foreground border-none text-xs font-bold px-2 py-0.5 rounded-md">Chưa học</Badge>
                               )}
                             </div>
                             <p className="text-sm text-muted-foreground font-medium mt-0.5">Ngày học: {lesson.date}</p>
@@ -628,7 +628,7 @@ export function StudentAssignments({
                             <button
                               type="button"
                               onClick={() => handleStartQuiz(lesson.homework!.quizId, lesson.homework!.title)}
-                              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
+                              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer"
                             >
                               <BookOpen className="size-4 shrink-0" />
                               {lesson.homework.state === 'submitted' ? 'Làm lại' : 'Làm bài tập'}
@@ -670,7 +670,7 @@ export function StudentAssignments({
                             <button
                               type="button"
                               onClick={() => handleStartQuiz(test.id, test.title)}
-                              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-indigo-600 text-white text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
+                              className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-indigo-600 text-white text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer"
                             >
                               <BookOpen className="size-4 shrink-0" />
                               {test.state === 'submitted' ? 'Làm lại' : 'Làm bài'}
@@ -704,7 +704,7 @@ export function StudentAssignments({
               </button>
 
                <div className={cn(
-                "flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-black border transition-all",
+                "flex items-center gap-1.5 rounded-2xl px-4 py-2 text-sm font-bold border transition-all",
                 timeLeft <= 30
                   ? "bg-destructive text-white border-destructive animate-pulse"
                   : "bg-destructive/10 border-destructive/20 text-destructive"
@@ -726,7 +726,7 @@ export function StudentAssignments({
               <CardContent className="p-6 space-y-6">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <Badge className="bg-primary/10 text-primary border-primary/20 text-sm font-black px-2.5 py-1 shadow-none">
+                    <Badge className="bg-primary/10 text-primary border-primary/20 text-sm font-bold px-2.5 py-1 shadow-none">
                       Câu hỏi {currentQuestionIdx + 1}/{currentQuestions.length}
                     </Badge>
                     <span className="text-sm font-bold text-muted-foreground">
@@ -869,7 +869,7 @@ export function StudentAssignments({
                           style={{ minHeight: '44px' }}
                         >
                           <span className={cn(
-                            "size-6.5 shrink-0 rounded-full flex items-center justify-center font-black text-sm",
+                            "size-6.5 shrink-0 rounded-full flex items-center justify-center font-bold text-sm",
                             isSelected ? "bg-card/20 text-primary-foreground" : "bg-background text-foreground"
                           )}>
                             {alphabet}
@@ -896,7 +896,7 @@ export function StudentAssignments({
                     <button
                       type="button"
                       onClick={() => setCurrentQuestionIdx(prev => prev + 1)}
-                      className="h-11 rounded-xl bg-primary px-5 py-2 text-sm font-black text-primary-foreground hover:opacity-90 transition-all cursor-pointer border-none shadow-xs"
+                      className="h-11 rounded-xl bg-primary px-5 py-2 text-sm font-bold text-primary-foreground hover:opacity-90 transition-all cursor-pointer border-none shadow-xs"
                     >
                       Câu tiếp theo
                     </button>
@@ -904,7 +904,7 @@ export function StudentAssignments({
                     <button
                       type="button"
                       onClick={handleQuizSubmit}
-                      className="h-11 rounded-xl bg-success px-5 py-2 text-sm font-black text-white hover:opacity-90 transition-all cursor-pointer border-none shadow-xs flex items-center gap-1.5"
+                      className="h-11 rounded-xl bg-success px-5 py-2 text-sm font-bold text-white hover:opacity-90 transition-all cursor-pointer border-none shadow-xs flex items-center gap-1.5"
                     >
                       <Send className="size-4 shrink-0" />
                       Nộp bài ngay
@@ -925,7 +925,7 @@ export function StudentAssignments({
                 <Sparkles className="absolute left-6 top-6 size-10 opacity-15" />
                 <Award className="size-16 mx-auto animate-bounce" />
                 <div>
-                  <h2 className="text-xl font-black">Kết quả nộp bài thi</h2>
+                  <h2 className="text-xl font-bold">Kết quả nộp bài thi</h2>
                   <p className="text-sm font-semibold opacity-90 mt-0.5">Chúc mừng em đã hoàn thành thử thách!</p>
                 </div>
               </div>
@@ -948,7 +948,7 @@ export function StudentAssignments({
                 {/* Điểm thành tích của em */}
                 <div className="rounded-2xl bg-primary/5 border border-primary/20 p-3.5 flex items-center justify-between">
                   <span className="text-sm font-bold text-foreground">Điểm thành tích nhận được</span>
-                  <span className="text-lg font-black text-primary">+{score * 10} điểm</span>
+                  <span className="text-lg font-bold text-primary">+{score * 10} điểm</span>
                 </div>
 
                 <p className="text-sm text-center text-muted-foreground font-semibold">
@@ -962,7 +962,7 @@ export function StudentAssignments({
                     setViewState('list')
                     setSelectedAssignmentId(null)
                   }}
-                  className="w-full h-12 rounded-2xl bg-primary text-sm font-black text-primary-foreground hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-primary/20 border-none cursor-pointer"
+                  className="w-full h-12 rounded-2xl bg-primary text-sm font-bold text-primary-foreground hover:opacity-90 transition-all flex items-center justify-center gap-1.5 shadow-md shadow-primary/20 border-none cursor-pointer"
                 >
                   Quay về danh sách <ArrowRight className="size-4.5" />
                 </button>
@@ -987,7 +987,7 @@ export function StudentAssignments({
                 <ArrowLeft className="size-4" /> Quay về danh sách
               </button>
 
-              <Badge className="bg-primary text-primary-foreground text-sm font-black px-3 py-1.5 rounded-xl border-none">
+              <Badge className="bg-primary text-primary-foreground text-sm font-bold px-3 py-1.5 rounded-xl border-none">
                 Độ chính xác: {activeReviewAttempt.score}/10 điểm
               </Badge>
             </div>
@@ -1019,7 +1019,7 @@ export function StudentAssignments({
                   <Card key={q.id} className="border-border/60 rounded-3xl overflow-hidden shadow-xs">
                     <CardContent className="p-6 space-y-4">
                       <div className="flex justify-between items-start gap-4">
-                        <Badge className="bg-muted text-foreground text-sm font-black px-2.5 py-0.5 rounded-md">
+                        <Badge className="bg-muted text-foreground text-sm font-bold px-2.5 py-0.5 rounded-md">
                           Câu hỏi {idx + 1}
                         </Badge>
 
@@ -1075,7 +1075,7 @@ export function StudentAssignments({
                               </div>
                               <div className="flex items-center gap-1.5">
                                 {isUserSelected && (
-                                  <Badge className="bg-foreground/10 text-foreground text-sm font-black py-0.5 shadow-none rounded-md border-none">Bài làm của em</Badge>
+                                  <Badge className="bg-foreground/10 text-foreground text-sm font-bold py-0.5 shadow-none rounded-md border-none">Bài làm của em</Badge>
                                 )}
                                 {isOptionCorrect ? (
                                   <Check className="size-4 text-success" />
@@ -1090,7 +1090,7 @@ export function StudentAssignments({
 
                       {/* Explanation box */}
                       <div className="p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-2xl text-sm leading-relaxed text-foreground font-semibold space-y-1">
-                        <p className="text-sm font-black text-indigo-600 uppercase">Giải thích chi tiết:</p>
+                        <p className="text-sm font-bold text-indigo-600 uppercase">Giải thích chi tiết:</p>
                         <p>{q.explanation}</p>
                       </div>
                     </CardContent>

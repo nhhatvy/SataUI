@@ -34,6 +34,65 @@ export function PageHeader({
   )
 }
 
+// Hero header dạng gradient — nâng tầm các trang cho đồng bộ với dashboard học sinh.
+// Dùng accent theo mode (parent/student) hoặc brand primary. metric: slot bên phải (ring/số liệu).
+export function PageHero({
+  icon: Icon,
+  overline,
+  title,
+  subtitle,
+  metric,
+  accent = 'parent',
+}: {
+  icon?: LucideIcon
+  overline?: string
+  title: string
+  subtitle?: string
+  metric?: React.ReactNode
+  accent?: 'parent' | 'student' | 'primary'
+}) {
+  const grad =
+    accent === 'student'
+      ? 'from-student to-student/80'
+      : accent === 'primary'
+        ? 'from-primary to-primary/80'
+        : 'from-parent to-parent/80'
+  return (
+    <div className={cn('relative mb-6 overflow-hidden rounded-3xl bg-gradient-to-br p-5 text-white sm:p-6', grad)}>
+      {Icon && (
+        <Icon className="pointer-events-none absolute -right-4 -top-4 size-28 rotate-12 text-white/10" />
+      )}
+      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+          {Icon && (
+            <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-white/15 ring-4 ring-white/10 sm:size-14">
+              <Icon className="size-6 sm:size-7" />
+            </span>
+          )}
+          <div className="min-w-0">
+            {overline && <p className="text-xs font-bold uppercase tracking-wider text-white/70">{overline}</p>}
+            <h1 className="text-xl font-bold tracking-tight text-balance sm:text-2xl">{title}</h1>
+            {subtitle && <p className="mt-0.5 text-xs font-medium text-white/80 sm:text-sm line-clamp-2">{subtitle}</p>}
+          </div>
+        </div>
+        {metric && <div className="shrink-0">{metric}</div>}
+      </div>
+    </div>
+  )
+}
+
+// Pill số liệu nổi bật đặt trong PageHero (nền kính mờ trên gradient).
+export function HeroMetric({ label, value }: { label: React.ReactNode; value: string }) {
+  return (
+    <div className="flex w-full items-center justify-between gap-3 rounded-2xl bg-white/15 px-4 py-2.5 backdrop-blur-sm sm:w-auto sm:justify-start">
+      <div className="leading-snug">
+        <p className="text-xs font-bold text-white/80">{label}</p>
+      </div>
+      <p className="text-2xl font-bold tabular-nums">{value}</p>
+    </div>
+  )
+}
+
 // Tiêu đề một section trong trang.
 export function SectionTitle({ children, hint }: { children: React.ReactNode; hint?: string }) {
   return (

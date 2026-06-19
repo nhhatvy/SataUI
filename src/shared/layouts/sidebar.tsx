@@ -69,11 +69,11 @@ export function Sidebar() {
 
       {/* Footer ModeBadge: nhắc rõ đang ở chế độ nào / dữ liệu của ai */}
       <div className="m-4 rounded-xl p-3.5 shrink-0 border border-accent/20 bg-accent-soft space-y-1">
-        <p className="text-xs font-black uppercase tracking-wider flex items-center gap-1.5 text-accent">
+        <p className="text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 text-accent">
           {isStudentMode ? (
             <>
               <span
-                className="grid size-5 place-items-center rounded-md text-[9px] font-black text-white"
+                className="grid size-5 place-items-center rounded-md text-xs font-bold text-white"
                 style={{ backgroundColor: child?.avatarColor }}
               >
                 {child?.initials}
@@ -86,7 +86,7 @@ export function Sidebar() {
             </>
           )}
         </p>
-        <p className="text-[11px] leading-relaxed text-muted-foreground font-medium">
+        <p className="text-xs leading-relaxed text-muted-foreground font-medium">
           {isStudentMode
             ? `Đang xem dữ liệu học tập của ${child?.shortName}. Đổi con ở góc trên phải.`
             : 'Quản lý lịch trình, học phí và tiến độ học tập của các con.'}

@@ -79,7 +79,7 @@ function ActivatePageContent() {
           <div className="mb-4">
             <Logo />
           </div>
-          <CardTitle className="text-xl font-black text-slate-900">Kích hoạt tài khoản</CardTitle>
+          <CardTitle className="text-xl font-bold text-slate-900">Kích hoạt tài khoản</CardTitle>
           <CardDescription className="text-center text-sm font-medium text-slate-500 mt-1">
             {isTokenValid
               ? `Xin chào phụ huynh ${parentName}! Vui lòng thiết lập mật khẩu để hoàn tất đăng ký.`

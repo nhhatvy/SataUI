@@ -159,6 +159,20 @@ Shadow trung tính, nhuốm slate (không nhuốm màu thương hiệu) để gi
 
 **Quy tắc:** elevation tỉ lệ thuận với "khoảng cách khỏi mặt phẳng" + tính tạm thời. Phần tử tạm thời (overlay) cao hơn phần tử thường trú (card). Không chồng shadow + ring đậm cùng lúc; card hiện dùng `ring-1` rất nhạt thay border cứng — giữ nhất quán.
 
+### 6.5 Category palette (màu phân loại)
+
+Ngoài màu semantic (`primary/accent/success/warning/destructive`), hệ thống có **màu phân loại chức năng** cho notification, loại bài, trạng thái phụ. Các token này **đọc được làm chữ trên nền sáng**; tô nền bằng opacity (`bg-info/10 text-info`). Đã khai báo trong `globals.css` (sáng) + `.dark` (tông ~400):
+
+| Token | Hue | px (light) | Ý nghĩa | Thay cho palette cũ |
+|-------|-----|-----------|---------|---------------------|
+| `--info` | blue | #3B82F6 | Thông tin, nhận xét, comment | `blue-500`, `sky-*` |
+| `--quiz` | indigo | #6366F1 | Kiểm tra, học bù, makeup | `indigo-500`, `violet-*` |
+| `--schedule-cat` | pink | #EC4899 | Lịch học | `pink-500`, `rose-*` |
+| `--report` | orange | #F97316 | Học bạ, báo cáo | `orange-500` |
+| `--caution` | amber | #D97706 | Cảnh báo nhẹ, chờ xử lý, công nợ | `amber-500/600` |
+
+> **Quy tắc:** tuyệt đối **không** dùng literal Tailwind palette (`bg-blue-500`, `text-amber-600`…) trong app. Màu trung tính (`slate-*`) → token `foreground/muted/border/background`. Màu phân loại → 5 token trên. Màu thương hiệu/trạng thái → semantic token.
+
 ---
 
 ## 7. Component Specifications
@@ -372,3 +386,7 @@ theme: {
 ## Changelog
 <!-- Ghi nhận các lần áp dụng refactor -->
 - _2026-06-18_ — Khởi tạo design system; thêm token foundation (`--space-*`, `--shadow-*`, `--text-*`); refactor primitives/layout (xem §11.2).
+- _2026-06-18_ — Thêm category palette (`--info/--quiz/--schedule-cat/--report/--caution`, §6.5). Token hoá màu Group 1–2 (dashboards, header, schedule, finance) + Group 3 (children, makeup).
+- _2026-06-18_ — **Redesign cổng phụ huynh** theo phong cách dashboard học sinh: thêm component dùng chung `PageHero` + `HeroMetric` (gradient theo accent, icon badge, metric nổi bật) và **stat-tile icon-badge**. Áp cho: parent-dashboard, children, schedule, finance, makeup. Tile 3-up dùng layout dọc-căn-giữa trên mobile, ngang trên `sm+`.
+- _2026-06-18_ — Rollout §11.4 (bước 1, file traffic cao nhất): `student-dashboard.tsx` — chuẩn weight `font-black`→`font-bold` (thang 400–700) và bỏ cỡ chữ arbitrary `text-[10px]/[11px]`→`text-xs`. Giữ nguyên spacing đã tinh chỉnh cho mobile (an toàn, không đổi bố cục). Build + tsc xanh.
+- _2026-06-18_ — Áp **toàn dự án** bộ quy tắc an toàn: `font-black`→`font-bold` (28 file) và cỡ chữ arbitrary `text-[9/10/10.5/11px]`→`text-xs`. **Ngoại lệ quang học** (§3): giữ nguyên label nhỏ trong `session-journey.tsx` (timeline 14 chấm dày đặc). Fix mobile-fit 4 card student-dashboard: thêm `truncate/min-w-0` cho tên môn "Lớp học tiếp theo" & nhãn "Kỹ năng"; thu nhỏ icon + ẩn chevron mobile cho hàng "Việc cần làm". Build + tsc xanh.

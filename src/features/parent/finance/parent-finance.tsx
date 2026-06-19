@@ -8,8 +8,8 @@ import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { formatCurrency, getChildData } from '@/shared/mock-data/parent-data'
 import { getCourseSyllabus } from '@/shared/mock-data/student-data'
 import { cn } from '@/shared/utils/utils'
-import { PageHeader, InfoNote } from '@/shared/components/page-header'
-import { Wallet, CheckCircle2, QrCode, ShieldCheck, CalendarClock, ReceiptText } from 'lucide-react'
+import { PageHero, HeroMetric, InfoNote } from '@/shared/components/page-header'
+import { Wallet, CheckCircle2, QrCode, ShieldCheck, CalendarClock, ReceiptText, type LucideIcon } from 'lucide-react'
 
 export function ParentFinance() {
   const { child } = useActiveChildStore()
@@ -53,10 +53,13 @@ export function ParentFinance() {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-      <PageHeader
+      <PageHero
         icon={Wallet}
+        accent="parent"
+        overline="Cổng phụ huynh"
         title="Học phí & công nợ"
-        subtitle={`Theo dõi học phí và công nợ của ${child.name} · ${syllabus.courseName}`}
+        subtitle={`${child.name} · ${syllabus.courseName}`}
+        metric={<HeroMetric label={debt > 0 ? 'Công nợ' : 'Trạng thái'} value={debt > 0 ? formatCurrency(debt) : 'Đủ'} />}
       />
 
       <div className="mb-5">
@@ -68,19 +71,19 @@ export function ParentFinance() {
 
       {/* Summary */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-        <Stat label="Đã thanh toán (đã xác nhận)" value={formatCurrency(confirmedTotal)} tone="success" />
-        <Stat label="Công nợ còn lại" value={formatCurrency(debt)} tone={debt > 0 ? 'warning' : 'default'} />
-        <Stat label="Kỳ đến hạn" value={debt > 0 ? (tuition?.dueDate ?? '—') : 'Đã đóng đủ'} tone={debt > 0 ? 'danger' : 'success'} small />
+        <Stat icon={CheckCircle2} label="Đã thanh toán (đã xác nhận)" value={formatCurrency(confirmedTotal)} tone="success" />
+        <Stat icon={Wallet} label="Công nợ còn lại" value={formatCurrency(debt)} tone={debt > 0 ? 'warning' : 'default'} />
+        <Stat icon={CalendarClock} label="Kỳ đến hạn" value={debt > 0 ? (tuition?.dueDate ?? '—') : 'Đã đóng đủ'} tone={debt > 0 ? 'danger' : 'success'} small />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
         {/* Left: due payment + history */}
         <div className="lg:col-span-2 space-y-6">
           {/* Khoản cần thanh toán */}
           <section className="space-y-3">
             <h2 className="text-base font-bold text-foreground uppercase tracking-wider">Khoản cần thanh toán</h2>
             {debt > 0 ? (
-              <Card className="border-amber-500/30 bg-amber-500/[0.03] rounded-2xl shadow-none">
+              <Card className="border-caution/30 bg-caution/[0.03] rounded-2xl shadow-none">
                 <CardContent className="p-5 space-y-4">
                   <div className="flex items-start justify-between gap-3">
                     <div>
@@ -88,17 +91,17 @@ export function ParentFinance() {
                       <h3 className="text-base font-bold text-foreground mt-0.5">Học phí {syllabus.courseName}</h3>
                       <p className="text-3xl font-bold text-primary mt-2">{formatCurrency(tuition?.amount ?? 0)}</p>
                     </div>
-                    <Badge className="bg-destructive text-white text-sm font-black px-2.5 py-1 rounded-md shrink-0">Chưa thanh toán</Badge>
+                    <Badge className="bg-destructive text-white text-sm font-bold px-2.5 py-1 rounded-md shrink-0">Chưa thanh toán</Badge>
                   </div>
                   <div className="flex items-center gap-2 text-sm text-muted-foreground bg-card/60 p-3 rounded-xl border border-border/40 font-semibold">
-                    <CalendarClock className="size-4 text-amber-600 shrink-0" />
+                    <CalendarClock className="size-4 text-caution shrink-0" />
                     Hạn đóng: <strong>{tuition?.dueDate}</strong> (còn {tuition?.daysLeft} ngày)
                   </div>
                   <button
                     onClick={() => setShowQR(true)}
-                    className="w-full h-11 rounded-xl bg-primary text-sm font-black text-primary-foreground hover:opacity-90 cursor-pointer flex items-center justify-center gap-2"
+                    className="w-full h-11 rounded-xl bg-primary text-sm font-bold text-primary-foreground hover:opacity-90 cursor-pointer flex items-center justify-center gap-2"
                   >
-                    <QrCode className="size-4.5" /> Thanh toán qua VietQR
+                    <QrCode className="size-5" /> Thanh toán qua VietQR
                   </button>
                 </CardContent>
               </Card>
@@ -131,7 +134,7 @@ export function ParentFinance() {
                           <p className="text-sm text-muted-foreground font-medium mt-0.5">{tx.date} · {tx.method}</p>
                         </div>
                         <div className="flex items-center gap-3 shrink-0">
-                          <span className="text-sm font-black text-foreground">{formatCurrency(tx.amount)}</span>
+                          <span className="text-sm font-bold text-foreground">{formatCurrency(tx.amount)}</span>
                           <Badge className="bg-success/15 text-success border border-success/30 text-sm font-bold px-2.5 py-1 rounded-md">Đã xác nhận</Badge>
                         </div>
                       </div>
@@ -181,7 +184,7 @@ export function ParentFinance() {
                   <div>Số tiền: <span className="font-extrabold">{formatCurrency(tuition?.amount ?? 0)}</span></div>
                 </div>
                 <button onClick={handlePay} disabled={paying}
-                  className="w-full h-11 rounded-xl bg-primary text-sm font-black text-primary-foreground hover:opacity-90 disabled:opacity-50 cursor-pointer">
+                  className="w-full h-11 rounded-xl bg-primary text-sm font-bold text-primary-foreground hover:opacity-90 disabled:opacity-50 cursor-pointer">
                   {paying ? 'Đang xác nhận...' : 'Tôi đã chuyển khoản'}
                 </button>
               </>
@@ -193,14 +196,21 @@ export function ParentFinance() {
   )
 }
 
-function Stat({ label, value, tone, small }: { label: string; value: string; tone: 'success' | 'warning' | 'danger' | 'default'; small?: boolean }) {
-  const cls =
-    tone === 'success' ? 'text-success' : tone === 'warning' ? 'text-amber-600' : tone === 'danger' ? 'text-destructive' : 'text-foreground'
+function Stat({ icon: Icon, label, value, tone, small }: { icon: LucideIcon; label: string; value: string; tone: 'success' | 'warning' | 'danger' | 'default'; small?: boolean }) {
+  const badgeCls =
+    tone === 'success' ? 'bg-success/10 text-success' : tone === 'warning' ? 'bg-caution/10 text-caution' : tone === 'danger' ? 'bg-destructive/10 text-destructive' : 'bg-muted text-muted-foreground'
+  const valueCls =
+    tone === 'success' ? 'text-success' : tone === 'warning' ? 'text-caution' : tone === 'danger' ? 'text-destructive' : 'text-foreground'
   return (
     <Card className="border-border/60 rounded-2xl shadow-none">
-      <CardContent className="p-4">
-        <p className="text-sm text-muted-foreground font-medium leading-tight">{label}</p>
-        <p className={cn('font-bold mt-1', small ? 'text-lg' : 'text-xl', cls)}>{value}</p>
+      <CardContent className="flex items-center gap-3 p-4">
+        <span className={cn('grid size-10 shrink-0 place-items-center rounded-xl', badgeCls)}>
+          <Icon className="size-5" />
+        </span>
+        <div className="min-w-0">
+          <p className={cn('font-bold tabular-nums leading-tight', small ? 'text-base' : 'text-xl', valueCls)}>{value}</p>
+          <p className="mt-0.5 truncate text-xs text-muted-foreground font-medium leading-tight">{label}</p>
+        </div>
       </CardContent>
     </Card>
   )

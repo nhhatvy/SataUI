@@ -104,7 +104,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-4">
             <Link
               href="/login"
-              className="inline-flex items-center justify-center rounded-xl bg-orange-500 hover:bg-orange-600 px-5 py-2.5 text-sm font-black text-white shadow-lg shadow-orange-500/10 transition-all active:scale-95 cursor-pointer"
+              className="inline-flex items-center justify-center rounded-xl bg-orange-500 hover:bg-orange-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-orange-500/10 transition-all active:scale-95 cursor-pointer"
             >
               Vào Demo
               <ArrowRight className="ml-1.5 size-4" />
@@ -126,7 +126,7 @@ export default function LandingPage() {
               Công nghệ giáo dục STEM chuẩn quốc tế
             </div>
 
-            <h1 className="text-4xl font-black tracking-tight sm:text-6xl text-white leading-[1.1]">
+            <h1 className="text-4xl font-bold tracking-tight sm:text-6xl text-white leading-[1.1]">
               Khơi dậy tư duy sáng tạo cùng <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-amber-500">SataRobo</span>
             </h1>
 
@@ -137,7 +137,7 @@ export default function LandingPage() {
             <div className="flex flex-wrap gap-4 pt-2">
               <Link
                 href="/login"
-                className="inline-flex items-center justify-center rounded-2xl bg-orange-500 hover:bg-orange-600 px-8 py-4 text-base font-black text-white shadow-xl shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
+                className="inline-flex items-center justify-center rounded-2xl bg-orange-500 hover:bg-orange-600 px-8 py-4 text-base font-bold text-white shadow-xl shadow-orange-500/20 transition-all active:scale-95 cursor-pointer"
               >
                 Khám phá ngay
                 <ArrowRight className="ml-2 size-5" />
@@ -169,7 +169,7 @@ export default function LandingPage() {
                   Báo cáo trực quan cho phụ huynh. Bài giảng video sinh động tích lũy phần thưởng cho con.
                 </p>
               </div>
-              <div className="flex gap-2 text-sm font-black">
+              <div className="flex gap-2 text-sm font-bold">
                 <Link href="/login" className="flex-1 text-center py-3 rounded-xl bg-orange-500/10 border border-orange-500/20 text-orange-400 hover:bg-orange-500 hover:text-white transition-all cursor-pointer">
                   Cổng Phụ huynh
                 </Link>
@@ -187,7 +187,7 @@ export default function LandingPage() {
         <div className="mx-auto max-w-7xl px-6 py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat, idx) => (
             <div key={idx} className="text-center">
-              <div className="text-3xl sm:text-4xl font-black text-white">{stat.value}</div>
+              <div className="text-3xl sm:text-4xl font-bold text-white">{stat.value}</div>
               <div className="text-sm text-slate-400 mt-1">{stat.label}</div>
             </div>
           ))}
@@ -197,8 +197,8 @@ export default function LandingPage() {
       {/* Courses Section */}
       <section id="courses" className="py-24 max-w-7xl mx-auto px-6">
         <div className="text-center space-y-3 mb-16">
-          <h2 className="text-sm font-black tracking-widest text-primary uppercase">Chương trình đào tạo</h2>
-          <h3 className="text-3xl font-black sm:text-4xl text-white">Khóa học robotics & tư duy thuật toán</h3>
+          <h2 className="text-sm font-bold tracking-widest text-primary uppercase">Chương trình đào tạo</h2>
+          <h3 className="text-3xl font-bold sm:text-4xl text-white">Khóa học robotics & tư duy thuật toán</h3>
           <p className="text-slate-400 text-sm max-w-xl mx-auto leading-relaxed">
             Các lớp học được chia theo độ tuổi và năng lực để đảm bảo lộ trình tiếp thu tự nhiên, hứng thú và đạt chất lượng tốt nhất.
           </p>
@@ -232,8 +232,8 @@ export default function LandingPage() {
       <section id="benefits" className="py-24 bg-slate-900/20 border-y border-slate-900">
         <div className="max-w-7xl mx-auto px-6 grid gap-16 lg:grid-cols-12 items-center">
           <div className="lg:col-span-5 space-y-6">
-            <h2 className="text-sm font-black tracking-widest text-primary uppercase">Tại sao chọn SataRobo?</h2>
-            <h3 className="text-3xl font-black text-white leading-tight">Phương pháp giáo dục tiên tiến kiến tạo tương lai</h3>
+            <h2 className="text-sm font-bold tracking-widest text-primary uppercase">Tại sao chọn SataRobo?</h2>
+            <h3 className="text-3xl font-bold text-white leading-tight">Phương pháp giáo dục tiên tiến kiến tạo tương lai</h3>
             <p className="text-slate-400 text-sm leading-relaxed">
               Chúng tôi không chỉ dạy trẻ lập trình. SataRobo giúp trẻ rèn luyện khả năng chia nhỏ vấn đề, cải thiện tính kiên nhẫn và khám phá giải pháp sáng tạo qua từng sản phẩm hoàn thiện.
             </p>
@@ -254,7 +254,7 @@ export default function LandingPage() {
                     <Icon className="size-5" />
                   </span>
                   <div>
-                    <h4 className="text-sm font-black text-white">{b.title}</h4>
+                    <h4 className="text-sm font-bold text-white">{b.title}</h4>
                     <p className="text-sm text-slate-400 mt-1.5 leading-relaxed">{b.desc}</p>
                   </div>
                 </div>
@@ -267,8 +267,8 @@ export default function LandingPage() {
       {/* Testimonials Section */}
       <section id="testimonials" className="py-24 max-w-7xl mx-auto px-6">
         <div className="text-center space-y-3 mb-16">
-          <h2 className="text-sm font-black tracking-widest text-primary uppercase font-bold">Ý kiến khách hàng</h2>
-          <h3 className="text-3xl font-black sm:text-4xl text-white">Chia sẻ chân thực từ các phụ huynh</h3>
+          <h2 className="text-sm font-bold tracking-widest text-primary uppercase font-bold">Ý kiến khách hàng</h2>
+          <h3 className="text-3xl font-bold sm:text-4xl text-white">Chia sẻ chân thực từ các phụ huynh</h3>
         </div>
 
         <div className="grid gap-8 md:grid-cols-2">
@@ -279,11 +279,11 @@ export default function LandingPage() {
                 "{t.comment}"
               </p>
               <div className="flex items-center gap-3">
-                <span className="grid size-10 place-items-center rounded-full bg-primary/10 text-primary font-black text-sm">
+                <span className="grid size-10 place-items-center rounded-full bg-primary/10 text-primary font-bold text-sm">
                   {t.name.split(' ').pop()?.slice(0, 2).toUpperCase()}
                 </span>
                 <div>
-                  <h4 className="text-sm font-black text-white">{t.name}</h4>
+                  <h4 className="text-sm font-bold text-white">{t.name}</h4>
                   <p className="text-xs text-slate-500 font-bold mt-0.5">{t.role}</p>
                 </div>
               </div>
@@ -296,7 +296,7 @@ export default function LandingPage() {
       <section className="py-20 max-w-7xl mx-auto px-6">
         <div className="relative rounded-3xl bg-gradient-to-r from-orange-500 to-amber-500 p-8 sm:p-12 text-center text-white overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-400/20 via-transparent to-transparent pointer-events-none" />
-          <h3 className="text-3xl sm:text-5xl font-black tracking-tight leading-none text-white">
+          <h3 className="text-3xl sm:text-5xl font-bold tracking-tight leading-none text-white">
             Sẵn sàng đồng hành cùng sự phát triển của con?
           </h3>
           <p className="mt-4 text-sm sm:text-base text-white/90 max-w-2xl mx-auto leading-relaxed">
@@ -305,7 +305,7 @@ export default function LandingPage() {
           <div className="mt-8 flex justify-center">
             <Link
               href="/login"
-              className="inline-flex items-center justify-center rounded-2xl bg-white hover:bg-slate-50 px-8 py-4 text-base font-black text-orange-600 transition-all shadow-xl hover:shadow-white/10 active:scale-95 cursor-pointer"
+              className="inline-flex items-center justify-center rounded-2xl bg-white hover:bg-slate-50 px-8 py-4 text-base font-bold text-orange-600 transition-all shadow-xl hover:shadow-white/10 active:scale-95 cursor-pointer"
             >
               Vào trải nghiệm Demo ngay
               <ArrowRight className="ml-2 size-5" />
@@ -339,12 +339,12 @@ export default function LandingPage() {
           </div>
 
           <div className="p-6 rounded-2xl border border-slate-800 bg-slate-900/20">
-            <h4 className="text-sm font-black text-white mb-4">Gửi tin nhắn nhanh</h4>
+            <h4 className="text-sm font-bold text-white mb-4">Gửi tin nhắn nhanh</h4>
             <form onSubmit={(e) => { e.preventDefault(); alert('Cảm ơn bạn đã gửi liên hệ! Chúng tôi sẽ phản hồi sớm nhất.') }} className="space-y-3">
               <input type="text" placeholder="Họ và tên phụ huynh" required className="w-full text-sm rounded-xl border border-slate-800 bg-slate-950 p-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none animate-none" />
               <input type="email" placeholder="Địa chỉ Email" required className="w-full text-sm rounded-xl border border-slate-800 bg-slate-950 p-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none animate-none" />
               <textarea placeholder="Nội dung cần hỗ trợ..." rows={3} required className="w-full text-sm rounded-xl border border-slate-800 bg-slate-950 p-3 text-white placeholder-slate-500 focus:border-primary focus:outline-none animate-none" />
-              <button type="submit" className="w-full py-3 rounded-xl bg-orange-500 text-sm font-black text-white hover:bg-orange-600 cursor-pointer">Gửi thông tin</button>
+              <button type="submit" className="w-full py-3 rounded-xl bg-orange-500 text-sm font-bold text-white hover:bg-orange-600 cursor-pointer">Gửi thông tin</button>
             </form>
           </div>
         </div>

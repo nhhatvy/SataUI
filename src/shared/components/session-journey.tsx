@@ -51,7 +51,7 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
               <div key={lesson.index} className="relative z-10 flex flex-col items-center">
                 {/* Current marker */}
                 {isToday && (
-                  <span className="absolute -top-6 sm:-top-7 text-[9px] sm:text-[10px] font-black text-primary uppercase whitespace-nowrap tracking-wider animate-bounce">
+                  <span className="absolute -top-6 sm:-top-7 text-[9px] sm:text-[10px] font-bold text-primary uppercase whitespace-nowrap tracking-wider animate-bounce">
                     hôm nay ▾
                   </span>
                 )}
@@ -104,7 +104,7 @@ export function SessionJourney({ childId, variant = 'line' }: SessionJourneyProp
               key={lesson.index}
               title={`Buổi ${lesson.index}: ${lesson.title}`}
               className={cn(
-                'grid aspect-square size-9 place-items-center rounded-full border-2 text-xs font-black transition-all cursor-default',
+                'grid aspect-square size-9 place-items-center rounded-full border-2 text-xs font-bold transition-all cursor-default',
                 style.bg,
                 style.border,
                 style.ring,

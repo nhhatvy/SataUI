@@ -47,7 +47,7 @@ export function ProfileSwitcher() {
         className="flex min-w-0 max-w-[55vw] items-center gap-2.5 rounded-xl border border-accent/30 bg-accent-soft text-accent px-2.5 py-1.5 text-sm font-bold transition-colors cursor-pointer select-none focus:outline-none sm:max-w-none sm:px-3"
       >
         <span
-          className="grid size-6 shrink-0 place-items-center rounded-md text-[10px] font-black text-white"
+          className="grid size-6 shrink-0 place-items-center rounded-md text-xs font-bold text-white"
           style={{
             backgroundColor: isStudentMode ? child?.avatarColor : 'var(--parent)',
           }}
@@ -56,7 +56,7 @@ export function ProfileSwitcher() {
         </span>
         {/* Ẩn nhãn chữ trên mobile để header gọn, tránh tràn ngang */}
         <span className="hidden sm:flex flex-col items-start leading-tight min-w-0">
-          <span className="text-[10px] font-black uppercase tracking-wider opacity-70">
+          <span className="text-xs font-bold uppercase tracking-wider opacity-70">
             {isStudentMode ? 'Học sinh' : 'Phụ huynh'}
           </span>
           <span className="text-sm font-bold truncate max-w-[12rem]">
@@ -88,7 +88,7 @@ export function ProfileSwitcher() {
         </DropdownMenuItem>
 
         <DropdownMenuSeparator />
-        <DropdownMenuLabel className="text-[10px] font-black uppercase tracking-wider text-muted-foreground">
+        <DropdownMenuLabel className="text-xs font-bold uppercase tracking-wider text-muted-foreground">
           Các con
         </DropdownMenuLabel>
 
@@ -106,7 +106,7 @@ export function ProfileSwitcher() {
               )}
             >
               <span
-                className="grid size-7 place-items-center rounded-lg text-[10px] font-black text-white"
+                className="grid size-7 place-items-center rounded-lg text-xs font-bold text-white"
                 style={{ backgroundColor: c.avatarColor }}
               >
                 {c.initials}

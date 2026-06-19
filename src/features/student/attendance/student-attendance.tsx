@@ -71,7 +71,7 @@ export function StudentAttendance() {
                       className={cn('w-full text-left p-3.5 flex items-center gap-3 transition-colors relative', selected ? 'bg-primary/5' : 'hover:bg-muted')}
                     >
                       {selected && <span className="absolute left-0 top-0 bottom-0 w-1 bg-primary" />}
-                      <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-black shrink-0',
+                      <span className={cn('grid size-8 place-items-center rounded-lg text-sm font-bold shrink-0',
                         l.progress === 'done' ? 'bg-success text-primary-foreground' : l.progress === 'current' ? 'bg-primary text-primary-foreground' : 'bg-muted text-muted-foreground')}>
                         {l.progress === 'done' ? '✓' : l.index}
                       </span>
@@ -79,7 +79,7 @@ export function StudentAttendance() {
                         <p className={cn('text-sm leading-snug truncate', selected ? 'font-bold text-foreground' : 'font-semibold text-foreground')}>Buổi {l.index}: {l.title}</p>
                         <p className="text-xs text-muted-foreground font-medium mt-0.5">{l.date}</p>
                       </div>
-                      <Badge className={cn('text-[10px] font-bold px-1.5 py-0.5 rounded-md border shadow-none shrink-0', ATT_META[att].cls)}>{ATT_META[att].label}</Badge>
+                      <Badge className={cn('text-xs font-bold px-1.5 py-0.5 rounded-md border shadow-none shrink-0', ATT_META[att].cls)}>{ATT_META[att].label}</Badge>
                     </button>
                   )
                 })}
@@ -143,7 +143,7 @@ function Detail({ lesson, att, objectives, onBack }: { lesson: any; att: AttStat
                   <Badge className={cn('text-xs font-bold px-2 py-0.5 rounded-md border-none', hw.state === 'submitted' ? 'bg-success/15 text-success' : hw.state === 'overdue' ? 'bg-destructive/15 text-destructive' : 'bg-amber-500/15 text-amber-600')}>
                     {hw.state === 'submitted' ? 'Đã làm' : hw.state === 'overdue' ? 'Quá hạn' : 'Chưa làm'}
                   </Badge>
-                  <Link href={`/student/homework/${hw.quizId}`} className="h-9 px-3.5 grid place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-black hover:opacity-90">
+                  <Link href={`/student/homework/${hw.quizId}`} className="h-9 px-3.5 grid place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-bold hover:opacity-90">
                     {hw.state === 'submitted' ? 'Làm lại' : 'Làm bài'}
                   </Link>
                 </div>

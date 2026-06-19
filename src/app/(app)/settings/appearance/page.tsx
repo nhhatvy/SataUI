@@ -169,7 +169,7 @@ export default function AppearancePage() {
                       >
                         {on && <Check className="size-5" />}
                       </span>
-                      <span className={cn('text-[10px] font-black uppercase tracking-wide', on ? 'text-primary' : 'text-muted-foreground')}>
+                      <span className={cn('text-xs font-bold uppercase tracking-wide', on ? 'text-primary' : 'text-muted-foreground')}>
                         {p.name}{def ? ' ✓' : ''}
                       </span>
                     </button>
@@ -199,7 +199,7 @@ export default function AppearancePage() {
                       className="w-[7rem] bg-transparent font-semibold uppercase tracking-wider outline-none text-foreground"
                     />
                   </div>
-                  <span className="inline-flex items-center rounded-lg px-3.5 h-9 text-sm font-black" style={{ backgroundColor: accent, color: ink }}>
+                  <span className="inline-flex items-center rounded-lg px-3.5 h-9 text-sm font-bold" style={{ backgroundColor: accent, color: ink }}>
                     Aa Nút
                   </span>
                 </div>
@@ -226,7 +226,7 @@ export default function AppearancePage() {
             <CardContent className="p-0">
               <div className="flex items-center justify-between px-4 py-3 border-b border-border/60">
                 <span className="text-sm font-bold text-foreground">Xem trước</span>
-                <span className="text-[10px] font-black uppercase tracking-wide rounded-full px-2.5 py-1 bg-primary/15 text-primary">
+                <span className="text-xs font-bold uppercase tracking-wide rounded-full px-2.5 py-1 bg-primary/15 text-primary">
                   {role === 'parent' ? 'Phụ huynh' : 'Học sinh'}
                 </span>
               </div>
@@ -241,20 +241,20 @@ export default function AppearancePage() {
                   </div>
                   <div className="flex-1 bg-card p-3.5 flex flex-col gap-2.5">
                     <div className="flex items-center gap-2.5">
-                      <span className="grid size-8 place-items-center rounded-full text-xs font-black" style={{ borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--primary)', color: 'var(--primary)' }}>BM</span>
+                      <span className="grid size-8 place-items-center rounded-full text-xs font-bold" style={{ borderWidth: 2, borderStyle: 'solid', borderColor: 'var(--primary)', color: 'var(--primary)' }}>BM</span>
                       <div className="space-y-1">
                         <span className="block h-2 w-20 rounded bg-foreground/80" />
                         <span className="block h-1.5 w-14 rounded bg-muted-foreground/60" />
                       </div>
                     </div>
                     <div className="flex gap-1.5">
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-primary/15 text-primary">Tiến độ</span>
-                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-success/15 text-success">Đã bù</span>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-primary/15 text-primary">Tiến độ</span>
+                      <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-success/15 text-success">Đã bù</span>
                     </div>
                     <div className="h-2 rounded-full bg-muted overflow-hidden">
                       <span className="block h-full rounded-full" style={{ width: '62%', backgroundColor: 'var(--primary)' }} />
                     </div>
-                    <button className="mt-auto self-start text-xs font-black px-3.5 py-2 rounded-lg" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}>
+                    <button className="mt-auto self-start text-xs font-bold px-3.5 py-2 rounded-lg" style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}>
                       Xem chi tiết
                     </button>
                   </div>
@@ -276,7 +276,7 @@ export default function AppearancePage() {
         <button
           onClick={onSave}
           disabled={!dirty}
-          className="inline-flex items-center gap-2 h-11 px-6 rounded-xl text-sm font-black transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+          className="inline-flex items-center gap-2 h-11 px-6 rounded-xl text-sm font-bold transition-all disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           style={{ backgroundColor: 'var(--primary)', color: 'var(--primary-foreground)' }}
         >
           {justSaved ? <CheckCircle2 className="size-4.5" /> : <Save className="size-4.5" />}
@@ -291,7 +291,7 @@ function SectionTitle({ num, title, desc }: { num: number; title: string; desc: 
   return (
     <div className="mb-4">
       <h2 className="flex items-center gap-2.5 text-base font-bold text-foreground">
-        <span className="grid size-6 place-items-center rounded-md bg-primary/15 text-primary text-xs font-black">{num}</span>
+        <span className="grid size-6 place-items-center rounded-md bg-primary/15 text-primary text-xs font-bold">{num}</span>
         {title}
       </h2>
       <p className="text-sm text-muted-foreground mt-1.5 ml-8">{desc}</p>

@@ -7,12 +7,12 @@ import { Dialog, DialogContent, DialogTitle } from '@/shared/components/ui/dialo
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { getMakeupData, type MissedSession, type MakeupHistory } from '@/shared/mock-data/student-data'
 import { cn } from '@/shared/utils/utils'
-import { PageHeader } from '@/shared/components/page-header'
-import { CalendarClock, MapPin, Clock, Users, CheckCircle2, AlertTriangle, History as HistoryIcon, Building2 } from 'lucide-react'
+import { PageHero, HeroMetric } from '@/shared/components/page-header'
+import { CalendarClock, MapPin, Clock, Users, CheckCircle2, AlertTriangle, History as HistoryIcon, Building2, type LucideIcon } from 'lucide-react'
 
 const statusMeta: Record<MakeupHistory['status'], { label: string; cls: string }> = {
-  pending: { label: 'Đang chờ duyệt', cls: 'bg-amber-500/15 text-amber-600 border border-amber-500/30' },
-  approved: { label: 'Đã duyệt', cls: 'bg-blue-500/15 text-blue-600 border border-blue-500/30' },
+  pending: { label: 'Đang chờ duyệt', cls: 'bg-caution/15 text-caution border border-caution/30' },
+  approved: { label: 'Đã duyệt', cls: 'bg-info/15 text-info border border-info/30' },
   done: { label: 'Đã học bù', cls: 'bg-success/15 text-success border border-success/30' },
 }
 
@@ -62,20 +62,23 @@ export function ParentMakeup() {
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-      <PageHeader
+      <PageHero
         icon={CalendarClock}
+        accent="parent"
+        overline="Cổng phụ huynh"
         title="Yêu cầu học bù"
-        subtitle={`Đăng ký và theo dõi lịch học bù cho ${child.name}. Hệ thống đề xuất lớp phù hợp, ưu tiên cơ sở của con.`}
+        subtitle={`${child.name} · Hệ thống đề xuất lớp phù hợp, ưu tiên cơ sở của con.`}
+        metric={<HeroMetric label="Cần học bù" value={`${data.missed.length}`} />}
       />
 
       {/* Summary */}
       <div className="grid grid-cols-3 gap-3 mb-6">
-        <SummaryStat label="Buổi cần học bù" value={data.missed.length} tone="warning" />
-        <SummaryStat label="Đang chờ duyệt" value={pendingCount} tone="blue" />
-        <SummaryStat label="Đã học bù" value={doneCount} tone="success" />
+        <SummaryStat icon={AlertTriangle} label="Buổi cần học bù" value={data.missed.length} tone="warning" />
+        <SummaryStat icon={Clock} label="Đang chờ duyệt" value={pendingCount} tone="blue" />
+        <SummaryStat icon={CheckCircle2} label="Đã học bù" value={doneCount} tone="success" />
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3 lg:items-start">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
         {/* Left: missed sessions + history */}
         <div className="lg:col-span-2 space-y-6">
           {/* Buổi cần học bù */}
@@ -90,10 +93,10 @@ export function ParentMakeup() {
               </Card>
             ) : (
               data.missed.map((m) => (
-                <Card key={m.id} className="border-amber-500/30 bg-amber-500/[0.03] rounded-2xl shadow-none">
+                <Card key={m.id} className="border-caution/30 bg-caution/[0.03] rounded-2xl shadow-none">
                   <CardContent className="p-5 flex flex-wrap items-center justify-between gap-3">
                     <div className="flex items-start gap-3 min-w-0">
-                      <span className="grid size-10 place-items-center rounded-xl bg-amber-500/15 text-amber-600 shrink-0">
+                      <span className="grid size-10 place-items-center rounded-xl bg-caution/15 text-caution shrink-0">
                         <AlertTriangle className="size-5" />
                       </span>
                       <div className="min-w-0">
@@ -103,7 +106,7 @@ export function ParentMakeup() {
                     </div>
                     <button
                       onClick={() => openFinder(m)}
-                      className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer shrink-0"
+                      className="flex items-center gap-1.5 h-10 px-4 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer shrink-0"
                     >
                       <CalendarClock className="size-4" /> Tìm lịch học bù
                     </button>
@@ -205,7 +208,7 @@ export function ParentMakeup() {
                   <button
                     onClick={submitRequest}
                     disabled={!pickedId}
-                    className="w-full h-11 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                    className="w-full h-11 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
                   >
                     Gửi yêu cầu học bù
                   </button>
@@ -245,12 +248,12 @@ function CampusGroup({
               key={s.id}
               onClick={() => onPick(s.id)}
               className={cn(
-                'w-full text-left p-3.5 rounded-xl border transition-all cursor-pointer',
+                'w-full text-left p-4 rounded-xl border transition-all cursor-pointer',
                 picked ? 'border-primary bg-primary/5 shadow-2xs' : 'border-border bg-card hover:border-border'
               )}
             >
               <div className="flex items-center justify-between gap-2">
-                <span className="text-sm font-black text-foreground">Lớp {s.className}</span>
+                <span className="text-sm font-bold text-foreground">Lớp {s.className}</span>
                 <Badge className="bg-muted text-muted-foreground border-none text-xs font-bold px-2 py-0.5 rounded-md">
                   <Users className="size-3 mr-1" /> Còn {s.seatsLeft} chỗ
                 </Badge>
@@ -267,13 +270,19 @@ function CampusGroup({
   )
 }
 
-function SummaryStat({ label, value, tone }: { label: string; value: number; tone: 'warning' | 'blue' | 'success' }) {
-  const toneCls = tone === 'warning' ? 'text-amber-600' : tone === 'blue' ? 'text-blue-600' : 'text-success'
+function SummaryStat({ icon: Icon, label, value, tone }: { icon: LucideIcon; label: string; value: number; tone: 'warning' | 'blue' | 'success' }) {
+  const badgeCls = tone === 'warning' ? 'bg-caution/10 text-caution' : tone === 'blue' ? 'bg-info/10 text-info' : 'bg-success/10 text-success'
+  const valueCls = tone === 'warning' ? 'text-caution' : tone === 'blue' ? 'text-info' : 'text-success'
   return (
     <Card className="border-border/60 rounded-2xl shadow-none">
-      <CardContent className="p-4 text-center">
-        <p className={cn('text-2xl font-bold', toneCls)}>{value}</p>
-        <p className="text-sm text-muted-foreground font-medium mt-0.5 leading-tight">{label}</p>
+      <CardContent className="flex flex-col items-center gap-1 p-4 text-center sm:flex-row sm:gap-3 sm:text-left">
+        <span className={cn('grid size-10 shrink-0 place-items-center rounded-xl', badgeCls)}>
+          <Icon className="size-5" />
+        </span>
+        <div className="min-w-0">
+          <p className={cn('text-lg font-bold tabular-nums leading-tight sm:text-xl', valueCls)}>{value}</p>
+          <p className="text-xs text-muted-foreground font-medium leading-tight mt-0.5">{label}</p>
+        </div>
       </CardContent>
     </Card>
   )

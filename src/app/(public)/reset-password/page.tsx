@@ -28,7 +28,7 @@ export default function ResetPasswordPage() {
           <div className="mb-4">
             <Logo />
           </div>
-          <CardTitle className="text-xl font-black text-slate-900">Quên mật khẩu?</CardTitle>
+          <CardTitle className="text-xl font-bold text-slate-900">Quên mật khẩu?</CardTitle>
           <CardDescription className="text-center text-sm font-medium text-slate-500 mt-1">
             {success
               ? 'Kiểm tra hòm thư của bạn để nhận hướng dẫn khôi phục.'

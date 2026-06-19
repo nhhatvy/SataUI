@@ -27,7 +27,7 @@ export function ErrorState({
       {onRetry && (
         <button
           onClick={onRetry}
-          className="mt-5 rounded-xl bg-destructive px-4 py-2.5 text-sm font-black text-white hover:opacity-90 transition-all cursor-pointer shadow-md shadow-destructive/15"
+          className="mt-5 rounded-xl bg-destructive px-4 py-2.5 text-sm font-bold text-white hover:opacity-90 transition-all cursor-pointer shadow-md shadow-destructive/15"
         >
           {retryLabel}
         </button>

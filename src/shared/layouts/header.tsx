@@ -46,12 +46,12 @@ const notiIcon = {
 }
 const notiColor = {
   study: 'text-primary bg-primary/10',
-  comment: 'text-blue-500 bg-blue-500/10',
-  finance: 'text-amber-500 bg-amber-500/10',
-  makeup: 'text-indigo-500 bg-indigo-500/10',
+  comment: 'text-info bg-info/10',
+  finance: 'text-caution bg-caution/10',
+  makeup: 'text-quiz bg-quiz/10',
   survey: 'text-success bg-success/10',
-  report: 'text-orange-500 bg-orange-500/10',
-  schedule: 'text-pink-500 bg-pink-500/10',
+  report: 'text-report bg-report/10',
+  schedule: 'text-schedule-cat bg-schedule-cat/10',
 }
 
 export function Header() {

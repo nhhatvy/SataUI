@@ -165,7 +165,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                       <Badge className="bg-amber-500/15 text-amber-600 border border-amber-500/30 text-xs font-bold px-2 py-0.5 rounded-md">Chưa làm</Badge>
                     )}
                   </div>
-                  <Badge className="bg-muted text-muted-foreground border-none text-[11px] font-bold px-2 py-0.5 rounded-md w-fit mb-1.5">{s.category}</Badge>
+                  <Badge className="bg-muted text-muted-foreground border-none text-xs font-bold px-2 py-0.5 rounded-md w-fit mb-1.5">{s.category}</Badge>
                   <h3 className="text-base font-bold text-foreground leading-snug">{s.title}</h3>
                   <p className="text-sm text-muted-foreground font-medium mt-1 flex-1">{s.subtitle}</p>
                   <div className="flex items-center justify-between mt-4 pt-3 border-t border-border/50">
@@ -209,7 +209,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
             Cảm ơn ý kiến của bạn cho khảo sát <strong>{activeSurvey.title}</strong>. SataRobo sẽ tiếp thu để cải thiện.
           </p>
           {!defaultSurveyId && (
-            <button onClick={() => setActiveId(null)} className="rounded-xl bg-primary text-primary-foreground px-5 py-2.5 text-sm font-black hover:opacity-90 cursor-pointer">
+            <button onClick={() => setActiveId(null)} className="rounded-xl bg-primary text-primary-foreground px-5 py-2.5 text-sm font-bold hover:opacity-90 cursor-pointer">
               Về danh sách khảo sát
             </button>
           )}
@@ -296,7 +296,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
                         <input type="range" min={f.min || 1} max={f.max || 10} value={formData[f.id] || 5}
                           onChange={(e) => setFormData((p) => ({ ...p, [f.id]: parseInt(e.target.value) }))}
                           className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer accent-primary" />
-                        <span className="size-10 grid place-items-center bg-primary text-primary-foreground rounded-full text-base font-black shrink-0">{formData[f.id] || 5}</span>
+                        <span className="size-10 grid place-items-center bg-primary text-primary-foreground rounded-full text-base font-bold shrink-0">{formData[f.id] || 5}</span>
                       </div>
                       <div className="flex justify-between text-sm text-muted-foreground font-medium px-1">
                         <span>{f.minLabel || 'Thấp'}</span><span>{f.maxLabel || 'Cao'}</span>
@@ -315,7 +315,7 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
           )}
 
           <button type="submit" disabled={submitting}
-            className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-primary text-sm font-black text-primary-foreground hover:opacity-90 disabled:opacity-50 cursor-pointer">
+            className="w-full h-11 flex items-center justify-center gap-2 rounded-xl bg-primary text-sm font-bold text-primary-foreground hover:opacity-90 disabled:opacity-50 cursor-pointer">
             {submitting ? 'Đang gửi...' : <><Send className="size-4" /> Gửi khảo sát</>}
           </button>
         </form>

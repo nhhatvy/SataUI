@@ -66,7 +66,7 @@ export function ParentGallery() {
                 <section key={lesson.index}>
                   {/* Session header */}
                   <div className="flex items-center gap-2.5 mb-3">
-                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-black shrink-0">
+                    <span className="grid size-7 place-items-center rounded-lg bg-primary text-primary-foreground text-sm font-bold shrink-0">
                       {lesson.index}
                     </span>
                     <div className="min-w-0">
@@ -100,7 +100,7 @@ export function ParentGallery() {
                             </div>
                             {!child.imageConsent && (
                               <div className="absolute inset-0 flex items-center justify-center p-2 bg-black/40 text-center z-10">
-                                <span className="bg-destructive text-white text-xs font-black rounded-lg px-2 py-1 shadow-md flex items-center gap-1">
+                                <span className="bg-destructive text-white text-xs font-bold rounded-lg px-2 py-1 shadow-md flex items-center gap-1">
                                   🔒 Đã làm mờ
                                 </span>
                               </div>
@@ -143,7 +143,7 @@ export function ParentGallery() {
                 </button>
                 {!child.imageConsent && (
                   <div className="absolute inset-0 flex flex-col items-center justify-center p-6 bg-black/40 text-center z-10 space-y-2">
-                    <span className="bg-destructive text-white text-sm font-black rounded-lg px-3 py-1.5 shadow-md flex items-center gap-1.5">
+                    <span className="bg-destructive text-white text-sm font-bold rounded-lg px-3 py-1.5 shadow-md flex items-center gap-1.5">
                       🔒 Quyền riêng tư hình ảnh
                     </span>
                     <p className="text-sm text-white/90 max-w-sm leading-relaxed font-bold">

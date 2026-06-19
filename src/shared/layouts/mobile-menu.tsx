@@ -88,7 +88,7 @@ export function MobileMenu() {
 
           {/* Chuyển chế độ */}
           <div className="mt-4 px-3">
-            <p className="px-3 mb-1.5 text-[10px] font-black uppercase tracking-wider text-muted-foreground">Chuyển chế độ</p>
+            <p className="px-3 mb-1.5 text-xs font-bold uppercase tracking-wider text-muted-foreground">Chuyển chế độ</p>
             <button
               onClick={goParent}
               className={cn(
@@ -111,7 +111,7 @@ export function MobileMenu() {
                     active ? 'bg-primary/5 text-primary' : 'text-muted-foreground hover:bg-muted'
                   )}
                 >
-                  <span className="grid size-7 place-items-center rounded-lg text-[10px] font-black text-white shrink-0" style={{ backgroundColor: c.avatarColor }}>
+                  <span className="grid size-7 place-items-center rounded-lg text-xs font-bold text-white shrink-0" style={{ backgroundColor: c.avatarColor }}>
                     {c.initials}
                   </span>
                   <span className="flex-1 text-left truncate">{c.shortName}</span>

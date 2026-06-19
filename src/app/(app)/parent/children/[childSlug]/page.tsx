@@ -57,7 +57,7 @@ export default function ChildProfilePage() {
           </button>
           <div className="flex items-center gap-3">
             <span
-              className="grid size-11 place-items-center rounded-xl text-base font-black text-white"
+              className="grid size-11 place-items-center rounded-xl text-base font-bold text-white"
               style={{ backgroundColor: child.avatarColor }}
             >
               {child.initials}
@@ -70,7 +70,7 @@ export default function ChildProfilePage() {
         </div>
         <button
           onClick={openStudentMode}
-          className="hidden sm:flex items-center gap-1.5 px-4 h-10 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer"
+          className="hidden sm:flex items-center gap-1.5 px-4 h-10 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer"
         >
           Cổng học sinh <ArrowRight className="size-4" />
         </button>
@@ -166,7 +166,7 @@ export default function ChildProfilePage() {
 
       <button
         onClick={openStudentMode}
-        className="sm:hidden mt-6 w-full flex items-center justify-center gap-1.5 px-4 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-black cursor-pointer"
+        className="sm:hidden mt-6 w-full flex items-center justify-center gap-1.5 px-4 h-11 rounded-xl bg-primary text-primary-foreground text-sm font-bold cursor-pointer"
       >
         Mở Cổng học sinh của {child.shortName} <ArrowRight className="size-4" />
       </button>

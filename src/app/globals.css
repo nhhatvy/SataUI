@@ -16,6 +16,17 @@
   --color-parent-foreground: var(--parent-foreground);
   --color-warning: var(--warning);
   --color-warning-foreground: var(--warning-foreground);
+  /* Category palette — màu phân loại chức năng (docs §6.5) */
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-quiz: var(--quiz);
+  --color-quiz-foreground: var(--quiz-foreground);
+  --color-schedule-cat: var(--schedule-cat);
+  --color-schedule-cat-foreground: var(--schedule-cat-foreground);
+  --color-report: var(--report);
+  --color-report-foreground: var(--report-foreground);
+  --color-caution: var(--caution);
+  --color-caution-foreground: var(--caution-foreground);
   
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
@@ -141,6 +152,15 @@
   
   --warning: #FFAE56;
   --warning-foreground: oklch(0.31 0.06 60);
+
+  /* Category palette — màu phân loại chức năng (notification, loại bài, trạng thái phụ).
+     Token hoá đúng tông hiện có; đọc được làm chữ trên nền sáng, tint nền qua opacity:
+     vd `bg-info/10 text-info`. Xem docs/ui-design-system.md §6.5. */
+  --info: #3B82F6;            --info-foreground: #ffffff;       /* blue   — thông tin / nhận xét */
+  --quiz: #6366F1;            --quiz-foreground: #ffffff;       /* indigo — kiểm tra / học bù */
+  --schedule-cat: #EC4899;    --schedule-cat-foreground: #ffffff; /* pink — lịch học */
+  --report: #F97316;          --report-foreground: #ffffff;     /* orange — học bạ / báo cáo */
+  --caution: #D97706;         --caution-foreground: #ffffff;    /* amber  — cảnh báo nhẹ / chờ xử lý */
   
   --border: oklch(0.923 0.008 247.9);
   --input: oklch(0.923 0.008 247.9);
@@ -214,6 +234,13 @@
      Khi người dùng chọn màu nhấn riêng, applyAccent sẽ ghi đè --accent-soft bằng rgba của màu đó. */
   --parent-soft: rgba(245, 120, 139, 0.16);
   --student-soft: rgba(255, 174, 86, 0.16);
+
+  /* Category palette: dùng tông sáng hơn (~400) để đọc được trên nền tối */
+  --info: #60A5FA;
+  --quiz: #818CF8;
+  --schedule-cat: #F472B6;
+  --report: #FB923C;
+  --caution: #FBBF24;
 
   --sidebar: #171320;
   --sidebar-foreground: #F3EFF7;

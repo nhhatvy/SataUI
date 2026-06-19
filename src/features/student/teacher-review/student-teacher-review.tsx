@@ -116,7 +116,7 @@ export function StudentTeacherReview() {
       <div className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-orange-400 to-amber-400 p-6 text-white mb-5 shadow-lg shadow-primary/20">
         <Sparkles className="absolute right-5 top-5 size-12 opacity-25" />
         <span className="text-4xl">⭐</span>
-        <h1 className="text-2xl font-black mt-2 leading-tight">Đánh giá Thầy/Cô của em</h1>
+        <h1 className="text-2xl font-bold mt-2 leading-tight">Đánh giá Thầy/Cô của em</h1>
         <p className="text-sm font-semibold text-white/90 mt-1 max-w-md leading-relaxed">
           Chọn khuôn mặt, số sao và gửi lời nhắn dễ thương cho Thầy/Cô nhé! Câu trả lời được giữ <strong>bí mật (ẩn danh)</strong>.
         </p>
@@ -137,7 +137,7 @@ export function StudentTeacherReview() {
               onClick={() => setSelected(t.name)}
               className={cn('flex items-center gap-3 p-3.5 rounded-2xl border-2 text-left transition-all cursor-pointer', active ? 'border-primary bg-primary/5 shadow-sm' : 'border-border/60 bg-card hover:border-border')}
             >
-              <span className="grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-amber-400 text-base font-black text-white shrink-0">
+              <span className="grid size-12 place-items-center rounded-2xl bg-gradient-to-br from-primary to-amber-400 text-base font-bold text-white shrink-0">
                 {t.name.split(' ').slice(-2).map((w) => w[0]).join('').toUpperCase()}
               </span>
               <div className="min-w-0 flex-1">
@@ -157,7 +157,7 @@ export function StudentTeacherReview() {
       {success ? (
         <Card className="border-success/20 bg-success/5 rounded-3xl p-8 text-center flex flex-col items-center gap-3">
           <span className="text-6xl">🎉</span>
-          <h2 className="text-xl font-black text-foreground">Tuyệt vời, cảm ơn em!</h2>
+          <h2 className="text-xl font-bold text-foreground">Tuyệt vời, cảm ơn em!</h2>
           <p className="text-sm text-muted-foreground font-semibold max-w-md leading-relaxed">Lời đánh giá của em dành cho <strong>{selected}</strong> đã được gửi (bí mật) rồi nhé!</p>
         </Card>
       ) : isLocked ? (
@@ -182,7 +182,7 @@ export function StudentTeacherReview() {
               return (
                 <div key={f.id} className={cn('rounded-3xl border-2 p-5', pal.bg)}>
                   <div className="flex items-start gap-2.5 mb-3.5">
-                    <span className={cn('grid size-7 place-items-center rounded-full text-white text-sm font-black shrink-0', pal.num)}>{idx + 1}</span>
+                    <span className={cn('grid size-7 place-items-center rounded-full text-white text-sm font-bold shrink-0', pal.num)}>{idx + 1}</span>
                     <p className="text-base font-bold text-foreground leading-snug">{f.question}{f.required && <span className="text-destructive"> *</span>}</p>
                   </div>
 
@@ -210,7 +210,7 @@ export function StudentTeacherReview() {
                           </button>
                         ))}
                       </div>
-                      {formData[f.id] > 0 && <span className="text-sm font-black text-amber-600 bg-card px-3 py-1.5 rounded-full shadow-2xs">{STAR_LABEL[formData[f.id]]}</span>}
+                      {formData[f.id] > 0 && <span className="text-sm font-bold text-amber-600 bg-card px-3 py-1.5 rounded-full shadow-2xs">{STAR_LABEL[formData[f.id]]}</span>}
                     </div>
                   )}
 
@@ -221,7 +221,7 @@ export function StudentTeacherReview() {
                         <input type="range" min={1} max={10} value={formData[f.id] || 5} onChange={(e) => set(f.id, parseInt(e.target.value))}
                           className="w-full h-3 bg-card rounded-full appearance-none cursor-pointer accent-primary" style={{ minHeight: 44 }} />
                         <span className="text-2xl">😍</span>
-                        <span className="size-12 grid place-items-center bg-primary text-primary-foreground rounded-full text-lg font-black shrink-0">{formData[f.id] || 5}</span>
+                        <span className="size-12 grid place-items-center bg-primary text-primary-foreground rounded-full text-lg font-bold shrink-0">{formData[f.id] || 5}</span>
                       </div>
                       <div className="flex justify-between text-xs text-muted-foreground font-bold uppercase px-9">
                         <span>{f.minLabel}</span><span>{f.maxLabel}</span>
@@ -246,7 +246,7 @@ export function StudentTeacherReview() {
           )}
 
           <button onClick={() => { if (validate()) setConfirm(true) }}
-            className="mt-5 w-full h-14 rounded-full bg-gradient-to-r from-primary to-amber-400 text-primary-foreground text-base font-black hover:opacity-95 active:scale-[0.99] cursor-pointer inline-flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
+            className="mt-5 w-full h-14 rounded-full bg-gradient-to-r from-primary to-amber-400 text-primary-foreground text-base font-bold hover:opacity-95 active:scale-[0.99] cursor-pointer inline-flex items-center justify-center gap-2 shadow-lg shadow-primary/25">
             <Send className="size-5" /> Gửi đánh giá cho {selected}
           </button>
         </>
@@ -261,7 +261,7 @@ export function StudentTeacherReview() {
             <p className="text-sm text-muted-foreground font-semibold leading-relaxed">Sau khi gửi em sẽ không sửa lại được. Em chắc chưa nào?</p>
             <div className="flex justify-center gap-3 pt-1">
               <button onClick={() => setConfirm(false)} className="h-11 rounded-full border border-border bg-card px-5 text-sm font-bold text-foreground hover:bg-muted cursor-pointer min-w-[110px]">Để sau</button>
-              <button onClick={submit} disabled={submitting} className="h-11 rounded-full bg-primary px-6 text-sm font-black text-primary-foreground hover:opacity-90 cursor-pointer border-none min-w-[110px]">{submitting ? 'Đang gửi...' : 'Gửi ngay!'}</button>
+              <button onClick={submit} disabled={submitting} className="h-11 rounded-full bg-primary px-6 text-sm font-bold text-primary-foreground hover:opacity-90 cursor-pointer border-none min-w-[110px]">{submitting ? 'Đang gửi...' : 'Gửi ngay!'}</button>
             </div>
           </div>
         </div>

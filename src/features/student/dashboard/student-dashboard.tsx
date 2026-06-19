@@ -96,14 +96,14 @@ export function StudentDashboard() {
           <div className="relative flex flex-col gap-3.5 sm:flex-row sm:items-center sm:justify-between">
             <div className="flex items-center gap-3 sm:gap-3.5 min-w-0">
               <span
-                className="grid size-12 sm:size-14 shrink-0 place-items-center rounded-2xl text-base sm:text-lg font-black ring-4 ring-primary-foreground/20"
+                className="grid size-12 sm:size-14 shrink-0 place-items-center rounded-2xl text-base sm:text-lg font-bold ring-4 ring-primary-foreground/20"
                 style={{ backgroundColor: child?.avatarColor, color: '#fff' }}
               >
                 {child?.initials}
               </span>
               <div className="min-w-0">
-                <p className="text-[11px] sm:text-xs font-black uppercase tracking-wider text-primary-foreground/70">Cổng học sinh</p>
-                <h1 className="text-lg sm:text-2xl font-black tracking-tight text-primary-foreground truncate">
+                <p className="text-xs font-bold uppercase tracking-wider text-primary-foreground/70">Cổng học sinh</p>
+                <h1 className="text-lg sm:text-2xl font-bold tracking-tight text-primary-foreground truncate">
                   Chào {child?.shortName ?? 'con'}! 🚀
                 </h1>
                 <p className="text-xs sm:text-sm font-medium text-primary-foreground/80 mt-0.5 truncate">
@@ -114,8 +114,8 @@ export function StudentDashboard() {
             {/* Tiến độ khóa học */}
             <div className="flex w-full sm:w-auto items-center justify-between sm:justify-start gap-3 rounded-2xl bg-primary-foreground/15 px-4 py-2.5 sm:py-3 backdrop-blur-sm shrink-0">
               <div className="leading-snug">
-                <p className="text-[11px] sm:text-xs font-bold text-primary-foreground/80">Tiến độ khóa học</p>
-                <p className="text-[11px] sm:text-xs font-medium text-primary-foreground/65">{breakdown.completed}/{breakdown.total} buổi đã học</p>
+                <p className="text-xs font-bold text-primary-foreground/80">Tiến độ khóa học</p>
+                <p className="text-xs font-medium text-primary-foreground/65">{breakdown.completed}/{breakdown.total} buổi đã học</p>
               </div>
               <ProgressRing value={overall} />
             </div>
@@ -141,10 +141,10 @@ export function StudentDashboard() {
               </h2>
               <span className="text-sm font-semibold text-muted-foreground">{breakdown.completed}/{breakdown.total} buổi</span>
             </div>
-            <div className="py-2.5">
+            <div className="py-2">
               <SessionJourney childId={child.id} variant="line" />
             </div>
-            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2.5 pt-1">
+            <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 pt-1">
               <StatBox label="Tổng buổi" value={breakdown.total} />
               <StatBox label="Đã học" value={breakdown.completed} tone="success" />
               <StatBox label="Còn lại" value={breakdown.remaining} />
@@ -160,13 +160,13 @@ export function StudentDashboard() {
           <div className="lg:col-span-2 space-y-4 sm:space-y-5">
             {/* VIỆC CẦN LÀM */}
             <Card className="border-border/60 rounded-2xl shadow-none">
-              <CardContent className="p-4 sm:p-5 space-y-3.5">
+              <CardContent className="p-4 sm:p-5 space-y-4">
                 <div className="flex items-center justify-between">
                   <h2 className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wider">
                     <ClipboardList className="size-4 text-primary" /> Việc cần làm
                   </h2>
                   {todoItems.length > 0 && (
-                    <Badge className="bg-primary/10 text-primary border-none text-xs font-black px-2 py-0.5 rounded-md">{todoItems.length}</Badge>
+                    <Badge className="bg-primary/10 text-primary border-none text-xs font-bold px-2 py-0.5 rounded-md">{todoItems.length}</Badge>
                   )}
                 </div>
 
@@ -177,7 +177,7 @@ export function StudentDashboard() {
                     <p className="text-xs text-muted-foreground">Giữ vững phong độ học tập nhé 💪</p>
                   </div>
                 ) : (
-                  <div className="space-y-2.5">
+                  <div className="space-y-2">
                     {todoItems.map((item) => {
                       const overdue = item.state === 'overdue'
                       const isTest = item.kind === 'test'
@@ -185,30 +185,34 @@ export function StudentDashboard() {
                         <button
                           key={item.key}
                           onClick={() => router.push('/student/homework')}
-                          className="group flex w-full items-center gap-3 rounded-xl border border-border/60 bg-card p-3 text-left transition-colors hover:border-primary/40 hover:bg-muted cursor-pointer"
+                          className="group flex w-full items-start gap-3 rounded-xl border border-border/60 bg-card p-3 text-left transition-colors hover:border-primary/40 hover:bg-muted cursor-pointer"
                         >
-                          <span className={cn('grid size-10 shrink-0 place-items-center rounded-xl', isTest ? 'bg-indigo-500/10 text-indigo-500' : 'bg-primary/10 text-primary')}>
+                          <span className={cn('grid size-9 sm:size-10 shrink-0 place-items-center rounded-xl', isTest ? 'bg-quiz/10 text-quiz' : 'bg-primary/10 text-primary')}>
                             {isTest ? <ClipboardList className="size-5" /> : <Pencil className="size-5" />}
                           </span>
-                          <div className="min-w-0 flex-1">
-                            <div className="flex items-center gap-2 min-w-0">
-                              <Badge className={cn('border-none text-[10px] font-black px-1.5 py-0 rounded uppercase', isTest ? 'bg-indigo-500/10 text-indigo-500' : 'bg-primary/10 text-primary')}>
+                          <div className="min-w-0 flex-1 space-y-1">
+                            {/* Dòng 1: tiêu đề (xuống dòng tối đa 2 dòng trên mobile) + trạng thái */}
+                            <div className="flex items-start justify-between gap-2">
+                              <p className="text-sm font-bold text-foreground line-clamp-2 sm:truncate min-w-0">{item.title}</p>
+                              <Badge className={cn('shrink-0 border-none text-xs font-bold px-2 py-0.5 rounded-md', overdue ? 'bg-destructive/15 text-destructive' : 'bg-caution/15 text-caution')}>
+                                {overdue ? 'Quá hạn' : 'Cần làm'}
+                              </Badge>
+                            </div>
+                            {/* Dòng 2: loại + thông tin phụ */}
+                            <div className="flex items-center gap-1.5 min-w-0">
+                              <Badge className={cn('shrink-0 border-none text-xs font-bold px-1.5 py-0 rounded uppercase', isTest ? 'bg-quiz/10 text-quiz' : 'bg-primary/10 text-primary')}>
                                 {isTest ? 'Kiểm tra' : 'Bài tập'}
                               </Badge>
-                              <p className="text-sm font-bold text-foreground truncate min-w-0">{item.title}</p>
+                              <p className="text-xs text-muted-foreground font-medium truncate min-w-0">{item.meta}</p>
                             </div>
-                            <p className="text-xs text-muted-foreground font-medium mt-0.5 truncate">{item.meta}</p>
                           </div>
-                          <Badge className={cn('shrink-0 border-none text-[11px] font-bold px-2 py-0.5 rounded-md', overdue ? 'bg-destructive/15 text-destructive' : 'bg-amber-500/15 text-amber-600')}>
-                            {overdue ? 'Quá hạn' : 'Cần làm'}
-                          </Badge>
-                          <ChevronRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+                          <ChevronRight className="hidden sm:block size-4 shrink-0 self-center text-muted-foreground transition-transform group-hover:translate-x-0.5" />
                         </button>
                       )
                     })}
                     <button
                       onClick={() => router.push('/student/homework')}
-                      className="flex w-full items-center justify-center gap-1.5 h-10 rounded-xl bg-primary text-primary-foreground text-sm font-black hover:opacity-90 transition-opacity cursor-pointer mt-1"
+                      className="flex w-full items-center justify-center gap-1.5 h-10 rounded-xl bg-primary text-primary-foreground text-sm font-bold hover:opacity-90 transition-opacity cursor-pointer mt-1"
                     >
                       <Play className="size-4 fill-current" /> Vào làm bài ngay
                     </button>
@@ -226,21 +230,21 @@ export function StudentDashboard() {
 
                 {/* Phong độ 6 tuần */}
                 {weeklyScores.length > 0 && (
-                  <div className="rounded-xl bg-muted/60 p-3.5">
-                    <div className="flex items-center justify-between mb-2.5">
-                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Phong độ gần đây</p>
-                      <span className="inline-flex items-center gap-1 text-xs font-black text-success">
+                  <div className="rounded-xl bg-muted/60 p-4">
+                    <div className="flex items-center justify-between mb-3 gap-2">
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider truncate min-w-0">Phong độ gần đây</p>
+                      <span className="inline-flex items-center gap-1 text-xs font-bold text-success shrink-0">
                         <Flame className="size-3.5" /> {weeklyScores[weeklyScores.length - 1]?.score.toFixed(1)} điểm
                       </span>
                     </div>
-                    <div className="flex items-end justify-between gap-1.5 sm:gap-2">
+                    <div className="flex items-end justify-between gap-1 sm:gap-2">
                       {weeklyScores.map((w) => (
-                        <div key={w.week} className="flex flex-1 flex-col items-center gap-1">
-                          <span className="text-[10px] font-black text-muted-foreground tabular-nums">{w.score.toFixed(1)}</span>
+                        <div key={w.week} className="flex flex-1 min-w-0 flex-col items-center gap-1">
+                          <span className="text-xs font-bold text-muted-foreground tabular-nums">{w.score.toFixed(1)}</span>
                           <div className="w-full rounded-md bg-primary/15 overflow-hidden flex items-end h-12">
                             <div className="w-full rounded-md bg-primary transition-all" style={{ height: `${(w.score / 10) * 100}%` }} />
                           </div>
-                          <span className="text-[10px] font-bold text-muted-foreground">{w.week}</span>
+                          <span className="text-xs font-bold text-muted-foreground truncate max-w-full">{w.week}</span>
                         </div>
                       ))}
                     </div>
@@ -258,7 +262,7 @@ export function StudentDashboard() {
                           <p className="text-sm font-bold text-foreground truncate">{r.title}</p>
                           <p className="text-xs text-muted-foreground font-medium mt-0.5">{r.type} · {r.date}</p>
                         </div>
-                        <span className={cn('grid place-items-center rounded-xl px-3 py-1.5 text-base font-black tabular-nums shrink-0', scoreCls(r.score / r.maxScore * 10))}>
+                        <span className={cn('grid place-items-center rounded-xl px-3 py-1.5 text-base font-bold tabular-nums shrink-0', scoreCls(r.score / r.maxScore * 10))}>
                           {r.score}<span className="text-xs font-bold opacity-60">/{r.maxScore}</span>
                         </span>
                       </div>
@@ -279,15 +283,15 @@ export function StudentDashboard() {
                 </h3>
                 {nextClass ? (
                   <>
-                    <div className="rounded-xl bg-primary/5 border border-primary/15 p-3.5 space-y-2">
+                    <div className="rounded-xl bg-primary/5 border border-primary/15 p-4 space-y-2">
                       <div className="flex items-center justify-between gap-2">
-                        <p className="text-base font-black text-foreground">{nextClass.subject}</p>
-                        <Badge className="bg-primary text-primary-foreground border-none text-[10px] font-black px-2 py-0.5 rounded-md shrink-0">{nextClass.day}</Badge>
+                        <p className="text-base font-bold text-foreground truncate min-w-0 flex-1">{nextClass.subject}</p>
+                        <Badge className="bg-primary text-primary-foreground border-none text-xs font-bold px-2 py-0.5 rounded-md shrink-0">{nextClass.day}</Badge>
                       </div>
                       <div className="space-y-1.5 text-sm text-muted-foreground font-medium">
-                        <span className="flex items-center gap-2"><Clock className="size-4 shrink-0 text-primary" /> {nextClass.time}</span>
-                        <span className="flex items-center gap-2"><MapPin className="size-4 shrink-0 text-primary" /> {nextClass.room}</span>
-                        <span className="flex items-center gap-2"><Pencil className="size-4 shrink-0 text-primary" /> GV {nextClass.teacher}</span>
+                        <span className="flex items-center gap-2 min-w-0"><Clock className="size-4 shrink-0 text-primary" /> <span className="truncate">{nextClass.time}</span></span>
+                        <span className="flex items-center gap-2 min-w-0"><MapPin className="size-4 shrink-0 text-primary" /> <span className="truncate">{nextClass.room}</span></span>
+                        <span className="flex items-center gap-2 min-w-0"><Pencil className="size-4 shrink-0 text-primary" /> <span className="truncate">GV {nextClass.teacher}</span></span>
                       </div>
                     </div>
                     {upcoming.length > 1 && (
@@ -317,16 +321,16 @@ export function StudentDashboard() {
             {/* KỸ NĂNG CỦA EM */}
             {skills.length > 0 && (
               <Card className="border-border/60 rounded-2xl shadow-none">
-                <CardContent className="p-4 sm:p-5 space-y-3.5">
+                <CardContent className="p-4 sm:p-5 space-y-4">
                   <h3 className="flex items-center gap-2 text-sm font-bold text-foreground uppercase tracking-wider">
                     <Sparkles className="size-4 text-primary" /> Kỹ năng của em
                   </h3>
                   <div className="space-y-3">
                     {skills.map((s) => (
                       <div key={s.skill} className="space-y-1">
-                        <div className="flex items-center justify-between text-sm">
-                          <span className="font-semibold text-foreground">{s.skill}</span>
-                          <span className="font-black text-primary tabular-nums">{s.value}%</span>
+                        <div className="flex items-center justify-between gap-2 text-sm">
+                          <span className="font-semibold text-foreground truncate min-w-0">{s.skill}</span>
+                          <span className="font-bold text-primary tabular-nums shrink-0">{s.value}%</span>
                         </div>
                         <div className="h-2 rounded-full bg-muted overflow-hidden">
                           <div className="h-full rounded-full bg-primary transition-all" style={{ width: `${s.value}%` }} />
@@ -349,7 +353,7 @@ export function StudentDashboard() {
 function scoreCls(score10: number) {
   if (score10 >= 9) return 'bg-success/15 text-success'
   if (score10 >= 7.5) return 'bg-primary/15 text-primary'
-  if (score10 >= 5) return 'bg-amber-500/15 text-amber-600'
+  if (score10 >= 5) return 'bg-caution/15 text-caution'
   return 'bg-destructive/15 text-destructive'
 }
 
@@ -366,7 +370,7 @@ function ProgressRing({ value }: { value: number }) {
           strokeDasharray={c} strokeDashoffset={offset} className="text-primary-foreground transition-all"
         />
       </svg>
-      <span className="absolute text-xs font-black text-primary-foreground tabular-nums">{value}%</span>
+      <span className="absolute text-xs font-bold text-primary-foreground tabular-nums">{value}%</span>
     </span>
   )
 }
@@ -381,13 +385,13 @@ function StatBox({
   const toneClass =
     tone === 'success' ? 'text-success'
       : tone === 'danger' ? 'text-destructive'
-        : tone === 'warning' ? 'text-amber-600'
+        : tone === 'warning' ? 'text-caution'
           : tone === 'primary' ? 'text-primary'
             : 'text-foreground'
   return (
-    <div className="p-2.5 bg-muted/50 border border-border/60 rounded-xl text-center">
-      <p className={cn('text-xl font-black tabular-nums', toneClass)}>{value}</p>
-      <p className="text-[11px] text-muted-foreground font-semibold mt-0.5 leading-tight">{label}</p>
+    <div className="p-3 bg-muted/50 border border-border/60 rounded-xl text-center">
+      <p className={cn('text-lg font-bold tabular-nums sm:text-xl', toneClass)}>{value}</p>
+      <p className="text-xs text-muted-foreground font-semibold mt-0.5 leading-tight">{label}</p>
     </div>
   )
 }
@@ -403,8 +407,8 @@ function QuickStat({
 }) {
   const accentCls =
     accent === 'primary' ? 'bg-primary/10 text-primary'
-      : accent === 'indigo' ? 'bg-indigo-500/10 text-indigo-500'
-        : accent === 'amber' ? 'bg-amber-500/10 text-amber-600'
+      : accent === 'indigo' ? 'bg-quiz/10 text-quiz'
+        : accent === 'amber' ? 'bg-caution/10 text-caution'
           : 'bg-success/10 text-success'
   return (
     <button
@@ -416,7 +420,7 @@ function QuickStat({
       </span>
       <div className="min-w-0">
         <p className="text-xs text-muted-foreground font-semibold truncate">{label}</p>
-        <p className="text-base font-black text-foreground truncate">{value}</p>
+        <p className="text-base font-bold text-foreground truncate">{value}</p>
       </div>
     </button>
   )

@@ -29,7 +29,7 @@ export function ParentChildSelector({ className }: { className?: string }) {
               )}
             >
               <span
-                className="grid size-5 place-items-center rounded-md text-[9px] font-black text-white"
+                className="grid size-5 place-items-center rounded-md text-xs font-bold text-white"
                 style={{ backgroundColor: active ? 'rgba(255,255,255,0.25)' : c.avatarColor }}
               >
                 {c.initials}
