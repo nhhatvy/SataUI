@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { useNotificationStore, type NotiCategory, type NotificationItem } from '@/shared/stores/useNotificationStore'
-import { PageHeader } from '@/shared/components/page-header'
+import { PageHero } from '@/shared/components/page-header'
 import { cn } from '@/shared/utils/utils'
 import { Bell, CheckCheck, type LucideIcon } from 'lucide-react'
 
@@ -19,6 +19,7 @@ export function NotificationCenter({
   categories,
   onOpen,
   showChild = false,
+  accent = 'parent',
 }: {
   title: string
   subtitle?: string
@@ -26,6 +27,7 @@ export function NotificationCenter({
   categories: NotiCat[]
   onOpen: (n: NotificationItem) => void
   showChild?: boolean
+  accent?: 'parent' | 'student'
 }) {
   const { markAsRead } = useNotificationStore()
   const [active, setActive] = useState<'all' | NotiCategory>('all')
@@ -99,14 +101,15 @@ export function NotificationCenter({
 
   return (
     <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-      <PageHeader
+      <PageHero
         icon={Bell}
+        accent={accent}
         title={title}
         subtitle={subtitle}
-        action={
+        metric={
           unreadTotal > 0 ? (
-            <button onClick={markAllShown} className="inline-flex items-center gap-1.5 px-3.5 h-10 bg-card border border-border hover:bg-muted text-foreground text-sm font-bold rounded-xl shadow-2xs cursor-pointer">
-              <CheckCheck className="size-4 text-primary" /> Đọc tất cả
+            <button onClick={markAllShown} className="inline-flex items-center gap-1.5 px-3.5 h-10 bg-white/15 hover:bg-white/25 text-white text-sm font-bold rounded-xl backdrop-blur-sm cursor-pointer transition-colors">
+              <CheckCheck className="size-4" /> Đọc tất cả
             </button>
           ) : undefined
         }

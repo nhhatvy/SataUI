@@ -8,7 +8,7 @@ import { getCourseSyllabus, getSessionExtras, type SessionPhoto } from '@/shared
 import { StateMockWrapper } from '@/shared/components/state-mock-wrapper'
 import { Camera, X, Download, ShieldAlert } from 'lucide-react'
 import { cn } from '@/shared/utils/utils'
-import { PageHeader } from '@/shared/components/page-header'
+import { PageHero } from '@/shared/components/page-header'
 
 type SelectedPhoto = { photo: SessionPhoto; sessionLabel: string; date: string }
 
@@ -28,8 +28,9 @@ export function ParentGallery() {
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-      <PageHeader
+      <PageHero
         icon={Camera}
+        accent="parent"
         title="Hình ảnh lớp theo buổi học"
         subtitle={`${totalPhotos} ảnh từ ${sessionsWithPhotos.length} buổi học của ${child.name} · Lớp ${child.className}.`}
       />

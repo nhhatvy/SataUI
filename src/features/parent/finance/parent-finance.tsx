@@ -70,11 +70,13 @@ export function ParentFinance() {
       </div>
 
       {/* Summary */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6">
-        <Stat icon={CheckCircle2} label="Đã thanh toán (đã xác nhận)" value={formatCurrency(confirmedTotal)} tone="success" />
-        <Stat icon={Wallet} label="Công nợ còn lại" value={formatCurrency(debt)} tone={debt > 0 ? 'warning' : 'default'} />
-        <Stat icon={CalendarClock} label="Kỳ đến hạn" value={debt > 0 ? (tuition?.dueDate ?? '—') : 'Đã đóng đủ'} tone={debt > 0 ? 'danger' : 'success'} small />
-      </div>
+      <Card className="border-border/60 rounded-2xl shadow-none mb-6">
+        <CardContent className="grid grid-cols-1 divide-y sm:grid-cols-3 sm:divide-x sm:divide-y-0 divide-border/60 p-0">
+          <Stat icon={CheckCircle2} label="Đã thanh toán (đã xác nhận)" value={formatCurrency(confirmedTotal)} tone="success" />
+          <Stat icon={Wallet} label="Công nợ còn lại" value={formatCurrency(debt)} tone={debt > 0 ? 'warning' : 'default'} />
+          <Stat icon={CalendarClock} label="Kỳ đến hạn" value={debt > 0 ? (tuition?.dueDate ?? '—') : 'Đã đóng đủ'} tone={debt > 0 ? 'danger' : 'success'} small />
+        </CardContent>
+      </Card>
 
       <div className="grid grid-cols-1 gap-6 lg:grid-cols-3 lg:items-start">
         {/* Left: due payment + history */}
@@ -202,16 +204,14 @@ function Stat({ icon: Icon, label, value, tone, small }: { icon: LucideIcon; lab
   const valueCls =
     tone === 'success' ? 'text-success' : tone === 'warning' ? 'text-caution' : tone === 'danger' ? 'text-destructive' : 'text-foreground'
   return (
-    <Card className="border-border/60 rounded-2xl shadow-none">
-      <CardContent className="flex items-center gap-3 p-4">
-        <span className={cn('grid size-10 shrink-0 place-items-center rounded-xl', badgeCls)}>
-          <Icon className="size-5" />
-        </span>
-        <div className="min-w-0">
-          <p className={cn('font-bold tabular-nums leading-tight', small ? 'text-base' : 'text-xl', valueCls)}>{value}</p>
-          <p className="mt-0.5 truncate text-xs text-muted-foreground font-medium leading-tight">{label}</p>
-        </div>
-      </CardContent>
-    </Card>
+    <div className="flex items-center gap-3 p-4">
+      <span className={cn('grid size-10 shrink-0 place-items-center rounded-xl', badgeCls)}>
+        <Icon className="size-5" />
+      </span>
+      <div className="min-w-0">
+        <p className={cn('font-bold tabular-nums leading-tight', small ? 'text-base' : 'text-xl', valueCls)}>{value}</p>
+        <p className="mt-0.5 truncate text-xs text-muted-foreground font-medium leading-tight">{label}</p>
+      </div>
+    </div>
   )
 }

@@ -13,7 +13,7 @@ import {
   type SessionReview,
 } from '@/shared/mock-data/student-data'
 import { cn } from '@/shared/utils/utils'
-import { PageHeader } from '@/shared/components/page-header'
+import { PageHero } from '@/shared/components/page-header'
 import { Search, MessageSquareText, ChevronLeft, Calendar, User, Target, Image as ImageIcon, Lightbulb } from 'lucide-react'
 
 function daysAgo(d: string): number {
@@ -173,8 +173,9 @@ export function ParentComments() {
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-      <PageHeader
+      <PageHero
         icon={MessageSquareText}
+        accent="parent"
         title="Nhận xét theo buổi học"
         subtitle={`Nhận xét chi tiết của giáo viên dành cho ${child.name}${unviewedCount > 0 ? ` · ${unviewedCount} chưa xem` : ''}`}
       />

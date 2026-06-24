@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { cn } from '@/shared/utils/utils'
-import { PageHeader, InfoNote } from '@/shared/components/page-header'
+import { PageHero, InfoNote } from '@/shared/components/page-header'
 import { ArrowLeft, Send, CheckCircle2, AlertCircle, Lock, Clock, ChevronRight, ClipboardList } from 'lucide-react'
 
 type SurveyField = {
@@ -137,8 +137,9 @@ export function ParentSurvey({ defaultSurveyId }: { defaultSurveyId?: string }) 
     const openCount = SURVEY_SCHEMAS.filter((s) => !isDone(s.id)).length
     return (
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-        <PageHeader
+        <PageHero
           icon={ClipboardList}
+          accent="parent"
           title="Khảo sát trung tâm"
           subtitle={`Ý kiến của phụ huynh giúp SataRobo nâng cao chất lượng.${openCount > 0 ? ` Còn ${openCount} khảo sát chưa làm.` : ''}`}
         />

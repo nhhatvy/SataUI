@@ -43,6 +43,7 @@ export default function StudentNotificationsPage() {
       items={items}
       categories={CATEGORIES}
       onOpen={onOpen}
+      accent="student"
     />
   )
 }
