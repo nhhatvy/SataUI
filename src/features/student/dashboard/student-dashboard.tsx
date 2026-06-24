@@ -78,7 +78,7 @@ export function StudentDashboard() {
           {[0, 1, 2, 3].map((i) => <Skeleton key={i} className="h-20 w-full rounded-2xl" />)}
         </div>
         <Skeleton className="h-32 w-full rounded-2xl" />
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3">
           <Skeleton className="h-64 w-full rounded-2xl lg:col-span-2" />
           <Skeleton className="h-64 w-full rounded-2xl" />
         </div>
@@ -155,7 +155,7 @@ export function StudentDashboard() {
           </CardContent>
         </Card>
 
-        <div className="grid gap-4 sm:gap-5 lg:grid-cols-3 lg:items-start">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 lg:grid-cols-3 lg:items-start">
           {/* LEFT */}
           <div className="lg:col-span-2 space-y-4 sm:space-y-5">
             {/* VIỆC CẦN LÀM */}

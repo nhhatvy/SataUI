@@ -6,7 +6,7 @@ import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { getCourseSyllabus, getSessionReviews, getAttendanceStats, type SyllabusLesson } from '@/shared/mock-data/student-data'
-import { PageHeader } from '@/shared/components/page-header'
+import { PageHero } from '@/shared/components/page-header'
 import { cn } from '@/shared/utils/utils'
 import { List, Calendar, Target, ClipboardCheck, BookOpen, ChevronLeft } from 'lucide-react'
 
@@ -45,15 +45,27 @@ export function StudentAttendance() {
 
   return (
     <main className="mx-auto w-full max-w-6xl flex-1 px-4 pb-24 pt-6 sm:px-6 lg:px-8 animate-in fade-in duration-300">
-      <PageHeader icon={List} title="Buổi học của em" subtitle={`Mục tiêu, điểm danh và bài tập từng buổi · ${syllabus.courseName}`} />
-
-      {/* Summary */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-        <Stat label="Đã học" value={`${summary.completed}/${summary.total}`} tone="primary" />
-        <Stat label="Có mặt" value={`${summary.present}`} tone="success" />
-        <Stat label="Vắng" value={`${summary.absent}`} tone="danger" />
-        <Stat label="Đã học bù" value={`${summary.makeup}`} tone="blue" />
-      </div>
+      <PageHero
+        icon={List}
+        accent="student"
+        title="Buổi học của em"
+        subtitle={`Mục tiêu, điểm danh và bài tập từng buổi · ${syllabus.courseName}`}
+        metric={
+          <div className="grid w-full grid-cols-4 gap-2 sm:w-auto sm:gap-2.5">
+            {[
+              { label: 'Đã học', value: `${summary.completed}/${summary.total}` },
+              { label: 'Có mặt', value: `${summary.present}` },
+              { label: 'Vắng', value: `${summary.absent}` },
+              { label: 'Đã học bù', value: `${summary.makeup}` },
+            ].map((m) => (
+              <div key={m.label} className="min-w-0 rounded-xl bg-white/15 px-2 py-2 text-center backdrop-blur-sm sm:px-3">
+                <p className="text-base font-bold leading-none tabular-nums sm:text-lg">{m.value}</p>
+                <p className="mt-1 truncate text-xs font-medium leading-tight text-white/75">{m.label}</p>
+              </div>
+            ))}
+          </div>
+        }
+      />
 
       <div className="lg:grid lg:grid-cols-[19rem_1fr] lg:gap-5 lg:items-start">
         {/* LIST */}
@@ -159,18 +171,6 @@ function Detail({ lesson, att, objectives, onBack }: { lesson: any; att: AttStat
             <Badge className={cn('text-sm font-bold px-2.5 py-1 rounded-md border shadow-none', ATT_META[att].cls)}>{ATT_META[att].label}</Badge>
           </section>
         </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-function Stat({ label, value, tone }: { label: string; value: string; tone: 'primary' | 'success' | 'danger' | 'blue' }) {
-  const cls = tone === 'success' ? 'text-success' : tone === 'danger' ? 'text-destructive' : tone === 'blue' ? 'text-blue-600' : 'text-primary'
-  return (
-    <Card className="border-border/60 rounded-2xl shadow-none">
-      <CardContent className="p-3.5 text-center">
-        <p className={cn('text-xl font-bold', cls)}>{value}</p>
-        <p className="text-sm text-muted-foreground font-medium mt-0.5 leading-tight">{label}</p>
       </CardContent>
     </Card>
   )

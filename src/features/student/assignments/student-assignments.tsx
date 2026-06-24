@@ -3,13 +3,12 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Card, CardContent } from '@/shared/components/ui/card'
 import { Badge } from '@/shared/components/ui/badge'
-import { Progress } from '@/shared/components/ui/progress'
 import { useActiveChildStore } from '@/shared/stores/useActiveChildStore'
 import { useScoreStore } from '@/shared/stores/useScoreStore'
 import { getStudentData, getCourseSyllabus, type HomeworkState } from '@/shared/mock-data/student-data'
 import { getChildData } from '@/shared/mock-data/parent-data'
 import { StateMockWrapper } from '@/shared/components/state-mock-wrapper'
-import { PageHeader, InfoNote } from '@/shared/components/page-header'
+import { PageHero } from '@/shared/components/page-header'
 import { cn } from '@/shared/utils/utils'
 import {
   ClipboardList,
@@ -532,42 +531,35 @@ export function StudentAssignments({
                 ? { label: 'Quá hạn', cls: 'bg-destructive/15 text-destructive border border-destructive/30' }
                 : { label: 'Chưa làm', cls: 'bg-amber-500/15 text-amber-600 border border-amber-500/30' }
 
+          // Điểm cao nhất của bài đã làm (lấy từ lịch sử trong phiên)
+          const bestAttempt = (quizId: string): Attempt | null => {
+            const list = attempts[quizId]
+            if (!list || list.length === 0) return null
+            return list.reduce((best, a) => (a.score > best.score ? a : best), list[0])
+          }
+
           return (
             <div className="space-y-6">
-              <div>
-                <PageHeader
-                  icon={BookOpen}
-                  title="Bài tập của em"
-                  subtitle="Theo dõi lộ trình từng buổi học, làm bài tập về nhà và bài kiểm tra của giáo viên."
-                />
-                <InfoNote variant="tip">
-                  Em làm bài trắc nghiệm <strong>ngay trên web</strong> (bấm "Làm bài tập"). Sau khi nộp sẽ được <strong>chấm điểm tự động</strong> và lưu vào kết quả học tập của em.
-                </InfoNote>
-              </div>
-
-              {/* Course header */}
-              <Card className="border-border/60 rounded-2xl shadow-none bg-gradient-to-r from-primary/5 via-transparent to-transparent">
-                <CardContent className="p-5 space-y-3">
-                  <div className="flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                      <Badge className="bg-primary/10 text-primary border-none text-xs font-bold px-2 py-0.5 rounded-md mb-1">Khóa học</Badge>
-                      <h2 className="text-lg font-bold text-foreground">{syllabus.courseName}</h2>
-                      <p className="text-sm text-muted-foreground font-medium mt-0.5">Giáo viên: {syllabus.teacher}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-2xl font-bold text-primary">{doneCount}/{syllabus.totalSessions}</p>
-                      <p className="text-sm text-muted-foreground font-medium">buổi đã học</p>
-                    </div>
+              <PageHero
+                icon={BookOpen}
+                accent="student"
+                overline="Khóa học"
+                title="Bài tập của em"
+                subtitle={`${syllabus.courseName} · Giáo viên: ${syllabus.teacher}`}
+                metric={
+                  <div className="grid w-full grid-cols-2 gap-2 sm:w-auto sm:gap-2.5">
+                    {[
+                      { label: 'Buổi đã học', value: `${doneCount}/${syllabus.totalSessions}` },
+                      { label: 'Tiến độ', value: `${progressPct}%` },
+                    ].map((m) => (
+                      <div key={m.label} className="min-w-0 rounded-xl bg-white/15 px-2 py-2 text-center backdrop-blur-sm sm:px-3">
+                        <p className="text-base font-bold leading-none tabular-nums sm:text-lg">{m.value}</p>
+                        <p className="mt-1 truncate text-xs font-medium leading-tight text-white/75">{m.label}</p>
+                      </div>
+                    ))}
                   </div>
-                  <div className="space-y-1.5">
-                    <div className="flex justify-between text-sm font-semibold">
-                      <span className="text-muted-foreground">Tiến độ chương trình</span>
-                      <span className="text-primary">{progressPct}%</span>
-                    </div>
-                    <Progress value={progressPct} className="h-2.5 bg-muted" />
-                  </div>
-                </CardContent>
-              </Card>
+                }
+              />
 
               {/* Lessons (14 sessions) */}
               <div className="space-y-3">
@@ -622,6 +614,20 @@ export function StudentAssignments({
 
                         {lesson.homework ? (
                           <div className="flex items-center gap-2.5 shrink-0">
+                            {(() => {
+                              const at = bestAttempt(lesson.homework!.quizId)
+                              return at ? (
+                                <button
+                                  type="button"
+                                  onClick={() => handleViewPastAttempt(at)}
+                                  title="Xem lại lời giải"
+                                  className="flex items-center gap-1.5 h-10 px-3 rounded-xl bg-success/15 text-success border border-success/30 text-sm font-bold hover:bg-success/25 transition-colors cursor-pointer"
+                                >
+                                  <Award className="size-4 shrink-0" />
+                                  Điểm: {at.score}/10
+                                </button>
+                              ) : null
+                            })()}
                             <Badge className={cn('text-sm font-bold px-2.5 py-1 rounded-md shadow-none', hwBadge(lesson.homework.state).cls)}>
                               {hwBadge(lesson.homework.state).label}
                             </Badge>
@@ -666,6 +672,20 @@ export function StudentAssignments({
                             </div>
                           </div>
                           <div className="flex items-center gap-2.5 shrink-0">
+                            {(() => {
+                              const at = bestAttempt(test.id)
+                              return at ? (
+                                <button
+                                  type="button"
+                                  onClick={() => handleViewPastAttempt(at)}
+                                  title="Xem lại lời giải"
+                                  className="flex items-center gap-1.5 h-10 px-3 rounded-xl bg-success/15 text-success border border-success/30 text-sm font-bold hover:bg-success/25 transition-colors cursor-pointer"
+                                >
+                                  <Award className="size-4 shrink-0" />
+                                  Điểm: {at.score}/10
+                                </button>
+                              ) : null
+                            })()}
                             <Badge className={cn('text-sm font-bold px-2.5 py-1 rounded-md shadow-none', b.cls)}>{b.label}</Badge>
                             <button
                               type="button"
